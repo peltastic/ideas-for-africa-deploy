@@ -19,6 +19,7 @@ const config: Config = {
       colors: {
         primary: "#B35009",
         black1: "#131316",
+        black2: "#131523",
         "black-footer": "#0B0B0B",
         gray1: "#56616B",
         gray2: "#E6E9EF",
@@ -28,6 +29,7 @@ const config: Config = {
         gray6: "#A6ABAF",
         gray7: "#F5F6FA",
         gray8: "#D7DBEC",
+        gray9: "#A1A7C4",
         lightBlue: "#F3F3F3",
         butter: "#FFF3EA"
       },

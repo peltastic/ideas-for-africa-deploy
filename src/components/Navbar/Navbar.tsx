@@ -15,7 +15,7 @@ const Navbar = (props: Props) => {
         <div className="flex text-sm">
           <Link
             className="border border-primary text-primary mr-4 rounded-full py-2 px-5"
-            href={"/"}
+            href={"/auth/login"}
           >
             Log in
           </Link>

@@ -5,6 +5,7 @@ import { ColorSchemeScript, MantineProvider } from "@mantine/core";
 
 import type { Metadata } from "next";
 import "./globals.css";
+import { Providers } from "@/lib/providers/providet";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -19,13 +20,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="">
+        <Providers>
         <MantineProvider
           theme={{
             headings: { fontFamily: "Poppins, sans-serif" },
           }}
         >
-          {children}
+            {children}
         </MantineProvider>
+            </Providers>
       </body>
     </html>
   );

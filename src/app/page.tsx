@@ -10,13 +10,15 @@ export default function Home() {
   return (
     <div className="">
       <Navbar />
-      <HomepageHeader />
-      <div className="ml-10 mt-20">
-        <CauroselSection />
-        <InnovativeIdeas />
+      <div className="mx-auto bg-primary-bg max-w-[1500px]">
+        <HomepageHeader />
+        <div className="ml-10 mt-20">
+          <CauroselSection />
+          <InnovativeIdeas />
+        </div>
+        <StayUpdated />
+        <ShareIdeas />
       </div>
-      <StayUpdated />
-      <ShareIdeas />
       <Footer />
     </div>
   );

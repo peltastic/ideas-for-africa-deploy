@@ -27,12 +27,12 @@ const InnovativeIdeasFilters = (props: Props) => {
 
   return (
     <div className="my-10 flex items-center">
-      <div className=" mr-auto">
+      <div className=" mr-auto hidden des:block">
         <SelectComponent placeholder="Most viewed" options={options} />
       </div>
-      <div className="flex items-center bg-gray3 px-1  py-1 rounded-full ">
+      <div className="items-center bg-gray3 px-1  py-1 rounded-full hidden lg:flex  ">
         {filterEl.map((el) => (
-          <div onClick={() => props.setFilterVal(el)}  key={el} className={`${props.filterVal === el ? " text-black1 bg-white rounded-full" : "text-gray1"} cursor-pointer text-sm  font-medium py-3 px-4`}>
+          <div onClick={() => props.setFilterVal(el)}  key={el} className={`transition-all ${props.filterVal === el ? " text-black1 bg-white rounded-full" : "text-gray1"} cursor-pointer text-sm  font-medium py-3 px-4`}>
             <p>{el}</p>
           </div>
         ))}

@@ -11,7 +11,7 @@ type Props = {
 const CarouselCard = (props: Props) => {
   return (
     <div className="relative">
-      <Image src={props.image} alt="" />
+      <Image src={props.image} alt="image" className="w-full" />
       <div className="absolute bottom-4 left-[50%] -translate-x-[47%] w-[95%] text-white">
         <h2 className="font-semibold mb-4">
           Energy generation for recycling rubber

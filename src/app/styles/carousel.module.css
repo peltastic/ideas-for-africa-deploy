@@ -1,0 +1,30 @@
+.controls {
+  margin-top: 12rem;
+  margin-right: 3rem;
+}
+
+@media (min-width: 1400px) {
+    .controls {
+        margin-top: 15rem;
+    }
+}
+
+@media (max-width: 1024px) {
+  .controls {
+    display: none;
+  }
+}
+
+.control {
+  &[data-inactive] {
+    opacity: 0;
+    cursor: default;
+  }
+}
+
+.indicator {
+  background-color: #b35009;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}

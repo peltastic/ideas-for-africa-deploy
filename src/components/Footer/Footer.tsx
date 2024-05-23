@@ -10,10 +10,10 @@ type Props = {};
 const Footer = (props: Props) => {
   return (
     <footer className="bg-black-footer py-10 px-10">
-      <div className="flex items-start">
-        <div className="w-[25%] mr-auto">
+      <div className="flex flex-wrap items-start">
+        <div className="w-full sm:w-[25%] mr-auto mb-10">
           <Image src={LogoDark} alt="logo-dark" />
-          <div className="text-gray8 mt-8 text-xs">
+          <div className="text-gray8 mt-8 text-xs w-full sm:w-auto">
             <p className="mb-3">
               Collaborate, share, and breathe life into your ideas. Let others
               help bring your vision to fruition.
@@ -34,7 +34,7 @@ const Footer = (props: Props) => {
             <h2>Finance</h2>
           </div>
         </div>
-        <div className="flex gap-8">
+        <div className="flex gap-8 mt-8 sm:mt-0 w-full sm:w-auto">
             <Image src={Mail} alt="mail" />
             <Image src={Instagram} alt="instagram" />
             <Image src={Facebook} alt="facebook" />

@@ -6,13 +6,13 @@ type Props = {};
 const ShareIdeas = (props: Props) => {
   return (
     <section className="bg-butter py-32">
-      <div className="w-[45%] mx-auto text-center">
-        <h2 className="font-bold text-2xl">
+      <div className="w-[80%] md:w-[60%] mm:w-[45%] mx-auto text-center">
+        <h2 className="font-bold text-3xl">
           Share your ideas and innovations with us. Together, let's shape the
           future.
         </h2>
         <Button
-          classname="bg-primary text-gray7 mx-auto text-xs rounded-full border border-primary ml-3 py-[.6rem] px-6 mt-6"
+          classname="bg-primary text-gray7 mx-auto text-sm rounded-full border border-primary ml-3 py-[.6rem] px-6 mt-6"
           clicked={() => {}}
         >
           Share an idea

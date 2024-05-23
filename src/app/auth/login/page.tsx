@@ -10,9 +10,9 @@ const LoginPage = (props: Props) => {
   return (
     <div className="flex h-screen">
        <div className="w-[50%]">
-        <Image src={AuthImage} alt='auth-image' />
+        <Image src={AuthImage} alt='auth-image' className='w-full h-screen' />
        </div>
-       <div className="w-[50%]">
+       <div className="w-[50%] relative">
         <LoginForm />
        </div>
     </div>

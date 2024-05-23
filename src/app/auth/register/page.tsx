@@ -12,7 +12,7 @@ const RegisterPage = (props: Props) => {
        <div className="w-[50%]">
         <Image src={AuthImage} alt='auth-image' />
        </div>
-       <div className="w-[50%]">
+       <div className="w-[50%] relative">
         <RegisterForm />
        </div>
     </div>

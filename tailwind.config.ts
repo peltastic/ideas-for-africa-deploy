@@ -8,8 +8,10 @@ const config: Config = {
   ],
   theme: {
     screens: {
-      sm: "480px",
+      xs: "480px",
+      sm: "600px",
       md: "768px",
+      mm: "860px",
       lg: "1024px",
       des: "1200px",
       xl: "1440px",
@@ -18,8 +20,11 @@ const config: Config = {
     extend: {
       colors: {
         primary: "#B35009",
+        "primary-bg": "#FFFCFA",
         black1: "#131316",
         black2: "#131523",
+        black3: "#363637",
+        black4: "#333752",
         "black-footer": "#0B0B0B",
         gray1: "#56616B",
         gray2: "#E6E9EF",
@@ -30,8 +35,9 @@ const config: Config = {
         gray7: "#F5F6FA",
         gray8: "#D7DBEC",
         gray9: "#A1A7C4",
+        "bg-grey1": "#F3F3F3",
         lightBlue: "#F3F3F3",
-        butter: "#FFF3EA"
+        butter: "#FFF3EA",
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

@@ -7,10 +7,12 @@ type Props = {};
 
 const Navbar = (props: Props) => {
   return (
-    <nav className=" w-[98%] mt-4 shadow-md  mx-auto rounded-full py-5 px-8 ">
+    <nav className=" w-[98%] mt-4 shadow-md mx-auto rounded-full py-5 px-8 ">
       <div className="flex items-center ">
-        <div className="mr-auto">
-          <Image src={Logo} alt="logo" />
+        <div className="cursor-pointer mr-auto">
+          <Link href={"/"}>
+            <Image src={Logo} alt="logo" />
+          </Link>
         </div>
         <div className="flex text-sm">
           <Link

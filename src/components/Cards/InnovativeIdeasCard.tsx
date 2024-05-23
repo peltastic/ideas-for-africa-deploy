@@ -1,5 +1,4 @@
 import React from "react";
-import InnovativeImg from "/public/assets/InnovativeImg1.png";
 import ClockIcon from "/public/assets/clock-icon.svg";
 import Image from "next/image";
 import { truncateStr } from "@/utils/helperfunctions";

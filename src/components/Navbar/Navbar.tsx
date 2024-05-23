@@ -16,14 +16,14 @@ const Navbar = (props: Props) => {
         </div>
         <div className="flex text-sm">
           <Link
-            className="border border-primary text-primary mr-4 rounded-full py-2 px-5"
+            className="border border-primary text-primary xxs:mr-4 rounded-full py-2 px-5"
             href={"/auth/login"}
           >
             Log in
           </Link>
           <Link
-            className="border border-primary bg-primary text-white rounded-full py-2 px-5"
-            href={"/"}
+            className="hidden xxs:block border border-primary bg-primary text-white rounded-full py-2 px-5"
+            href={"/auth/register"}
           >
             Sign up
           </Link>

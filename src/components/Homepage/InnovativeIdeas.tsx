@@ -35,7 +35,7 @@ const InnovativeIdeas = (props: Props) => {
   return (
     <section className=" mt-28">
       <div className="">
-        <h1 className="text-4xl font-bold mb-3 text-black1">
+        <h1 className="text-3xl xs:text-4xl font-bold mb-3 text-black1">
           Explore innovative ideas
         </h1>
         <h2 className="text-gray1">
@@ -49,7 +49,7 @@ const InnovativeIdeas = (props: Props) => {
           filterVal={selectedFilter}
         />
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 mm:grid-cols-3 des:grid-cols-4 gap-6 mr-10">
+      <div className="grid grid-cols-1 sm:grid-cols-2 mm:grid-cols-3 des:grid-cols-4 gap-6 sm:mr-10">
         {imgs.map((el, index) => (
           <InnovativeIdeasCard image={el} key={index} />
         ))}

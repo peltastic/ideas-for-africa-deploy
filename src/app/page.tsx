@@ -12,7 +12,7 @@ export default function Home() {
       <Navbar />
       <div className="mx-auto bg-primary-bg max-w-[1500px]">
         <HomepageHeader />
-        <div className="ml-10 mt-20">
+        <div className="ml-4 mr-4 xs:mr-10 sm:mr-0 xs:ml-10 mt-20">
           <CauroselSection />
           <InnovativeIdeas />
         </div>

@@ -19,12 +19,12 @@ const LoginForm = (props: Props) => {
   return (
     <>
       <div
-        className="absolute cursor-pointer right-10 top-10"
+        className=" hidden mm:block absolute cursor-pointer right-2 sm:right-10 top-10"
         onClick={() => router.push("/")}
         >
         <Image src={CancelImage} alt="cancel-image" />
         </div>
-      <div className="py-[6rem] w-[60%] mx-auto absolute left-[50%] top-[50%] -translate-x-[50%] -translate-y-[50%]">
+      <div className="py-[2rem] lg:py-[6rem] w-full mm:w-[60%] mx-auto lg:absolute left-[50%] top-[50%] lg:-translate-x-[50%] lg:-translate-y-[50%]">
         <div className="font-bold text-2xl text-black2">
           <h1>Ready to share an idea??</h1>
           <h1>Log in to get started</h1>

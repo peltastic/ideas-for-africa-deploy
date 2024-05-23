@@ -30,12 +30,12 @@ const RegisterForm = (props: Props) => {
   return (
     <>
       <div
-        className="absolute cursor-pointer right-10 top-10"
+        className="hidden des:block absolute cursor-pointer right-10 top-10"
         onClick={() => router.push("/")}
         >
         <Image src={CancelImage} alt="cancel-image" />
         </div>
-      <div className="py-[2rem] w-[60%] mx-auto absolute left-[50%] top-[50%] -translate-x-[50%] -translate-y-[50%]">
+      <div className="py-[2rem] w-full sm:w-[80%] md:w-[60%] mx-auto des:absolute left-[50%] top-[50%] des:-translate-x-[50%] des:-translate-y-[50%]">
         <div className="font-bold text-2xl text-black2">
           <h1>Ready to share an idea??</h1>
           <h1>Sign up to get started</h1>

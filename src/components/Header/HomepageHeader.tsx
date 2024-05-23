@@ -18,13 +18,13 @@ const HomepageHeader = (props: Props) => {
         <h1>blossom & minds connect</h1>
       </div>
       <div className="">
-        <h1 className="text-[2.9rem] block sm:hidden font-bold leading-[1.07]">A space where ideas blossom & minds connect</h1>
+        <h1 className="text-[2.3rem] xxs:text-[2.9rem] block sm:hidden font-bold leading-[1.07]">A space where ideas blossom & minds connect</h1>
       </div>
       <div className="flex justify-center mt-6 gap-4">
         <div className="hidden md:block">
           <Image src={HeaderStar} alt="header-stroke" />
         </div>
-        <h2 className=" text-[#333752] md:text-gray1 text-xl ">
+        <h2 className=" text-[#333752] md:text-gray1 text-lg xxs:text-xl ">
           Collaborate, share, and breathe life into your ideas. Let others help
           bring your vision to fruition.
         </h2>

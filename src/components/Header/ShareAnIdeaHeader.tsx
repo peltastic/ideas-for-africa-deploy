@@ -36,7 +36,7 @@ const ShareAnIdeaHeader = (props: Props) => {
               partnerships. Additionally, actively participating in discussions
               and sharing your ideas can lead to valuable feedback that helps
               refine and strengthen your concepts over time. <br /> <br /> To
-              get your ideas known to the public, it's essential to adopt a
+              get your ideas known to the public, it&apos;s essential to adopt a
               multifaceted approach. This includes networking with industry
               peers, leveraging social media platforms to showcase your work,
               and seeking out opportunities to present or publish your ideas. By

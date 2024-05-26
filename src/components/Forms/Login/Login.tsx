@@ -86,7 +86,7 @@ const LoginForm = (props: Props) => {
                 Log in
               </Button>
               <p className="text-xs text-gray1 text-center mt-5">
-                Don't have an account?{" "}
+                Don&apos;t have an account? &nbsp;
                 <span className="text-primary">
                   <Link href={"/auth/register"}>Sign up</Link>
                 </span>

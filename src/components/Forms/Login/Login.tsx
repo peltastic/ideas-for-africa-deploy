@@ -66,10 +66,12 @@ const LoginForm = (props: Props) => {
                   name="email"
                   label="Email Address"
                   placeholder=""
-                />
+                  smallLabel
+                  />
               </div>
               <div className="w-full mt-8">
                 <Field
+                  smallLabel
                   classname=""
                   name="password"
                   label="Password"

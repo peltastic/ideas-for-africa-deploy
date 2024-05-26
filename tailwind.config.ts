@@ -21,6 +21,7 @@ const config: Config = {
     extend: {
       colors: {
         primary: "#B35009",
+        "primary-light": "#E68B03",
         "primary-bg": "#FFFCFA",
         black1: "#131316",
         black2: "#131523",
@@ -36,6 +37,7 @@ const config: Config = {
         gray7: "#F5F6FA",
         gray8: "#D7DBEC",
         gray9: "#A1A7C4",
+        gray10: "#2B2B2F",
         "bg-grey1": "#F3F3F3",
         lightBlue: "#F3F3F3",
         butter: "#FFF3EA",

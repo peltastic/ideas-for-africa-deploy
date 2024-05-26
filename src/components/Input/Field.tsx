@@ -11,6 +11,7 @@ interface OtherProps {
   password?: boolean;
   changed?: any;
   borderError?: boolean;
+  smallLabel?: boolean;
 }
 
 const Field = (props: FieldHookConfig<string> & OtherProps) => {
@@ -20,7 +21,11 @@ const Field = (props: FieldHookConfig<string> & OtherProps) => {
   return (
     <div className="w-full">
       <label className="">
-        <p className="font-semibold text-sm mb-3">{props.label}</p>
+        <p
+          className={`font-semibold ${props.smallLabel ? "text-sm" : ""}  mb-3`}
+        >
+          {props.label}
+        </p>
 
         <div className="relative ">
           <input
@@ -35,9 +40,9 @@ const Field = (props: FieldHookConfig<string> & OtherProps) => {
             placeholder={props.placeholder}
             type={typePassword && props.password ? "password" : props.type}
             className={`px-4 py-3 rounded-full w-full  placeholder:text-gray6 outline-none
-             ${props.borderError ? "border-errorRed" : " border border-gray2"} ${
-              props.classname
-            }`}
+             ${
+               props.borderError ? "border-errorRed" : " border border-gray8"
+             } ${props.classname}`}
           />
           {props.password ? (
             <div

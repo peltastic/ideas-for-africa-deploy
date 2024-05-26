@@ -10,7 +10,7 @@ type Props = {};
 const ShareAnIdeaPage = (props: Props) => {
   return (
     <div className="">
-      <Navbar />
+      <Navbar homepage />
       <div className="bg-primary-bg mx-auto max-w-[1500px]">
         <ShareAnIdeaHeader />
         <Faces />

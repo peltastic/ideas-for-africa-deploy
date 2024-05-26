@@ -3,11 +3,13 @@ import Image from "next/image";
 import Logo from "/public/assets/logo.svg";
 import Link from "next/link";
 
-type Props = {};
+type Props = {
+  homepage?: boolean;
+};
 
 const Navbar = (props: Props) => {
   return (
-    <nav className=" w-[98%] mt-4 shadow-md mx-auto rounded-full py-5 px-8 ">
+    <nav className={` w-[98%] mt-4  ${props.homepage? "shadow-md" : ""} mx-auto rounded-full py-5 px-8 `}>
       <div className="flex items-center ">
         <div className="cursor-pointer mr-auto">
           <Link href={"/"}>

@@ -1,6 +1,7 @@
 import React from "react";
-import * as Select from "@radix-ui/react-select";
+import { Select } from "@mantine/core";
 import { IoIosArrowDown } from "react-icons/io";
+import classes from "@/app/styles/select.module.css";
 
 type Props = {
   options?: { value: any; label: string }[];
@@ -8,44 +9,24 @@ type Props = {
   style2?: boolean;
   changed?: (value: any) => void;
   value?: any;
+  label?: string;
+  size: "sm" | "lg" | "md" | "xs" | "xl";
 };
 
 const SelectComponent = (props: Props) => {
+  const icon = <IoIosArrowDown className="font-semibold text-black" />;
   return (
-    <Select.Root value={"1"} onValueChange={props.changed}>
-      <Select.Trigger
-        className={`px-6 py-3 gap-3  font-semibold text-sm bg-white outline-none border border-gray  inline-flex items-center justify-center rounded-full`}
-      >
-        <Select.Value
-          className=" "
-          placeholder={props.placeholder}
-        />
-        <Select.Icon className={`   `}>
-          <IoIosArrowDown className="text-2xl" />
-        </Select.Icon>
-      </Select.Trigger>
-
-      <Select.Portal>
-        <Select.Content>
-          <Select.ScrollUpButton />
-          <Select.Viewport className="  mt-[5rem] px-12 rounded-md py-6 w-[18rem]">
-            {props.options?.map((el) => (
-              <Select.Item
-                key={el.value}
-                className="text-white cursor-pointer dark:text-black font-bold py-1 text-lg"
-                value={el.value}
-              >
-                <Select.ItemText>{el.label}</Select.ItemText>
-              </Select.Item>
-            ))}
-
-            <Select.Separator />
-          </Select.Viewport>
-          <Select.ScrollDownButton />
-          <Select.Arrow />
-        </Select.Content>
-      </Select.Portal>
-    </Select.Root>
+    <Select
+      label={props.label}
+      radius={"xl"}
+      size={props.size}
+      classNames={{label: classes.label}}
+      className="font-semibold placeholder:text-black" 
+      value={"1"}
+      data={props.options}
+      rightSection={icon}
+      placeholder={props.placeholder}
+    />
   );
 };
 

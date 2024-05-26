@@ -83,19 +83,22 @@ const RegisterForm = (props: Props) => {
                   name="email"
                   label="Email Address"
                   placeholder=""
-                />
+                  smallLabel
+                  />
               </div>
               <div className="w-full mt-8">
                 <Field
                   classname=""
                   name="password"
                   label="Password"
+                  smallLabel
                   placeholder=""
-                />
+                  />
               </div>
               <div className="w-full mt-8">
                 <Field
                   classname=""
+                  smallLabel
                   name="confirm_password"
                   label="Confirm password"
                   placeholder=""

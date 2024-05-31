@@ -19,7 +19,7 @@ const StayUpdated = (props: Props) => {
           <p className="mb-1 text-sm font-medium">Email address</p>
           <div className="flex flex-wrap items-center">
             <Input class="border-gray5 border px-4 py-3 rounded-full w-full sm:w-[60%] mb-3 sm:mb-0 placeholder:text-gray6 outline-none" placeholder="example@gmail.com" />
-            <Button classname=" w-full sm:w-auto bg-primary text-gray7 text-xs rounded-full border border-primary sm:ml-3 py-[.9rem] px-4 " clicked={() => {}}>
+            <Button classname=" w-full sm:w-auto bg-primary text-gray7 text-xs rounded-full border border-primary sm:ml-3 py-[.9rem] px-4 " >
               Get Notified
             </Button>
           </div>

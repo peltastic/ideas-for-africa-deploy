@@ -14,27 +14,42 @@ import { notify } from "@/utils/toast";
 import { useRouter } from "next/navigation";
 import Spinner from "@/components/Spinner/Spinner";
 import CancelImage from "/public/assets/cancel.svg";
+import { registerSchema } from "@/utils/validation";
+import { setCookie, setTokenCookie } from "@/utils/storage";
+import ModalComponent from "@/components/Modal/Modal";
+import { useDisclosure } from "@mantine/hooks";
+import AdditionalInfo from "./AdditionalInfo";
 
 type Props = {};
 
 const RegisterForm = (props: Props) => {
+  const [opened, { open, close }] = useDisclosure(false);
   const router = useRouter();
   const [registerUser, { isLoading, isSuccess, isError, data }] =
     useRegisterUserMutation();
   useEffect(() => {
     if (isSuccess) {
-      notify(data?.message, "success");
-      router.push("/auth/login");
+      notify(
+        "Registration Successful, plese check your email to verify your account.",
+        "success"
+      );
+      setTokenCookie(data.token)
+      setCookie("id", data.userId)
+      open()
     }
   }, [isError, isSuccess]);
+  
   return (
     <>
+    <ModalComponent size="45%" opened={opened} onClose={close} >
+      <AdditionalInfo />
+    </ModalComponent>
       <div
         className="hidden des:block absolute cursor-pointer right-10 top-10"
         onClick={() => router.push("/")}
-        >
+      >
         <Image src={CancelImage} alt="cancel-image" />
-        </div>
+      </div>
       <div className="py-[2rem] w-full sm:w-[80%] md:w-[60%] mx-auto des:absolute left-[50%] top-[50%] des:-translate-x-[50%] des:-translate-y-[50%]">
         <div className="font-bold text-2xl text-black2">
           <h1>Ready to share an idea??</h1>
@@ -69,6 +84,7 @@ const RegisterForm = (props: Props) => {
               password: "",
               confirm_password: "",
             }}
+            validationSchema={registerSchema}
             onSubmit={(values) => {
               registerUser({
                 email: values.email,
@@ -76,7 +92,7 @@ const RegisterForm = (props: Props) => {
               });
             }}
           >
-            <Form>
+            <Form className="transition-all">
               <div className="w-full mt-4">
                 <Field
                   classname=""
@@ -84,7 +100,7 @@ const RegisterForm = (props: Props) => {
                   label="Email Address"
                   placeholder=""
                   smallLabel
-                  />
+                />
               </div>
               <div className="w-full mt-8">
                 <Field
@@ -93,7 +109,8 @@ const RegisterForm = (props: Props) => {
                   label="Password"
                   smallLabel
                   placeholder=""
-                  />
+                  password
+                />
               </div>
               <div className="w-full mt-8">
                 <Field
@@ -101,6 +118,7 @@ const RegisterForm = (props: Props) => {
                   smallLabel
                   name="confirm_password"
                   label="Confirm password"
+                  password
                   placeholder=""
                 />
               </div>

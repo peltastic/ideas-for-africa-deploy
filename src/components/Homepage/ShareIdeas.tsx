@@ -13,7 +13,6 @@ const ShareIdeas = (props: Props) => {
         </h2>
         <Button
           classname="bg-primary text-gray7 mx-auto text-sm rounded-full border border-primary ml-3 py-[.6rem] px-6 mt-6"
-          clicked={() => {}}
         >
           Share an idea
         </Button>

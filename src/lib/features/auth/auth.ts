@@ -8,21 +8,35 @@ export const authApi = createApi({
     baseUrl: config.API_URL,
   }),
   endpoints: (builder) => ({
-    registerUser: builder.mutation<{
-      message: string
-    }, IRegisterUser>({
-      query: () => ({
+    registerUser: builder.mutation<
+      {
+        message: string;
+        token: string;
+        userId: string;
+        vscode: string;
+      },
+      IRegisterUser
+    >({
+      query: (body) => ({
         url: "/users/reg",
         method: "POST",
+        body,
       }),
     }),
-    loginUser: builder.mutation<unknown, IRegisterUser>({
-        query: () => ({
-            url: "/users/login",
-            method: "POST"
-        })
-    })
+    loginUser: builder.mutation<
+      {
+        message: string;
+        token: string;
+      },
+      IRegisterUser
+    >({
+      query: (body) => ({
+        url: "/users/login",
+        method: "POST",
+        body,
+      }),
+    }),
   }),
 });
 
-export const {useLoginUserMutation, useRegisterUserMutation} = authApi;
+export const { useLoginUserMutation, useRegisterUserMutation } = authApi;

@@ -2,7 +2,7 @@ import Footer from "@/components/Footer/Footer";
 import ShareAnIdeaHeader from "@/components/Header/ShareAnIdeaHeader";
 import ShareIdeas from "@/components/Homepage/ShareIdeas";
 import Navbar from "@/components/Navbar/Navbar";
-import Faces from "@/components/ShareAnIdea/Faces";
+import Faces from "@/components/MeetTheTeam/Faces";
 import React from "react";
 
 type Props = {};

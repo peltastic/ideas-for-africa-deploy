@@ -18,13 +18,15 @@ const HomepageHeader = (props: Props) => {
         <h1>blossom & minds connect</h1>
       </div>
       <div className="">
-        <h1 className="text-[2.3rem] xxs:text-[2.9rem] block sm:hidden font-bold leading-[1.07]">A space where ideas blossom & minds connect</h1>
+        <h1 className="text-[2.7rem] xxs:text-[2.9rem] block sm:hidden font-semibold leading-[1.07]">
+          A space where ideas blossom & minds connect
+        </h1>
       </div>
       <div className="flex justify-center mt-6 gap-4">
         <div className="hidden md:block">
           <Image src={HeaderStar} alt="header-stroke" />
         </div>
-        <h2 className=" text-[#333752] md:text-gray1 text-lg xxs:text-xl ">
+        <h2 className=" text-[#333752] md:text-gray1  xxs:text-lg ">
           Collaborate, share, and breathe life into your ideas. Let others help
           bring your vision to fruition.
         </h2>
@@ -34,16 +36,16 @@ const HomepageHeader = (props: Props) => {
       </div>
       <div className="  flex flex-wrap justify-center mt-12 items-center">
         <Link
-          className="w-[60%] md:w-auto mb-6 md:mb-0 rounded-full px-8 py-4 md:py-3 bg-primary text-white mr-8 border-primary border"
-          href={"/share-an-idea"}
-        >
-          Share an idea
-        </Link>
-        <Link
-          className="w-[60%] md:w-auto rounded-full px-8 py-4 md:py-3 text-primary mr-8 border-primary border"
+          className="w-[60%] md:w-auto mb-6 md:mb-0 rounded-full px-8 py-4 md:py-3 bg-primary text-white md:mr-8 border-primary border"
           href={"/"}
         >
-          Meet the team
+          <button>Share an idea</button>
+        </Link>
+        <Link
+          className="w-[60%] md:w-auto rounded-full px-8 py-4 md:py-3 text-primary md:mr-8 border-primary border"
+          href={"/meet-the-team"}
+        >
+          <button>Meet the team</button>
         </Link>
       </div>
     </header>

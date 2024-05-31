@@ -11,6 +11,8 @@ type Props = {
   value?: any;
   label?: string;
   size: "sm" | "lg" | "md" | "xs" | "xl";
+  thinLabel?: boolean
+  
 };
 
 const SelectComponent = (props: Props) => {
@@ -20,12 +22,13 @@ const SelectComponent = (props: Props) => {
       label={props.label}
       radius={"xl"}
       size={props.size}
-      classNames={{label: classes.label}}
+      classNames={{label: props.thinLabel ? classes.label2 : classes.label}}
       className="font-semibold placeholder:text-black" 
-      value={"1"}
+      value={props.value}
       data={props.options}
       rightSection={icon}
       placeholder={props.placeholder}
+      onChange={props.changed}
     />
   );
 };

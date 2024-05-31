@@ -28,3 +28,9 @@
   height: 8px;
   border-radius: 50%;
 }
+
+@media (max-width: 420px) {
+  .indicator {
+    margin-top: -8rem;
+  }
+}

@@ -41,6 +41,7 @@ const config: Config = {
         "bg-grey1": "#F3F3F3",
         lightBlue: "#F3F3F3",
         butter: "#FFF3EA",
+        errorRed: "#FF4F1E"
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

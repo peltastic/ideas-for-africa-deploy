@@ -54,7 +54,7 @@ const InnovativeIdeas = (props: Props) => {
           <InnovativeIdeasCard image={el} key={index} />
         ))}
       </div>
-      <div className="border border-gray2 py-4 rounded-2xl text-center mr-10">
+      <div className="border border-gray2 py-4 rounded-2xl text-center sm:mr-10">
         <p className="text-xs font-medium text-[#56616B]">Show more</p>
       </div>
     </section>

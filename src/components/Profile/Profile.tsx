@@ -29,7 +29,7 @@ const Profile = (props: Props) => {
       break;
 
     default:
-      <ProfileForm />;
+      break;
   }
   return (
     <div className="">

@@ -1,3 +1,4 @@
+"use client"
 import Navbar from "@/components/Navbar/Navbar";
 import Profile from "@/components/Profile/Profile";
 import ProfileHeader from "@/components/Profile/ProfileHeader";

@@ -4,7 +4,9 @@ import Image from "next/image";
 import ChatImg from "/public/assets/chat.svg";
 import LikeImg from "/public/assets/like-img.svg";
 
-type Props = {};
+type Props = {
+  modified?: boolean
+};
 
 const Idea = (props: Props) => {
   return (

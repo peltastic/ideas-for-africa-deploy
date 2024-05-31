@@ -12,6 +12,7 @@ interface OtherProps {
   changed?: any;
   borderError?: boolean;
   smallLabel?: boolean;
+  labelClass?: string
 }
 
 const Field = (props: FieldHookConfig<string> & OtherProps) => {
@@ -22,7 +23,7 @@ const Field = (props: FieldHookConfig<string> & OtherProps) => {
     <div className="w-full">
       <label className="">
         <p
-          className={`font-semibold ${props.smallLabel ? "text-sm" : ""}  mb-3`}
+          className={`${props.labelClass || "font-semibold"} ${props.smallLabel ? "text-sm" : ""}  mb-3`}
         >
           {props.label}
         </p>
@@ -39,10 +40,8 @@ const Field = (props: FieldHookConfig<string> & OtherProps) => {
             }}
             placeholder={props.placeholder}
             type={typePassword && props.password ? "password" : props.type}
-            className={`px-4 py-3 rounded-full w-full  placeholder:text-gray6 outline-none
-             ${
-               props.borderError ? "border-errorRed" : " border border-gray8"
-             } ${props.classname}`}
+            className={` rounded-full w-full  placeholder:text-gray6 outline-none
+             ${props.classname || "px-4 py-3"} ${meta.error && meta.touched  ? "border border-errorRed" : "border border-gray8"}`}
           />
           {props.password ? (
             <div
@@ -55,7 +54,7 @@ const Field = (props: FieldHookConfig<string> & OtherProps) => {
         </div>
       </label>
       {meta.touched && meta.error ? (
-        <div className="text-[#eb4040] mt-2 text-sm font-medium ">
+        <div className="text-[#eb4040] mt-2 text-xs font-medium ">
           {meta.error}
         </div>
       ) : null}

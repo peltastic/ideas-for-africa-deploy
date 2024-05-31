@@ -1,3 +1,4 @@
+"use client"
 import Footer from "@/components/Footer/Footer";
 import HomepageHeader from "@/components/Header/HomepageHeader";
 import CauroselSection from "@/components/Homepage/CauroselSection";
@@ -17,7 +18,7 @@ export default function Home() {
           <InnovativeIdeas />
         </div>
         <StayUpdated />
-        <ShareIdeas />
+        {/* <ShareIdeas /> */}
       </div>
       <Footer />
     </div>

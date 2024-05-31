@@ -3,11 +3,14 @@ import React from 'react'
 type Props = {
     class: string
     placeholder: string
+    type?: string
+    value?: any
+    changed: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 const Input = (props: Props) => {
   return (
-    <input className={props.class} type='' placeholder={props.placeholder} />
+    <input value={props.value} onChange={props.changed} className={props.class} type={props.class} placeholder={props.placeholder} />
   )
 }
 

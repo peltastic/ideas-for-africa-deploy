@@ -5,3 +5,13 @@ export function truncateStr(word: string, length: number): string {
     }
     return str + "...";
   }
+
+  export function formDataHandler<T extends object>(body: T) {
+    const formData = new FormData()
+    for (const key in body) {
+      if (body.hasOwnProperty(key)) {
+        formData.append(key, body[key as keyof typeof body] as string)
+      }
+    }
+    return formData
+  }

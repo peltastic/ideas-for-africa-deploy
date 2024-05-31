@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React from "react";
+import React, { useEffect } from "react";
 import Google from "/public/assets/google.svg";
 import Facebook from "/public/assets/facebook-icon.svg";
 import X from "/public/assets/x.svg";
@@ -11,19 +11,32 @@ import Button from "@/components/Button/Button";
 import Link from "next/link";
 import CancelImage from "/public/assets/cancel.svg";
 import { useRouter } from "next/navigation";
+import { useLoginUserMutation } from "@/lib/features/auth/auth";
+import Spinner from "@/components/Spinner/Spinner";
+import { notify } from "@/utils/toast";
+import { setTokenCookie } from "@/utils/storage";
 
 type Props = {};
 
 const LoginForm = (props: Props) => {
+  const [loginUser, { isLoading, isError, isSuccess, data }] =
+    useLoginUserMutation();
   const router = useRouter();
+  useEffect(() => {
+    if (isSuccess) {
+      notify("Login Successful!", "success");
+      setTokenCookie(data?.token);
+      router.push("/share-idea");
+    }
+  }, [isSuccess, isError]);
   return (
     <>
       <div
         className=" hidden mm:block absolute cursor-pointer right-2 sm:right-10 top-10"
         onClick={() => router.push("/")}
-        >
+      >
         <Image src={CancelImage} alt="cancel-image" />
-        </div>
+      </div>
       <div className="py-[2rem] lg:py-[6rem] w-full mm:w-[60%] mx-auto lg:absolute left-[50%] top-[50%] lg:-translate-x-[50%] lg:-translate-y-[50%]">
         <div className="font-bold text-2xl text-black2">
           <h1>Ready to share an idea??</h1>
@@ -57,7 +70,9 @@ const LoginForm = (props: Props) => {
               email: "",
               password: "",
             }}
-            onSubmit={() => {}}
+            onSubmit={(values) => {
+              loginUser(values);
+            }}
           >
             <Form>
               <div className="w-full mt-4">
@@ -67,7 +82,7 @@ const LoginForm = (props: Props) => {
                   label="Email Address"
                   placeholder=""
                   smallLabel
-                  />
+                />
               </div>
               <div className="w-full mt-8">
                 <Field
@@ -76,14 +91,12 @@ const LoginForm = (props: Props) => {
                   name="password"
                   label="Password"
                   placeholder=""
+                  password
                 />
               </div>
               <p className="text-xs text-gray1 mt-2">Forgot Password?</p>
-              <Button
-                classname="rounded-full w-full mt-8 py-3 border border-primary bg-primary text-gray7"
-                clicked={() => {}}
-              >
-                Log in
+              <Button classname="rounded-full w-full mt-8 py-3 border border-primary bg-primary text-gray7">
+                {isLoading ? <Spinner /> : "Log In"}
               </Button>
               <p className="text-xs text-gray1 text-center mt-5">
                 Don&apos;t have an account? &nbsp;

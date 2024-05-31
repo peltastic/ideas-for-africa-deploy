@@ -1,15 +1,18 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { authApi } from "./features/auth/auth";
+import { profileApi } from "./features/auth/profile";
 
 export const store = configureStore({
   reducer: {
     [authApi.reducerPath]: authApi.reducer,
+    [profileApi.reducerPath]: profileApi.reducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
     }).concat([
-      authApi.middleware
+      authApi.middleware,
+      profileApi.middleware
     ]),
 });
 

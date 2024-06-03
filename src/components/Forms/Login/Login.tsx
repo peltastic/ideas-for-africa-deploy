@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Google from "/public/assets/google.svg";
 import Facebook from "/public/assets/facebook-icon.svg";
 import X from "/public/assets/x.svg";
@@ -11,33 +11,61 @@ import Button from "@/components/Button/Button";
 import Link from "next/link";
 import CancelImage from "/public/assets/cancel.svg";
 import { useRouter } from "next/navigation";
-import { useLoginUserMutation } from "@/lib/features/auth/auth";
+import {
+  useLazyCheckSessionQuery,
+  useLoginUserMutation,
+} from "@/lib/features/auth/auth";
 import Spinner from "@/components/Spinner/Spinner";
 import { notify } from "@/utils/toast";
-import { setTokenCookie } from "@/utils/storage";
+import { setCookie, setTokenCookie } from "@/utils/storage";
+import { useDispatch } from "react-redux";
+import { setAuthState } from "@/lib/reducers/auth";
+import { loginSchema } from "@/utils/validation";
+import AuthError from "@/components/Error/AuthError";
 
 type Props = {};
 
 const LoginForm = (props: Props) => {
-  const [loginUser, { isLoading, isError, isSuccess, data }] =
+  const [errorMessage, setErrorMessage] = useState<string>("");
+  const dispatch = useDispatch();
+  const [loginUser, { isLoading, isError, isSuccess, data, error }] =
     useLoginUserMutation();
+  const [checkSession, result] = useLazyCheckSessionQuery();
+  const [loading, setLoading] = useState<boolean>();
   const router = useRouter();
   useEffect(() => {
+    if (isError) {
+      setErrorMessage((error as any)?.data?.message|| "Something went wrong")
+      setLoading(false)
+    }
     if (isSuccess) {
-      notify("Login Successful!", "success");
       setTokenCookie(data?.token);
-      router.push("/share-idea");
+      checkSession();
     }
   }, [isSuccess, isError]);
+
+  useEffect(() => {
+    if (isError) {
+      setErrorMessage((error as any)?.data?.message|| "Something went wrong")
+      setLoading(false)
+    }
+    if (isSuccess) {
+      notify("Login Successful!", "success");
+      dispatch(setAuthState("LOGGED_IN"));
+      setCookie("id", result.data?.user.id as string);
+      setLoading(false);
+      router.push("/share-idea");
+    }
+  }, [result.isSuccess, result.isError]);
   return (
     <>
       <div
-        className=" hidden mm:block absolute cursor-pointer right-2 sm:right-10 top-10"
+        className=" hidden des:block absolute cursor-pointer right-2 sm:right-10 top-10"
         onClick={() => router.push("/")}
       >
         <Image src={CancelImage} alt="cancel-image" />
       </div>
-      <div className="py-[2rem] lg:py-[6rem] w-full mm:w-[60%] mx-auto lg:absolute left-[50%] top-[50%] lg:-translate-x-[50%] lg:-translate-y-[50%]">
+      <div className="py-[2rem] lg:py-[6rem] w-full mm:w-[60%] mx-auto des:absolute left-[50%] top-[50%] des:-translate-x-[50%] des:-translate-y-[50%]">
         <div className="font-bold text-2xl text-black2">
           <h1>Ready to share an idea??</h1>
           <h1>Log in to get started</h1>
@@ -64,6 +92,14 @@ const LoginForm = (props: Props) => {
           <p>or</p>
           <div className="border-b border-b-gray9 w-[48%]"></div>
         </div>
+        {errorMessage ? (
+          <div className="my-6">
+            <AuthError
+              message={errorMessage}
+              closeMessage={() => setErrorMessage("")}
+            />
+          </div>
+        ) : null}
         <div className="">
           <Formik
             initialValues={{
@@ -71,8 +107,10 @@ const LoginForm = (props: Props) => {
               password: "",
             }}
             onSubmit={(values) => {
+              setLoading(true);
               loginUser(values);
             }}
+            validationSchema={loginSchema}
           >
             <Form>
               <div className="w-full mt-4">
@@ -96,7 +134,13 @@ const LoginForm = (props: Props) => {
               </div>
               <p className="text-xs text-gray1 mt-2">Forgot Password?</p>
               <Button classname="rounded-full w-full mt-8 py-3 border border-primary bg-primary text-gray7">
-                {isLoading ? <Spinner /> : "Log In"}
+                {loading ? (
+                  <div className="flex justify-center py-1">
+                    <Spinner />
+                  </div>
+                ) : (
+                  "Log In"
+                )}
               </Button>
               <p className="text-xs text-gray1 text-center mt-5">
                 Don&apos;t have an account? &nbsp;

@@ -32,6 +32,7 @@ const BasicInformation = ({ setIdea, idea }: Props) => {
         <div className="">
           <label className="text-sm font-bold mt-8 mb-4 block">Summary</label>
           <Input
+            value={idea.summary}
             changed={(e) => {
               setIdea("summary", e.target.value);
             }}
@@ -41,7 +42,7 @@ const BasicInformation = ({ setIdea, idea }: Props) => {
         </div>
         <div className="">
           <label className="text-sm font-bold mt-8 mb-4 block">Body</label>
-          <Editor setIdea={setIdea} />
+          <Editor content={idea.body} setIdea={setIdea} />
         </div>
         <div className="mb-[5rem]">
           <label className="text-sm font-bold mt-8 mb-4 block">Image</label>

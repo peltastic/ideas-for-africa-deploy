@@ -13,6 +13,7 @@ interface OtherProps {
   borderError?: boolean;
   smallLabel?: boolean;
   labelClass?: string
+  disabled?:boolean
 }
 
 const Field = (props: FieldHookConfig<string> & OtherProps) => {
@@ -30,6 +31,7 @@ const Field = (props: FieldHookConfig<string> & OtherProps) => {
 
         <div className="relative ">
           <input
+          disabled={props.disabled}
             autoComplete="off"
             {...field}
             onChange={(e) => {
@@ -38,6 +40,7 @@ const Field = (props: FieldHookConfig<string> & OtherProps) => {
               }
               field.onChange(e);
             }}
+            // value={props.value}
             placeholder={props.placeholder}
             type={typePassword && props.password ? "password" : props.type}
             className={` rounded-full w-full  placeholder:text-gray6 outline-none

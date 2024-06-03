@@ -1,5 +1,6 @@
 import config from "@/config/config";
-import { IRegisterUser } from "@/interface/auth";
+import { ILoginUser, IRegisterUser } from "@/interface/auth";
+import { getCookie } from "@/utils/storage";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const authApi = createApi({
@@ -28,7 +29,7 @@ export const authApi = createApi({
         message: string;
         token: string;
       },
-      IRegisterUser
+      ILoginUser
     >({
       query: (body) => ({
         url: "/users/login",
@@ -36,7 +37,24 @@ export const authApi = createApi({
         body,
       }),
     }),
+    checkSession: builder.query< {
+      message: string
+      user: {
+        id: string
+        email: string
+      }
+    }, void>({
+      query: () => {
+        const token = getCookie("token");
+        return {
+          url: "/users/check-session",
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        };
+      },
+    }),
   }),
 });
 
-export const { useLoginUserMutation, useRegisterUserMutation } = authApi;
+export const { useLoginUserMutation, useRegisterUserMutation, useLazyCheckSessionQuery } = authApi;

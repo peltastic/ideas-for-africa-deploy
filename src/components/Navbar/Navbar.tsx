@@ -13,20 +13,27 @@ import NotificationImg from "/public/assets/notifications.svg";
 import ArchiveImg from "/public/assets/archive.svg";
 import LogoutImg from "/public/assets/logout.svg";
 import { useRouter } from "next/navigation";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/lib/store";
+import { setAuthState } from "@/lib/reducers/auth";
 
 type Props = {
   homepage?: boolean;
 };
 
 const Navbar = (props: Props) => {
+  const dispatch = useDispatch()
+  const authState = useSelector((state: RootState) => state.persistedState.authStatus )
   const id = getCookie("token");
   const router = useRouter()
   const [loggedIn, setLoggedIn] = useState<boolean>(false);
   useEffect(() => {
-    if (id) {
-      setLoggedIn(true);
+    console.log(!id)
+    if (!id) {
+      dispatch(setAuthState("LOGGED_OUT"))
     }
   }, [id]);
+  console.log(authState)
   return (
     <nav
       className={` w-[98%] mt-4  ${
@@ -39,7 +46,7 @@ const Navbar = (props: Props) => {
             <Image src={Logo} alt="logo" />
           </Link>
         </div>
-        {loggedIn ? (
+        {authState === "LOGGED_IN" ? (
           <MenuComponent
             target={
               <div className="flex items-center bg-gray3 rounded-full py-2 px-3 cursor-pointer">
@@ -89,6 +96,7 @@ const Navbar = (props: Props) => {
               <div className="mt-8 flex cursor-pointer" onClick={() => {
                 removeCookie("id")
                 removeCookie("token")
+                dispatch(setAuthState("LOGGED_OUT"))
                 router.push("/")
               }}>
                 <Image src={LogoutImg} alt="" className="mr-4 w-[1.4rem]" />

@@ -27,10 +27,10 @@ body {
   box-sizing: border-box;
 }
 .lds-ring {
-  display: inline-block;
+  display: block;
   position: relative;
-  width: 10px;
-  height: 10px;
+  width: 15px;
+  height: 15px;
 }
 .lds-ring div {
   box-sizing: border-box;

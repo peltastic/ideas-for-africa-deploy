@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { RichTextEditor, Link } from "@mantine/tiptap";
 import { useEditor } from "@tiptap/react";
 import Highlight from "@tiptap/extension-highlight";
@@ -10,11 +10,13 @@ import SubScript from "@tiptap/extension-subscript";
 
 type Props = {
   setIdea: (key: string, value: string | File) => void;
+  content: string
 };
-const content = ``;
 // const content =
 // '<h2 style="text-align: center;">Welcome to Mantine rich text editor</h2><p><code>RichTextEditor</code> component focuses on usability and is designed to be as simple as possible to bring a familiar editing experience to regular users. <code>RichTextEditor</code> is based on <a href="https://tiptap.dev/" rel="noopener noreferrer" target="_blank">Tiptap.dev</a> and supports all of its features:</p><ul><li>General text formatting: <strong>bold</strong>, <em>italic</em>, <u>underline</u>, <s>strike-through</s> </li><li>Headings (h1-h6)</li><li>Sub and super scripts (<sup>&lt;sup /&gt;</sup> and <sub>&lt;sub /&gt;</sub> tags)</li><li>Ordered and bullet lists</li><li>Text align&nbsp;</li><li>And all <a href="https://tiptap.dev/extensions" target="_blank" rel="noopener noreferrer">other extensions</a></li></ul>';
 const Editor = (props: Props) => {
+  const hasEditorBeenRendered = useRef(false)
+  const content = props.content;
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -25,12 +27,14 @@ const Editor = (props: Props) => {
       Highlight,
       TextAlign.configure({ types: ["heading", "paragraph"] }),
     ],
-    content: "",
+    content: props.content,
   });
   useEffect(() => {
-    if (editor) {
+    if (editor && hasEditorBeenRendered.current) {
       props.setIdea("body", editor.getHTML());
+      return () => {}
     }
+    hasEditorBeenRendered.current = true
   }, [editor?.state]);
   return (
     <RichTextEditor editor={editor}>

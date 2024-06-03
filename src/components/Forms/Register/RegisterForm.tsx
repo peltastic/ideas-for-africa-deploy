@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Google from "/public/assets/google.svg";
 import Facebook from "/public/assets/facebook-icon.svg";
 import X from "/public/assets/x.svg";
@@ -19,38 +19,49 @@ import { setCookie, setTokenCookie } from "@/utils/storage";
 import ModalComponent from "@/components/Modal/Modal";
 import { useDisclosure } from "@mantine/hooks";
 import AdditionalInfo from "./AdditionalInfo";
+import { useDispatch } from "react-redux";
+import { setAuthState } from "@/lib/reducers/auth";
+import AuthError from "@/components/Error/AuthError";
 
 type Props = {};
 
 const RegisterForm = (props: Props) => {
+
+  const [errorMessage, setErrorMessage] = useState<string>("");
+  const dispatch = useDispatch();
   const [opened, { open, close }] = useDisclosure(false);
   const router = useRouter();
-  const [registerUser, { isLoading, isSuccess, isError, data }] =
+  const [registerUser, { isLoading, isSuccess, isError, data, error }] =
     useRegisterUserMutation();
   useEffect(() => {
+    if (isError) {
+      setErrorMessage((error as any)?.data?.message|| "Something went wrong")
+      
+    }
     if (isSuccess) {
       notify(
         "Registration Successful, plese check your email to verify your account.",
         "success"
       );
-      setTokenCookie(data.token)
-      setCookie("id", data.userId)
-      open()
+      setTokenCookie(data.token);
+      setCookie("id", data.userId);
+      dispatch(setAuthState("LOGGED_IN"));
+      open();
     }
   }, [isError, isSuccess]);
-  
+
   return (
     <>
-    <ModalComponent size="45%" opened={opened} onClose={close} >
-      <AdditionalInfo />
-    </ModalComponent>
+        <ModalComponent size="lg" opened={opened} onClose={close}>
+          <AdditionalInfo />
+        </ModalComponent>
       <div
         className="hidden des:block absolute cursor-pointer right-10 top-10"
         onClick={() => router.push("/")}
       >
         <Image src={CancelImage} alt="cancel-image" />
       </div>
-      <div className="py-[2rem] w-full sm:w-[80%] md:w-[60%] mx-auto des:absolute left-[50%] top-[50%] des:-translate-x-[50%] des:-translate-y-[50%]">
+      <div className="py-[2rem] w-full sm:w-[80%] md:w-[70%] max-w-[50rem]  mx-auto des:absolute left-[50%] top-[55%] des:-translate-x-[50%] des:-translate-y-[50%]">
         <div className="font-bold text-2xl text-black2">
           <h1>Ready to share an idea??</h1>
           <h1>Sign up to get started</h1>
@@ -77,23 +88,53 @@ const RegisterForm = (props: Props) => {
           <p>or</p>
           <div className="border-b border-b-gray9 w-[48%]"></div>
         </div>
+
+        {errorMessage ? (
+          <div className="my-6">
+            <AuthError
+              message={errorMessage}
+              closeMessage={() => setErrorMessage("")}
+            />
+          </div>
+        ) : null}
         <div className="">
           <Formik
             initialValues={{
               email: "",
               password: "",
+              fname: "",
+              lname: "",
               confirm_password: "",
             }}
             validationSchema={registerSchema}
             onSubmit={(values) => {
+              setErrorMessage("")
               registerUser({
                 email: values.email,
                 password: values.password,
+                lname: values.lname,
+                fname: values.fname,
               });
             }}
           >
             <Form className="transition-all">
-              <div className="w-full mt-4">
+              <div className="grid grid-cols-2 mt-8 gap-8">
+                <Field
+                  classname=""
+                  name="fname"
+                  label="First Name"
+                  placeholder=""
+                  smallLabel
+                />
+                <Field
+                  classname=""
+                  name="lname"
+                  label="Last Name"
+                  placeholder=""
+                  smallLabel
+                />
+              </div>
+              <div className="w-full mt-8">
                 <Field
                   classname=""
                   name="email"
@@ -126,7 +167,12 @@ const RegisterForm = (props: Props) => {
                 classname="rounded-full justify-center flex items-center w-full mt-8 py-3 border border-primary bg-primary text-gray7"
                 clicked={() => {}}
               >
-                <div className="">{isLoading ? <Spinner /> : "Sign up"}</div>
+                <div className="">{isLoading ?
+                <div className="py-1">
+
+                 <Spinner />
+                </div>
+                  : "Sign up"}</div>
                 {/* Log in */}
               </Button>
               <p className="text-xs text-gray1 text-center mt-5">

@@ -29,7 +29,7 @@ const AdditionalInfo = (props: Props) => {
     }
   }, [isSuccess, isError]);
   return (
-    <div className="px-8">
+    <div className="sm:px-8">
       <h1 className="font-semibold text-lg">Additional Information</h1>
       <p className="text-sm text-black2">Quick information to collect</p>
       <Formik
@@ -51,7 +51,7 @@ const AdditionalInfo = (props: Props) => {
           });
         }}
       >
-        <Form>
+        <Form >
           <div className="mt-8">
             <SelectComponent
             value={nonInputValues.title}
@@ -70,7 +70,7 @@ const AdditionalInfo = (props: Props) => {
               }
             />
           </div>
-          <div className="grid grid-cols-2 my-8 gap-6">
+          <div className="grid xs:grid-cols-2 my-8 gap-6">
             <Field
               labelClass="text-sm font-medium"
               classname="py-[0.47rem] px-3 text-sm"

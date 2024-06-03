@@ -11,7 +11,7 @@ const Archive = (props: Props) => {
         subtitle="Restore a shared idea or permanently remove it."
         title="Archive"
       />
-      <div className="w-[60%]">
+      <div className="w-full mm:w-[90%] lg:w-[80%] des:w-[60%]">
         <Idea />
         <Idea />
         <Idea />

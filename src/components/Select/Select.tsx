@@ -24,7 +24,7 @@ const SelectComponent = (props: Props) => {
       size={props.size}
       classNames={{label: props.thinLabel ? classes.label2 : classes.label}}
       className="font-semibold placeholder:text-black" 
-      value={props.value}
+      value={props.value || null}
       data={props.options}
       rightSection={icon}
       placeholder={props.placeholder}

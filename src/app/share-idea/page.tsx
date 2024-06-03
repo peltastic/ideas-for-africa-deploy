@@ -3,28 +3,101 @@ import Button from "@/components/Button/Button";
 import Navbar from "@/components/Navbar/Navbar";
 import AdditionalInformation from "@/components/ShareIdea/AdditionalInformation";
 import BasicInformation from "@/components/ShareIdea/BasicInformation";
+import Spinner from "@/components/Spinner/Spinner";
 import { ICreateIdeaPayload } from "@/interface/idea";
-import React, { useState } from "react";
+import { useCreateIdeaMutation } from "@/lib/features/auth/ideas";
+import { getCookie } from "@/utils/storage";
+import { notify } from "@/utils/toast";
+import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
 
 type Props = {};
 
 const ShareIdea = (props: Props) => {
+  const id = getCookie("id")
+  const router = useRouter()
+  const [createIdea, {isLoading, isError, isSuccess, error}] = useCreateIdeaMutation();
   const [step, setStep] = useState<"basic" | "additional">("basic");
   const [ideaPayload, setIdeaPayload] = useState<ICreateIdeaPayload>({
     headline: "",
     summary: "",
     category: "",
     body: "",
-    pitch: "",
+    pitchs: [
+      {
+        count: "",
+        step: "",
+      },
+      {
+        count: "",
+        step: "",
+      },
+    ],
     minbud: "",
     maxbud: "",
     banner: null,
     files: null,
   });
+  useEffect(() => {
+    if (isError) {
+      console.log("error")
+      // notify(error?.data)
+    }
+   if (isSuccess) {
+    notify("Idea Posted Successfully", "success")
+    router.push("/")
+   }
+  }, [isError, isSuccess])
+  const createIdeaHandler = () => {
+    let pitchsIsEmpty = true;
+    for (const el of ideaPayload.pitchs) {
+      if (el.step) {
+        pitchsIsEmpty = false;
+        break;
+      }
+    }
+    createIdea({
+      banner: ideaPayload.banner,
+      headline: ideaPayload.headline,
+      category: ideaPayload.category,
+      summary: ideaPayload.summary,
+      body: ideaPayload.body,
+      pitches: JSON.stringify(pitchsIsEmpty ? [] : ideaPayload.pitchs),
+      maxbud: `USD ${ideaPayload.maxbud}`,
+      minbud: `USD ${ideaPayload.minbud}`,
+      userId: id
+
+    })
+  };
   const setIdeaPayloadHandler = (key: string, value: string | File | null) => {
     setIdeaPayload((prev) => ({
       ...prev,
       [key]: value,
+    }));
+  };
+  const updatePitch = (value: string, count: string) => {
+    const newEntry = {
+      count,
+      step: value,
+    };
+    const currentPitch = [...ideaPayload.pitchs];
+    currentPitch.splice(Number(count), 1, newEntry);
+    setIdeaPayload((prev) => ({
+      ...prev,
+      pitchs: currentPitch,
+    }));
+  };
+
+  const addNewPitch = () => {
+    const newEntry = {
+      count: "",
+      step: "",
+    };
+    const currentPitch = [...ideaPayload.pitchs];
+    currentPitch.push(newEntry);
+    setIdeaPayload((prev) => ({
+      ...prev,
+      pitchs: currentPitch,
     }));
   };
   return (
@@ -67,7 +140,12 @@ const ShareIdea = (props: Props) => {
                 setIdea={setIdeaPayloadHandler}
               />
             ) : (
-              <AdditionalInformation setIdea={setIdeaPayloadHandler} />
+              <AdditionalInformation
+                addNewPitchHandler={addNewPitch}
+                updatePitchHandler={updatePitch}
+                idea={ideaPayload}
+                setIdea={setIdeaPayloadHandler}
+              />
             )}
           </div>
         </div>
@@ -94,14 +172,25 @@ const ShareIdea = (props: Props) => {
                 !ideaPayload.banner ||
                 ((!ideaPayload.maxbud ||
                   !ideaPayload.minbud ||
-                  !ideaPayload.pitch ||
+                  !(ideaPayload.pitchs.length > 0) ||
                   !ideaPayload.category) &&
                   step === "additional")
               }
               classname="bg-primary px-5 py-2 disabled:cursor-not-allowed rounded-full ml-auto disabled:bg-[#A6ABAF] text-white"
-              clicked={() => setStep("additional")}
+              clicked={() =>{
+                if (step === "additional") {
+                  return createIdeaHandler()
+                }
+                setStep("additional")}}
             >
+              {isLoading ?
+              <div className="mx-8">
+
+               <Spinner />
+              </div>
+                :<p>
               {step === "basic" ? "Next" : "Share idea"}
+              </p> }
             </Button>
           </div>
         </div>

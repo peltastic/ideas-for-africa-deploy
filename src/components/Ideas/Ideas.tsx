@@ -1,12 +1,15 @@
 import React from "react";
 import Idea from "./Idea";
 import ProfileFilters from "../Profile/ProfileFilters";
+import { useGetIdeasQuery } from "@/lib/features/auth/ideas";
+import IdeasSkeleton from "../Skeleton/IdeasSkeleton";
 
 type Props = {
   hideFilter?: boolean;
 };
 
 const Ideas = (props: Props) => {
+  const { data, isFetching } = useGetIdeasQuery();
   return (
     <div className="">
       {props.hideFilter ? null : (
@@ -15,13 +18,20 @@ const Ideas = (props: Props) => {
           title="Ideas"
         />
       )}
-      <div className="w-[60%]">
-        <Idea />
-        <Idea />
-        <Idea />
-        <Idea />
-        <Idea />
-        <Idea />
+      <div className="w-full lg:w-[80%] des:w-[60%]">
+        {isFetching ? (
+          <div className="mt-4 w-full">
+
+          <IdeasSkeleton />
+          <IdeasSkeleton />
+          <IdeasSkeleton />
+          <IdeasSkeleton />
+          </div>
+        ) : (
+          <>
+           {data?.ideas.map(el => <Idea description={el.summary}  title={el.headline}  />)}
+          </>
+        )}  
       </div>
     </div>
   );

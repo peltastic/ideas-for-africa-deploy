@@ -10,13 +10,13 @@ type Props = {
 
 const ProfileFilters = (props: Props) => {
   return (
-    <div className="flex items-center border-b border-gray3 py-6">
-      <div className=" mr-auto">
+    <div className="flex flex-wrap items-center border-b border-gray3 py-6">
+      <div className=" mr-auto w-full md:w-auto">
         <h1 className="font-semibold">{props.title}</h1>
         <p className="text-xs text-gray1">{props.subtitle}</p>
       </div>
-      <div className="flex bg-gray3 text-xs rounded-full text-black1 px-7 py-4">
-        <div className="flex items-center mr-20">
+      <div className=" mt-6 md:mt-0 flex bg-gray3 text-xs rounded-full text-black1 px-4 xxs:s:px-7 py-4">
+        <div className="flex items-center mr-6 xs:mr-20">
           <p className="mr-2">All time</p>
           <IoIosArrowDown />
         </div>

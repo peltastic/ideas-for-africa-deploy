@@ -25,8 +25,13 @@ export const profileApi = createApi({
         body,
       }),
     }),
+    getUserProfile:  build.query<IGetUserProfileResponse, {id: string}>({
+      query: ({id}) => ({
+        url: `/users/${id}/profile`,
+      })
+    })
   }),
 });
 
 
-export const {useUpdateProfileMutation} = profileApi
+export const {useUpdateProfileMutation, useLazyGetUserProfileQuery} = profileApi

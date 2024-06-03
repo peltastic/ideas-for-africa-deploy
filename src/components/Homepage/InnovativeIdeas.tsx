@@ -11,6 +11,8 @@ import Innovative5 from "/public/assets/innovative5.png";
 import Innovative6 from "/public/assets/innovative6.png";
 import Innovative7 from "/public/assets/innovative7.png";
 import Innovative8 from "/public/assets/innovative8.png";
+import InnovativeIdeasSkeleton from "../Skeleton/InnovativeIdeasSkeleton";
+import { useGetIdeasQuery } from "@/lib/features/auth/ideas";
 
 type Props = {};
 const imgs = [
@@ -29,6 +31,7 @@ const imgs = [
 ];
 const InnovativeIdeas = (props: Props) => {
   const [selectedFilter, setSelectedFilter] = useState<string>("All ideas");
+  const { data, isFetching } = useGetIdeasQuery();
   const setSelectedFilterHandler = (el: string) => {
     setSelectedFilter(el);
   };
@@ -50,9 +53,25 @@ const InnovativeIdeas = (props: Props) => {
         />
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 mm:grid-cols-3 des:grid-cols-4 gap-6 sm:mr-10">
-        {imgs.map((el, index) => (
-          <InnovativeIdeasCard image={el} key={index} />
-        ))}
+        {isFetching ? (
+          <>
+            <InnovativeIdeasSkeleton />
+            <InnovativeIdeasSkeleton />
+            <InnovativeIdeasSkeleton />
+            <InnovativeIdeasSkeleton />
+          </>
+        ) : (
+          <>
+            {data && data.ideas.map((el, index) => (
+              <InnovativeIdeasCard data={{
+                category: el.category,
+                createdAt: el.createdAt,
+                headline: el.headline,
+                summary: el.summary
+              }} image={imgs[0]} key={index} />
+            ))}
+          </>
+        )}
       </div>
       <div className="border border-gray2 py-4 rounded-2xl text-center sm:mr-10">
         <p className="text-xs font-medium text-[#56616B]">Show more</p>

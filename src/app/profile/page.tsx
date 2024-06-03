@@ -10,7 +10,7 @@ const ProfilePage = (props: Props) => {
   return (
     <div className="">
       <Navbar />
-      <div className="px-20">
+      <div className="px-4 xs:px-10 md:px-20 mx-auto max-w-[1700px]">
         <ProfileHeader />
         <Profile />
       </div>

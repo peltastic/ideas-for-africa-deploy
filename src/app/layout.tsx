@@ -1,7 +1,7 @@
 import "@mantine/core/styles.css";
 import "@mantine/carousel/styles.css";
-import 'react-toastify/dist/ReactToastify.css';
-import '@mantine/tiptap/styles.css';
+import "react-toastify/dist/ReactToastify.css";
+import "@mantine/tiptap/styles.css";
 
 import { ColorSchemeScript, MantineProvider } from "@mantine/core";
 
@@ -9,6 +9,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Providers } from "@/lib/providers/providet";
 import { ToastContainer } from "react-toastify";
+import { persistStore } from "redux-persist";
+import { store } from "@/lib/store";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -20,19 +22,20 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  let persistor = persistStore(store)
   return (
     <html lang="en">
       <body className="">
-      <ToastContainer />
-        <Providers>
-        <MantineProvider
-          theme={{
-            headings: { fontFamily: "Poppins, sans-serif" },
-          }}
-        >
-            {children}
-        </MantineProvider>
-            </Providers>
+        <ToastContainer />
+          <Providers>
+            <MantineProvider
+              theme={{
+                headings: { fontFamily: "Poppins, sans-serif" },
+              }}
+            >
+              {children}
+            </MantineProvider>
+          </Providers>
       </body>
     </html>
   );

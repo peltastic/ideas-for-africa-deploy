@@ -32,7 +32,7 @@ const AdditionalInformation = ({
         Add a step by step process in realising this idea
       </p>
       {idea.pitchs.map((el, index) => (
-        <div className="">
+        <div key={el.count} className="">
           <label className="text-sm  mt-8 mb-2 block">Step {index + 1}</label>
           <Input
             value={el.step}

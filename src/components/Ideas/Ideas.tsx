@@ -29,7 +29,7 @@ const Ideas = (props: Props) => {
           </div>
         ) : (
           <>
-           {data?.ideas.map(el => <Idea description={el.summary}  title={el.headline}  />)}
+           {data?.ideas.map(el => <Idea key={el.headline} description={el.summary}  title={el.headline}  />)}
           </>
         )}  
       </div>

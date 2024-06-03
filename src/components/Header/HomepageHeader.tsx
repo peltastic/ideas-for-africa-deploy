@@ -37,7 +37,7 @@ const HomepageHeader = (props: Props) => {
       <div className="  flex flex-wrap justify-center mt-12 items-center">
         <Link
           className="w-[60%] md:w-auto mb-6 md:mb-0 rounded-full px-8 py-4 md:py-3 bg-primary text-white md:mr-8 border-primary border"
-          href={"/"}
+          href={"/share-idea"}
         >
           <button>Share an idea</button>
         </Link>

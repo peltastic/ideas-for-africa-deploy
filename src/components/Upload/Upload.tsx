@@ -7,35 +7,38 @@ import DeleteImg from "/public/assets/delete.svg";
 
 type Props = {
   setFile: (key: string, value: string | File | null) => void;
-  accept: string
+  accept: string;
+  files?: boolean;
+  uploadDoc?: (file: File | null) => void;
+  basic?: boolean;
+  preview?: string;
+  setBannerPreview?: (preview: string) => void;
 };
 
 const Upload = (props: Props) => {
-  const [imagePreview, setImagePreview] = useState<string>("");
+ 
   return (
     <>
-      {imagePreview ? (
+      {props.preview ? (
         <div className=" overflow-hidden rounded-2xl relative">
           <div className="overflow-hidden rounded-2xl">
-
-          <Image
-            className="w-full"
-            src={imagePreview}
-            alt="image-preview"
-            width={100}
-            height={100}
+            <Image
+              className="w-full"
+              src={props.preview}
+              alt="image-preview"
+              width={100}
+              height={100}
             />
-            </div>
+          </div>
           <div className="mm:absolute flex mt-8 mm:mt-0    gap-3 items-center  mm:-translate-x-1/2 mm:-translate-y-1/2 bottom-6 left-1/2">
             <FileButtonComponent
-            accept={props.accept}
+              accept={props.accept}
               setFile={(key, value) => {
-                console.log(value);
-                if (typeof value === "object") {
-                  console.log(value?.name);
-                  var reader = new FileReader();
+                if (props.files && props.uploadDoc) {
+                  props.uploadDoc(value);
+                } else if (typeof value === "object") {
                   const url = URL.createObjectURL(value as File);
-                  setImagePreview(url);
+                  props.setBannerPreview && props.setBannerPreview(url);
                 }
                 props.setFile(key, value);
               }}
@@ -49,10 +52,19 @@ const Upload = (props: Props) => {
                 <p className="text-[0.6rem] xs:text-xs">Change Image</p>
               </div>
             </FileButtonComponent>
-            
-            <Button clicked={() => setImagePreview("")} classname=" border  flex justify-center text-[0.6rem] xs:text-xs text-black1 items-center gap-2 px-4 xxs:px-8 py-[0.9rem] rounded-full bg-white">
+
+            <Button
+              clicked={() =>
+                props.setBannerPreview && props.setBannerPreview("")
+              }
+              classname=" border  flex justify-center text-[0.6rem] xs:text-xs text-black1 items-center gap-2 px-4 xxs:px-8 py-[0.9rem] rounded-full bg-white"
+            >
               <Image src={DeleteImg} alt="delete-svg" />
-              <p>Delete Image</p>
+              <p>
+                {props.basic
+                  ? "1600 *1200 (4:3) recommended, up to 10MB each. You can add up-to 5 photos"
+                  : "Delete Image"}
+              </p>
             </Button>
           </div>
         </div>
@@ -64,24 +76,27 @@ const Upload = (props: Props) => {
               alt="photo-library"
               className="mx-auto"
             />
-            <p className="text-black1 font-semibold py-4">
-              Drop your idea image here.
-            </p>
-            <p className="w-[95%] mx-auto sm:w-full text-gray1 text-xs">
-              1600 *1200 (4:3) recommended, up to 10MB each. You can add up-to 5
-              photos
-            </p>
+            <div className="">
+              <p className="text-black1 font-semibold py-4">
+                {props.basic
+                  ? "Drop your Idea Image here"
+                  : "Drop your file here"}
+              </p>
+              <p className="w-[95%] mx-auto sm:w-full text-gray1 text-xs">
+                100MB total limit
+              </p>
+            </div>
           </div>
           <div className="">
             <FileButtonComponent
-            accept={props.accept}
+              accept={props.accept}
               setFile={(key, value) => {
-                console.log(value);
-                if (typeof value === "object") {
-                  console.log(value?.name);
-                  var reader = new FileReader();
+                if (props.files && props.uploadDoc) {
+                  console.log("sdllds");
+                  return props.uploadDoc(value);
+                } else if (typeof value === "object") {
                   const url = URL.createObjectURL(value as File);
-                  setImagePreview(url);
+                  props.setBannerPreview && props.setBannerPreview(url);
                 }
                 props.setFile(key, value);
               }}

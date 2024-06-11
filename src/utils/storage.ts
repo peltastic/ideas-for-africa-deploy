@@ -3,7 +3,7 @@ const cookies = new Cookies();
 export function setTokenCookie(token: string) {
   cookies.set("token", token, {
     path: "/",
-    expires: new Date(Date.now() + 30 * 60 * 1000),
+    expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
   });
 }
 

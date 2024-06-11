@@ -3,32 +3,11 @@ import React, { useState } from "react";
 import InnovativeIdeasFilters from "../Filters/InnovativeIdeasFilters";
 import InnovativeIdeasCard from "../Cards/InnovativeIdeasCard";
 
-import InnovativeImg from "/public/assets/InnovativeImg1.png";
-import Innovative2 from "/public/assets/Innovative2.png";
-import Innovative3 from "/public/assets/innovative3.png";
-import Innovative4 from "/public/assets/innovative4.png";
-import Innovative5 from "/public/assets/innovative5.png";
-import Innovative6 from "/public/assets/innovative6.png";
-import Innovative7 from "/public/assets/innovative7.png";
-import Innovative8 from "/public/assets/innovative8.png";
 import InnovativeIdeasSkeleton from "../Skeleton/InnovativeIdeasSkeleton";
 import { useGetIdeasQuery } from "@/lib/features/auth/ideas";
 
 type Props = {};
-const imgs = [
-  InnovativeImg,
-  Innovative2,
-  Innovative3,
-  Innovative4,
-  Innovative5,
-  Innovative6,
-  Innovative7,
-  Innovative8,
-  Innovative5,
-  Innovative6,
-  Innovative7,
-  Innovative8,
-];
+
 const InnovativeIdeas = (props: Props) => {
   const [selectedFilter, setSelectedFilter] = useState<string>("All ideas");
   const { data, isFetching } = useGetIdeasQuery();
@@ -62,14 +41,24 @@ const InnovativeIdeas = (props: Props) => {
           </>
         ) : (
           <>
-            {data && data.ideas.map((el, index) => (
-              <InnovativeIdeasCard data={{
-                category: el.category,
-                createdAt: el.createdAt,
-                headline: el.headline,
-                summary: el.summary
-              }} image={imgs[0]} key={index} />
-            ))}
+            {data &&
+              data.ideas.map((el, index) => (
+                <InnovativeIdeasCard
+                  data={{
+                    category: el.category,
+                    createdAt: el.createdAt,
+                    headline: el.headline,
+                    summary: el.summary,
+                    banner: el.banner,
+                    fname: el.fname,
+                    lname: el.lname,
+                    pow: el.pow,
+                    id: el._id
+                  }}
+                  image={el.banner}
+                  key={index}
+                />
+              ))}
           </>
         )}
       </div>

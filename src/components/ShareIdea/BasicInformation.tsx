@@ -8,9 +8,11 @@ import { ICreateIdeaPayload } from "@/interface/idea";
 type Props = {
   setIdea: (key: string, value: string | File | null) => void;
   idea: ICreateIdeaPayload;
+  setBannerPreview?: (preview: string) => void
+  preview?: string
 };
 
-const BasicInformation = ({ setIdea, idea }: Props) => {
+const BasicInformation = ({ setIdea, idea, setBannerPreview, preview }: Props) => {
   return (
     <div>
       <h1 className="font-bold text-2xl xxs:text-3xl">Share your existing idea</h1>
@@ -46,7 +48,7 @@ const BasicInformation = ({ setIdea, idea }: Props) => {
         </div>
         <div className="mb-[5rem]">
           <label className="text-sm font-bold mt-8 mb-4 block">Image</label>
-          <Upload accept="image/png,image/jpeg" setFile={setIdea} />
+          <Upload setBannerPreview={setBannerPreview}  basic accept="image/png,image/jpeg" setFile={setIdea} />
         </div>
       </div>
     </div>

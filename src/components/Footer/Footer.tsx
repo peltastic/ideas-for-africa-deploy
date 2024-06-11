@@ -1,10 +1,10 @@
-import Image from "next/image";
 import React from "react";
 import LogoDark from "/public/assets/logo-dark.svg";
 import Facebook from "/public/assets/facebook.svg"
 import Twitter from "/public/assets/twitter.svg"
 import Instagram from "/public/assets/instagram.svg"
 import Mail from "/public/assets/mail.svg"
+import Image from "next/image";
 type Props = {};
 
 const Footer = (props: Props) => {

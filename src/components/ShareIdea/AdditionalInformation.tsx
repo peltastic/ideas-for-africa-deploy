@@ -1,15 +1,19 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Input from "../Input/Input";
 import { IoMdAdd } from "react-icons/io";
 import SelectComponent from "../Select/Select";
 import Upload from "../Upload/Upload";
 import { ICreateIdeaPayload } from "@/interface/idea";
+import File from "./File";
 
 type Props = {
   setIdea: (key: string, value: string | File | null) => void;
   idea: ICreateIdeaPayload;
   updatePitchHandler: (value: string, count: string) => void;
   addNewPitchHandler: () => void;
+  addDocHandler: (file: File | null) => void;
+  deleteFileHandler: (index: number) => void;
+  updateDocHandler: (file: File | null, index: number) => void
 };
 
 const AdditionalInformation = ({
@@ -17,6 +21,9 @@ const AdditionalInformation = ({
   idea,
   updatePitchHandler,
   addNewPitchHandler,
+  addDocHandler,
+  deleteFileHandler,
+  updateDocHandler
 }: Props) => {
   return (
     <div className="pb-[5rem]">
@@ -32,7 +39,7 @@ const AdditionalInformation = ({
         Add a step by step process in realising this idea
       </p>
       {idea.pitchs.map((el, index) => (
-        <div key={el.count} className="">
+        <div key={index} className="">
           <label className="text-sm  mt-8 mb-2 block">Step {index + 1}</label>
           <Input
             value={el.step}
@@ -66,7 +73,7 @@ const AdditionalInformation = ({
         <div className="">
           <label className="text-sm  mb-2 block">Minimum Budget</label>
           <Input
-          value={idea.minbud}
+            value={idea.minbud}
             changed={(e) => {
               setIdea("minbud", `${e.target.value}`);
             }}
@@ -77,7 +84,7 @@ const AdditionalInformation = ({
         <div className="">
           <label className="text-sm  mb-2 block">Maximum budget</label>
           <Input
-          value={idea.maxbud}
+            value={idea.maxbud}
             changed={(e) => {
               setIdea("maxbud", `${e.target.value}`);
             }}
@@ -104,7 +111,25 @@ const AdditionalInformation = ({
         Please provide the necessary documents to support your idea.
       </p>
       <div className="mt-4">
-        <Upload accept="application/pdf" setFile={setIdea} />
+        <Upload
+          uploadDoc={addDocHandler}
+          files
+          accept="application/pdf"
+          setFile={setIdea}
+        />
+      </div>
+      <div className="mt-8">
+        {idea
+          ? idea.files?.map((el, index) => (
+              <File
+              updateDocHandler={updateDocHandler}
+                deleteFileHandler={deleteFileHandler}
+                index={index}
+                name={el.name}
+                size={el.size}
+              />
+            ))
+          : null}
       </div>
     </div>
   );

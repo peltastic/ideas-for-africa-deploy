@@ -37,6 +37,13 @@ export const authApi = createApi({
         body,
       }),
     }),
+    verifyUserEmail: builder.mutation<unknown, {userId: string; vcode: string}>({
+      query: (body) => ({
+        url: `/users/verify`,
+        method: "POST",
+        body
+      })
+    }),
     checkSession: builder.query< {
       message: string
       user: {
@@ -57,4 +64,4 @@ export const authApi = createApi({
   }),
 });
 
-export const { useLoginUserMutation, useRegisterUserMutation, useLazyCheckSessionQuery } = authApi;
+export const { useLoginUserMutation, useRegisterUserMutation, useLazyCheckSessionQuery, useVerifyUserEmailMutation } = authApi;

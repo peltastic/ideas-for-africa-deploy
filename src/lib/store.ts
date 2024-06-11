@@ -1,16 +1,22 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { authApi } from "./features/auth/auth";
 import { profileApi } from "./features/auth/profile";
 import storage from "redux-persist/lib/storage";
 import persistReducer from "redux-persist/lib/persistReducer";
 import authReducer from "./reducers/auth";
+import profileReducer from "./reducers/profile"
 import { ideasApi } from "./features/auth/ideas";
 
 const persistConfig = {
   key: "root",
   storage,
 };
-const persistedReducer = persistReducer(persistConfig, authReducer);
+const combinedReducers = combineReducers({
+  auth: authReducer,
+  profile: profileReducer
+
+})
+const persistedReducer = persistReducer(persistConfig, combinedReducers);
 export const store = configureStore({
   reducer: {
     persistedState: persistedReducer,

@@ -6,6 +6,7 @@ import Image from "next/image";
 type Props = {};
 
 const VerifyEmail = (props: Props) => {
+
   return (
     <div className="h-screen">
         <div className="absolute left-8 top-10">

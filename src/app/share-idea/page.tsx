@@ -14,10 +14,12 @@ import React, { useEffect, useState } from "react";
 type Props = {};
 
 const ShareIdea = (props: Props) => {
-  const id = getCookie("id")
-  const router = useRouter()
-  const [createIdea, {isLoading, isError, isSuccess, error}] = useCreateIdeaMutation();
+  const id = getCookie("id");
+  const router = useRouter();
+  const [createIdea, { isLoading, isError, isSuccess, error }] =
+    useCreateIdeaMutation();
   const [step, setStep] = useState<"basic" | "additional">("basic");
+  const [bannerPreview, setBannerPreview] = useState<string>("")
   const [ideaPayload, setIdeaPayload] = useState<ICreateIdeaPayload>({
     headline: "",
     summary: "",
@@ -40,14 +42,14 @@ const ShareIdea = (props: Props) => {
   });
   useEffect(() => {
     if (isError) {
-      console.log("error")
+      console.log("error");
       // notify(error?.data)
     }
-   if (isSuccess) {
-    notify("Idea Posted Successfully", "success")
-    router.push("/")
-   }
-  }, [isError, isSuccess])
+    if (isSuccess) {
+      notify("Idea Posted Successfully", "success");
+      router.push("/");
+    }
+  }, [isError, isSuccess]);
   const createIdeaHandler = () => {
     let pitchsIsEmpty = true;
     for (const el of ideaPayload.pitchs) {
@@ -65,9 +67,8 @@ const ShareIdea = (props: Props) => {
       pitches: JSON.stringify(pitchsIsEmpty ? [] : ideaPayload.pitchs),
       maxbud: `USD ${ideaPayload.maxbud}`,
       minbud: `USD ${ideaPayload.minbud}`,
-      userId: id
-
-    })
+      userId: id,
+    });
   };
   const setIdeaPayloadHandler = (key: string, value: string | File | null) => {
     setIdeaPayload((prev) => ({
@@ -76,16 +77,18 @@ const ShareIdea = (props: Props) => {
     }));
   };
   const updatePitch = (value: string, count: string) => {
+    // console.log(count)
     const newEntry = {
       count,
       step: value,
     };
     const currentPitch = [...ideaPayload.pitchs];
     currentPitch.splice(Number(count), 1, newEntry);
-    setIdeaPayload((prev) => ({
-      ...prev,
+    setIdeaPayload({
+      ...ideaPayload,
+
       pitchs: currentPitch,
-    }));
+    });
   };
 
   const addNewPitch = () => {
@@ -100,6 +103,45 @@ const ShareIdea = (props: Props) => {
       pitchs: currentPitch,
     }));
   };
+
+  const addDocumentFilesHandler = (file: File | null) => {
+    if (!file) return;
+    let updatedFileList;
+    if (ideaPayload.files) {
+      const currentFileList = [...ideaPayload.files];
+      currentFileList.push(file);
+      updatedFileList = currentFileList;
+    } else {
+      updatedFileList = [file];
+    }
+
+    setIdeaPayload({
+      ...ideaPayload,
+      files: updatedFileList,
+    });
+  };
+  const deleteDocumentHandler = (index: number) => {
+    if (!ideaPayload.files) return;
+    const currrentFileList = [...ideaPayload.files];
+    currrentFileList.splice(index, 1);
+    setIdeaPayload({
+      ...ideaPayload,
+      files: currrentFileList,
+    });
+  };
+  const updateDocumentHandler = (file: File | null, index: number) => {
+    if (!file || !ideaPayload.files) return;
+    const fileList = [...ideaPayload.files];
+    fileList.splice(index, 1, file);
+    setIdeaPayload({
+      ...ideaPayload,
+      files: fileList,
+    });
+  };
+
+  const setBannerPreviewHandler = (preview: string) => {
+    setBannerPreview(preview)
+  }
   return (
     <div className="">
       <Navbar />
@@ -136,15 +178,20 @@ const ShareIdea = (props: Props) => {
           <div className="w-full sm:w-[95%] mm:w-[80%] lg:w-[65%] mx-auto ">
             {step === "basic" ? (
               <BasicInformation
+              setBannerPreview={setBannerPreviewHandler}
+              preview={bannerPreview}
                 idea={ideaPayload}
                 setIdea={setIdeaPayloadHandler}
               />
             ) : (
               <AdditionalInformation
+                addDocHandler={addDocumentFilesHandler}
+                updateDocHandler={updateDocumentHandler}
                 addNewPitchHandler={addNewPitch}
                 updatePitchHandler={updatePitch}
                 idea={ideaPayload}
                 setIdea={setIdeaPayloadHandler}
+                deleteFileHandler={deleteDocumentHandler}
               />
             )}
           </div>
@@ -177,20 +224,20 @@ const ShareIdea = (props: Props) => {
                   step === "additional")
               }
               classname="bg-primary px-5 py-2 disabled:cursor-not-allowed rounded-full ml-auto disabled:bg-[#A6ABAF] text-white"
-              clicked={() =>{
+              clicked={() => {
                 if (step === "additional") {
-                  return createIdeaHandler()
+                  return createIdeaHandler();
                 }
-                setStep("additional")}}
+                setStep("additional");
+              }}
             >
-              {isLoading ?
-              <div className="mx-8">
-
-               <Spinner />
-              </div>
-                :<p>
-              {step === "basic" ? "Next" : "Share idea"}
-              </p> }
+              {isLoading ? (
+                <div className="mx-8">
+                  <Spinner />
+                </div>
+              ) : (
+                <p>{step === "basic" ? "Next" : "Share idea"}</p>
+              )}
             </Button>
           </div>
         </div>

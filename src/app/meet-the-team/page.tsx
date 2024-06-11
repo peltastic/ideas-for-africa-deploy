@@ -1,3 +1,4 @@
+"use client"
 import Footer from "@/components/Footer/Footer";
 import ShareAnIdeaHeader from "@/components/Header/ShareAnIdeaHeader";
 import ShareIdeas from "@/components/Homepage/ShareIdeas";

@@ -25,8 +25,12 @@ const LoginPage = (props: Props) => {
       <div className=" hidden des:block absolute top-10 left-10 ">
         <Image src={Logo} alt="logo-image" />
       </div>
-      <div className=" h-screen hidden des:block w-[50%]">
-        <Image src={AuthImage} alt="auth-image" className="w-full h-full" />
+      <div
+       style={{
+        backgroundImage: `url(${AuthImage.src})`
+      }}
+       className="bg-auth bg-cover bg-center   h-screen hidden des:block w-[50%]">
+        {/* <Image src={AuthImage} alt="auth-image" className="w-full h-full" /> */}
       </div>
       <div className="mx-auto w-[90%] sm:w-[70%] lg:w-[50%] relative">
         <LoginForm />

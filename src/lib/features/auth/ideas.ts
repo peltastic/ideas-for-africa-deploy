@@ -1,5 +1,5 @@
 import config from "@/config/config";
-import { ICreateIdeaPayload, IGetIdeasResponse } from "@/interface/idea";
+import { ICreateIdeaPayload, IGetIdeasResponse, IGetSingleIdeaResponse } from "@/interface/idea";
 import { formDataHandler } from "@/utils/helperfunctions";
 import { getCookie } from "@/utils/storage";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
@@ -29,22 +29,36 @@ export const ideasApi = createApi({
         maxbud: string;
         userId?: string;
         banner: File | null;
-        files?: File | null;
+        files?: File[] | null;
       }
     >({
       query: (body) => {
-        const payload = formDataHandler(body);
+        const formData = new FormData();
+        for (const key in body) {
+          if (body.hasOwnProperty(key)) {
+            formData.append(key, body[key as keyof typeof body] as string);
+          }
+        }
+        if (body.files && body.files.length > 0) {
+          for (const el of body.files) {
+            formData.append("files", el);
+          }
+        }
+        // const payload = formDataHandler(body);
         return {
           url: "/users/ideas",
           method: "POST",
-          body: payload,
+          body: formData,
         };
       },
     }),
-    getIdeas: build.query<{ideas:IGetIdeasResponse[], }, void>({
-      query: () => "/users/ideas"
+    getIdeas: build.query<{ ideas: IGetIdeasResponse[] }, void>({
+      query: () => "/users/ideas",
+    }),
+    getSingleIdea: build.query<IGetSingleIdeaResponse, {id: string}>({
+      query: ({id}) => `/users/ideas/${id}`
     })
   }),
 });
 
-export const { useCreateIdeaMutation, useGetIdeasQuery } = ideasApi;
+export const { useCreateIdeaMutation, useGetIdeasQuery, useLazyGetSingleIdeaQuery } = ideasApi;

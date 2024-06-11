@@ -43,9 +43,14 @@ const config: Config = {
         butter: "#FFF3EA",
         errorRed: "#FF4F1E",
         errorFill: "#FDE7EA",
-        errorText: "#F0142F"
+        errorText: "#F0142F",
+        red1: "#E11900",
+        "idea-bg": "#E5E9EA",
+        "amber-bg": "#FFF9E5",
+        "amber-dark": "#332600"
       },
       backgroundImage: {
+        "auth": "url('/public/assets/auth-image.png')",
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",

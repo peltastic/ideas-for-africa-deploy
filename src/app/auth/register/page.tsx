@@ -25,8 +25,11 @@ const RegisterPage = (props: Props) => {
       <div className=" hidden des:block absolute top-10 left-10 ">
         <Image src={Logo} alt="logo-image" />
       </div>
-       <div className=" h-screen hidden des:block w-[50%]">
-        <Image src={AuthImage} alt='auth-image' className='h-full w-full' />
+       <div 
+       style={{
+        backgroundImage: `url(${AuthImage.src})`
+      }} className="  bg-cover bg-center h-screen hidden des:block w-[50%]">
+        {/* <Image src={AuthImage} alt='auth-image' className='h-full w-full' /> */}
        </div>
        <div className="w-[90%] h-screen overflow-scroll mm:w-[65%] des:w-[50%] mx-auto relative">
         <RegisterForm />

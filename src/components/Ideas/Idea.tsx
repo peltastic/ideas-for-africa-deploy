@@ -3,7 +3,6 @@ import IdeaImg from "/public/assets/idea-img-1.png";
 import Image from "next/image";
 import ChatImg from "/public/assets/chat.svg";
 import LikeImg from "/public/assets/like-img.svg";
-
 type Props = {
   modified?: boolean;
   title?: string;

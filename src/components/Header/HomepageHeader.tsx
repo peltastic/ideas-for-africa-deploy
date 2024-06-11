@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import HeaderStroke from "/public/assets/header-stroke.svg";
 import HeaderStar from "/public/assets/header-star.svg";
 import Image from "next/image";
@@ -6,6 +6,7 @@ import Link from "next/link";
 type Props = {};
 
 const HomepageHeader = (props: Props) => {
+
   return (
     <header className="text-center w-[90%] sm:w-[95%] md:w-[70%] mx-auto mt-2 pt-14">
       <div className=" hidden sm:block text-[2.5rem] sm:text-[3.5rem] md:text-[4rem] leading-[1.07] font-bold md:font-semibold ">

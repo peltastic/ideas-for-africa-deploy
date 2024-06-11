@@ -13,7 +13,7 @@ const Budget = (props: Props) => {
       {!props.maxbud && !props.minbud ? (
         <div className="">
           <p className="text-center">
-            Looks like there's nothing here yet. Hang tight, we're working on
+            Looks like there&apos;s nothing here yet. Hang tight, we&apos;re working on
             it!
           </p>
         </div>

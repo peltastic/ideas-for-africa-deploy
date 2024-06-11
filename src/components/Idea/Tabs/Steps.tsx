@@ -18,7 +18,7 @@ const Steps = (props: Props) => {
         </div>
       ) : (
         <p className="text-center">
-          Looks like there's nothing here yet. Hang tight, we're working on it!
+          Looks like there&apos;s nothing here yet. Hang tight, we&apos;re working on it!
         </p>
       )}
     </div>

@@ -122,6 +122,7 @@ const AdditionalInformation = ({
         {idea
           ? idea.files?.map((el, index) => (
               <File
+              key={el.name}
               updateDocHandler={updateDocHandler}
                 deleteFileHandler={deleteFileHandler}
                 index={index}

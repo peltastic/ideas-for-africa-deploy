@@ -7,7 +7,7 @@ import LikeImg from "/public/assets/like.svg";
 import { IoShareSocialOutline } from "react-icons/io5";
 import moment from "moment";
 
-import InnovativeImg from "/public/assets/Innovative3.png";
+import InnovativeImg from "/public/assets/innovative7.png";
 import { useRouter } from "next/navigation";
 
 type Props = {

@@ -1,3 +1,4 @@
+// "use client"
 import React, { useEffect } from 'react'
 import MenuComponent from "../Menu/Menu";
 import TestProfile from "/public/assets/dp.png";

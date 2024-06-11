@@ -62,7 +62,7 @@ const Upload = (props: Props) => {
               <Image src={DeleteImg} alt="delete-svg" />
               <p>
                 {props.basic
-                  ? "1600 *1200 (4:3) recommended, up to 10MB each. You can add up-to 5 photos"
+                  ? "Delete Image"
                   : "Delete Image"}
               </p>
             </Button>

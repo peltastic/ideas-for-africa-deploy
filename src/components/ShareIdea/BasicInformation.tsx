@@ -48,7 +48,7 @@ const BasicInformation = ({ setIdea, idea, setBannerPreview, preview }: Props) =
         </div>
         <div className="mb-[5rem]">
           <label className="text-sm font-bold mt-8 mb-4 block">Image</label>
-          <Upload setBannerPreview={setBannerPreview}  basic accept="image/png,image/jpeg" setFile={setIdea} />
+          <Upload preview={preview} setBannerPreview={setBannerPreview}  basic accept="image/png,image/jpeg" setFile={setIdea} />
         </div>
       </div>
     </div>

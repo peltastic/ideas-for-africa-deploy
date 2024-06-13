@@ -15,7 +15,7 @@ const ProfileViewPage = (props: Props) => {
     <div className="">
         <Navbar />
         <div className="px-20">
-        <ProfileHeader />
+        {/* <ProfileHeader /> */}
         <ProfileView />
         </div>
     </div>

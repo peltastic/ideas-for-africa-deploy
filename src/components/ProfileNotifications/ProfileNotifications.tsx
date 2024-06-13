@@ -9,7 +9,7 @@ const ProfileNotifications = (props: Props) => {
     <div>
       <div className="flex items-center">
         <div className="border py-2 px-2 xxs:px-3 border-black1 mr-4 rounded-full text-xs xxs:text-sm">
-          <p>Unre px-2axxs:l (3)</p>
+          <p>Unread (3)</p>
         </div>
         <div className="border rounded-full text-xs xxs:text-sm text-gray1 py-2 px-2 xxs:px-3 mr-4">
           <p>Read (25)</p>

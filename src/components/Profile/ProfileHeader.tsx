@@ -7,6 +7,9 @@ import ProfileSvg from "/public/assets/profile-svg.svg";
 import ProfileSvgMobile from "/public/assets/profile-svg-mobile.svg";
 
 type Props = {
+  fname: string
+  lname: string
+  email: string
   // setEdit: (param: boolean) => void
 };
 
@@ -20,10 +23,10 @@ const ProfileHeader = (props: Props) => {
         <div className="w-full mt-3 sm:mt-0 sm:w-auto">
           <div className="text-xs mr-auto text-white ">
             <p className="font-bold text-xl sm:text-2xl mb-1">
-              Demilade Odetara
+              {props.fname} {props.lname}
             </p>
             <p className="leading-5 text-white text-[0.9rem]">
-              demi@ictnet.com • Created Feb 23, 2024
+              {props.email} • Created Feb 23, 2024
             </p>
           </div>
         </div>

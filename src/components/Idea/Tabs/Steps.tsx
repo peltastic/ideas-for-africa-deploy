@@ -11,7 +11,7 @@ const Steps = (props: Props) => {
         <div className="">
           {props.pitches.map((el, index) => (
             <div className="flex items-start mb-5" key={el.step}>
-              <p className="mr-2 font-medium">Step {index + 1}:</p>
+              <p className="mr-2 w-[10rem] font-medium">Step {index + 1}:</p>
               <p>{el.step}</p>
             </div>
           ))}

@@ -19,12 +19,12 @@ const Idea = (props: Props) => {
     }
   }, [data]);
   return (
-    <div className="rounded-tr-xl rounded-tl-xl bg-white flex px-10 py-10">
-      <div className="w-[60%] mr-auto">
+    <div className="mx-auto max-w-[2000px] rounded-tr-xl relative overflow-hidden rounded-tl-xl bg-white flex px-4 xs:px-10 py-10">
+      <div className="w-full des:w-[60%] mr-auto">
         
         {data ? <IdeaGrid data={data} /> : <IdeaPageSkeleton />}
       </div>
-      <div className="w-[35%]">
+      <div className="des:w-[35%] absolute des:relative translate-x-[120%] top-0 right-0 des:translate-x-0">
         <ModifyIdeaGrid />
       </div>
     </div>

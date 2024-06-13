@@ -23,7 +23,7 @@ type Props = {
 
 const IdeaGrid = ({ data }: Props) => {
   const [curentTab, setCurrentTab] = useState<
-    "Body" | "Steps" | "Budget Range" | "Documents" | "Discussions"
+    "Body" | "Steps" | "Budget" | "Documents" | "Discussions"
   >("Body");
   const body = (
     <div
@@ -38,8 +38,10 @@ const IdeaGrid = ({ data }: Props) => {
     case "Body":
       component = body;
       break;
-    case "Budget Range":
-      component = <Budget minbud={data.idea.minbud} maxbud={data.idea.maxbud} />;
+    case "Budget":
+      component = (
+        <Budget minbud={data.idea.minbud} maxbud={data.idea.maxbud} />
+      );
       break;
     case "Discussions":
       component = <Discussions />;
@@ -55,9 +57,9 @@ const IdeaGrid = ({ data }: Props) => {
       break;
   }
   return (
-    <div className="">
+    <div className="w-full">
       <h1 className="text-2xl font-bold">{data.idea.headline}</h1>
-      <button className="flex items-center text-sm rounded-full px-8 py-3 my-6 bg-primary text-white md:mr-8 border-primary border">
+      <button className="hidden sm:flex items-center text-sm rounded-full px-8 py-3 my-6 bg-primary text-white md:mr-8 border-primary border">
         <Image src={BrainstormSvg} className="mr-2" alt="brainstorm svg" />
         <p>Brainstorm idea</p>
       </button>
@@ -106,12 +108,14 @@ const IdeaGrid = ({ data }: Props) => {
       </div>
       <div className="">
         <Tabs
+          profile
+          idea
           filterVal={curentTab}
           setVal={(el) => setCurrentTab(el)}
           elements={[
             "Body",
             "Steps",
-            "Budget Range",
+            "Budget",
             "Documents",
             "Discussions",
           ]}

@@ -45,6 +45,8 @@ const HomepageHeader = (props: Props) => {
           if (authStatus === "LOGGED_OUT") {
             notify("Login to share an idea")
             router.push("/auth/login")
+          } else {
+            router.push("/share-idea")
           }
         }} className="w-[60%] md:w-auto mb-6 md:mb-0 rounded-full px-8 py-4 md:py-3 bg-primary text-white md:mr-8 border-primary border">
           Share an idea

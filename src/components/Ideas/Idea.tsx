@@ -7,8 +7,8 @@ import { truncateStr } from "@/utils/helperfunctions";
 type Props = {
   modified?: boolean;
   title?: string;
-  banner: string;
-  description: string;
+  banner?: string;
+  description?: string;
 };
 
 const Idea = (props: Props) => {

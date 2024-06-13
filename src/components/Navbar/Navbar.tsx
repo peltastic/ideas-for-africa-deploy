@@ -1,15 +1,24 @@
 
-import React from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import Logo from "/public/assets/logo.svg";
 import Link from "next/link";
 import ProfileMenu from "../ProfileMenu/ProfileMenu";
+import { getCookie } from "@/utils/storage";
+import { useDispatch } from "react-redux";
+import { setAuthState } from "@/lib/reducers/auth";
 type Props = {
   homepage?: boolean;
 };
 
 const Navbar = (props: Props) => {
-
+ const dispatch = useDispatch()
+  const token = getCookie("token");
+  useEffect(() => {
+    if (!token) {
+      dispatch(setAuthState("LOGGED_OUT"));
+    }
+  }, [token]);
 
   return (
     <nav

@@ -3,10 +3,15 @@ import HeaderStroke from "/public/assets/header-stroke.svg";
 import HeaderStar from "/public/assets/header-star.svg";
 import Image from "next/image";
 import Link from "next/link";
+import { useSelector } from "react-redux";
+import { RootState } from "@/lib/store";
+import { notify } from "@/utils/toast";
+import { useRouter } from "next/navigation";
 type Props = {};
 
 const HomepageHeader = (props: Props) => {
-
+  const router = useRouter()
+  const authStatus =  useSelector((state: RootState) => state.persistedState.auth.authStatus)
   return (
     <header className="text-center w-[90%] sm:w-[95%] md:w-[70%] mx-auto mt-2 pt-14">
       <div className=" hidden sm:block text-[2.5rem] sm:text-[3.5rem] md:text-[4rem] leading-[1.07] font-bold md:font-semibold ">
@@ -36,12 +41,14 @@ const HomepageHeader = (props: Props) => {
         </div>
       </div>
       <div className="  flex flex-wrap justify-center mt-12 items-center">
-        <Link
-          className="w-[60%] md:w-auto mb-6 md:mb-0 rounded-full px-8 py-4 md:py-3 bg-primary text-white md:mr-8 border-primary border"
-          href={"/share-idea"}
-        >
-          <button>Share an idea</button>
-        </Link>
+        <button onClick={() => {
+          if (authStatus === "LOGGED_OUT") {
+            notify("Login to share an idea")
+            router.push("/auth/login")
+          }
+        }} className="w-[60%] md:w-auto mb-6 md:mb-0 rounded-full px-8 py-4 md:py-3 bg-primary text-white md:mr-8 border-primary border">
+          Share an idea
+        </button>
         <Link
           className="w-[60%] md:w-auto rounded-full px-8 py-4 md:py-3 text-primary md:mr-8 border-primary border"
           href={"/meet-the-team"}

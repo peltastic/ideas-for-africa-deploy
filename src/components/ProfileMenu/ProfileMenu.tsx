@@ -29,7 +29,6 @@ const ProfileMenu = (props: Props) => {
   const profileInfo = useSelector(
     (state: RootState) => state.persistedState.profile.profile
   );
-  const token = getCookie("token");
   const [getUserProfile, { data }] = useLazyGetUserProfileQuery();
 
   const id = getCookie("id");
@@ -57,11 +56,7 @@ const ProfileMenu = (props: Props) => {
   }, [data]);
 
   const router = useRouter();
-  useEffect(() => {
-    if (!token) {
-      dispatch(setAuthState("LOGGED_OUT"));
-    }
-  }, [token]);
+  
   return (
     <div>
       {authState === "LOGGED_IN" ? (

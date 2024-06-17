@@ -12,7 +12,7 @@ const AvatarGroup = (props: Props) => {
   return (
     <Avatar.Group spacing={"sm"}>
       {props.avatars.map((el) => (
-        <Avatar src={el} />
+        <Avatar key={el} src={el} />
       ))}
       {/* <Avatar src="image.png" />
     <Avatar src="image.png" />

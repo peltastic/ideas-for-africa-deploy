@@ -24,7 +24,7 @@ const HomepageHeader = (props: Props) => {
         <h1>blossom & minds connect</h1>
       </div>
       <div className="">
-        <h1 className="text-[2.7rem] xxs:text-[2.9rem] block sm:hidden font-semibold leading-[1.07]">
+        <h1 className="text-[2.7rem] xxs:text-[2.9rem] block sm:hidden font-bold xs:font-semibold leading-[1.07]">
           A space where ideas blossom & minds connect
         </h1>
       </div>

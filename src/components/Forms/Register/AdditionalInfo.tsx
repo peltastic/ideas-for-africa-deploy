@@ -2,7 +2,7 @@ import Button from "@/components/Button/Button";
 import Field from "@/components/Input/Field";
 import SelectComponent from "@/components/Select/Select";
 import Spinner from "@/components/Spinner/Spinner";
-import { useUpdateProfileMutation } from "@/lib/features/auth/profile";
+import { useUpdateProfileMutation } from "@/lib/features/profile";
 import { getCookie } from "@/utils/storage";
 import { notify } from "@/utils/toast";
 import { Form, Formik } from "formik";

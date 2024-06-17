@@ -13,7 +13,7 @@ type Props = {}
 const RegisterPage = (props: Props) => {
   const router = useRouter()
   return (
-    <div className="des:flex h-screen">
+    <div className="des:flex des:h-screen">
        <div className=" flex des:hidden  items-center justify-between px-4 xxs:px-6 pt-6">
         <div className="">
           <Image src={Logo} alt="logo-image" />
@@ -31,7 +31,7 @@ const RegisterPage = (props: Props) => {
       }} className="  bg-cover bg-center h-screen hidden des:block w-[50%]">
         {/* <Image src={AuthImage} alt='auth-image' className='h-full w-full' /> */}
        </div>
-       <div className="w-[90%] h-screen overflow-scroll mm:w-[65%] des:w-[50%] mx-auto relative">
+       <div className="w-[90%] des:h-screen des:overflow-scroll mm:w-[65%] des:w-[50%] mx-auto relative">
         <RegisterForm />
        </div>
     </div>

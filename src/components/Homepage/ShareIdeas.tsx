@@ -7,7 +7,7 @@ const ShareIdeas = (props: Props) => {
   return (
     <section className="bg-butter py-32">
       <div className="w-[95%] xs:w-[80%] md:w-[60%] mm:w-[45%] mx-auto text-center">
-        <h2 className="font-bold text-2xl xxs:text-3xl">
+        <h2 className="font-bold text-3xl">
           Share your ideas and innovations with us. Together, let&apos;s shape the
           future.
         </h2>

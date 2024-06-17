@@ -19,7 +19,7 @@ const CauroselSection = (props: Props) => {
       loop
       withIndicators
       height={500}
-      slideSize={{ base:"80%", sm: "50%", md: "27.333333%" }}
+      slideSize={{ base:"100%", sm: "40%", md: "27.333333%", xl: "27.333%", lg: "27.333%", xs: "60%" }}
       slideGap={{ base: "sm", sm: "md" }}
       classNames={{
         controls: classes.controls,

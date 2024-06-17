@@ -45,7 +45,7 @@ const Verify = (props: Props) => {
             <Image src={SuccessSvg} alt="email-svg" className="w-full" />
           </div>
           <Link
-          className="w-[10rem] flex items-center mt-8 text-sm md:w-auto mb-6 md:mb-0 rounded-full px-8 py-4 md:py-3 bg-primary text-white  border-primary border"
+          className="w-[10rem] flex items-center mt-8 justify-center text-sm md:w-auto mb-6 md:mb-0 rounded-full px-8 py-4 md:py-3 bg-primary text-white  border-primary border"
           href={"/"}
         >
             <IoHome className="mr-1" />

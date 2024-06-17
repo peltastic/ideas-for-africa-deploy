@@ -13,10 +13,10 @@ const CarouselCard = (props: Props) => {
     <div className="relative">
       <Image src={props.image} alt="image" className="w-full" />
       <div className="absolute bottom-4 left-[50%] -translate-x-[47%] w-[95%] text-white">
-        <h2 className="font-semibold mb-4">
+        <h2 className="text-sm des:text-base font-semibold mb-4">
           Energy generation for recycling rubber
         </h2>
-        <h3 className="text-gray2 font-light mb-4">
+        <h3 className=" text-xs des:text-base text-gray2 font-light mb-4">
           Users can submit their startup, for getting feedbacks, beta
           subscriptions, early adopters, traffic and users. In addition, they
           can also..
@@ -25,7 +25,7 @@ const CarouselCard = (props: Props) => {
           <div className="mr-4">
             <Image src={Avatar} alt="avatar" />
           </div>
-          <div className="text-sm ">
+          <div className="text-xs lg:text-sm ">
             <p className="font-semibold">Demilade Odetara</p>
             <p className="leading-5 text-gray2">CEO Pledre Solutions</p>
           </div>

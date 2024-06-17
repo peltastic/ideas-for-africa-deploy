@@ -15,7 +15,7 @@ const InnovativeIdeas = (props: Props) => {
     setSelectedFilter(el);
   };
   return (
-    <section className=" mt-28">
+    <section className=" mt-10 xxs:mt-28">
       <div className="">
         <h1 className="text-3xl xs:text-4xl font-bold mb-3 text-black1">
           Explore innovative ideas

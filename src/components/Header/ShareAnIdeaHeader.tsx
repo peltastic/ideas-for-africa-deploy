@@ -10,7 +10,7 @@ const ShareAnIdeaHeader = (props: Props) => {
     <header>
       <div className=" mx-auto w-[90%] sm:w-[70%] lg:w-[50%] sm:ml-10 sm:mr-10 md:mr-auto md:ml-20 pt-14 mt-2">
         <p className="text-gray1">Meet the team</p>
-        <h1 className="font-semibold text-[2rem] sm:text-[2.7rem] leading-[1.09]">
+        <h1 className="font-bold sm:font-semibold text-[2rem] sm:text-[2.7rem] leading-[1.3] sm:leading-[1.09]">
           We truly believe that shared ideas are never forgotten.
         </h1>
       </div>
@@ -19,9 +19,9 @@ const ShareAnIdeaHeader = (props: Props) => {
           <Image src={ShareAnIdeaImg} alt="share-an-idea" />
         </div>
       </div>
-      <div className="flex flex-wrap px-8 sm:px-20 mt-20 ">
-        <div className="w-full mm:w-[50%] text-4xl font-semibold">
-          <div className="w-[95%] lg:w-[70%]">
+      <div className="flex flex-wrap px-4 sm:px-20 mt-20 ">
+        <div className="w-full mm:w-[50%] text-4xl font-bold sm:font-semibold">
+          <div className=" w-full sm:w-[95%] lg:w-[70%]">
             <h1>We do this for a single cause</h1>
           </div>
         </div>

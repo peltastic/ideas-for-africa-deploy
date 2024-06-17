@@ -16,6 +16,8 @@ import Budget from "./Tabs/Budget";
 import Discussions from "./Tabs/Discussions";
 import Document from "./Tabs/Document";
 import Steps from "./Tabs/Steps";
+import { replacePTags } from "@/utils/helperfunctions";
+import Link from "next/link";
 
 type Props = {
   data: IGetSingleIdeaResponse;
@@ -29,7 +31,7 @@ const IdeaGrid = ({ data }: Props) => {
     <div
       className=""
       dangerouslySetInnerHTML={{
-        __html: `${data.idea.body}`,
+        __html: `${replacePTags(data.idea.body)}`,
       }}
     ></div>
   );
@@ -59,19 +61,21 @@ const IdeaGrid = ({ data }: Props) => {
   return (
     <div className="w-full">
       <h1 className="text-2xl font-bold">{data.idea.headline}</h1>
+      <Link href={`/idea/${data.idea._id}/brainstorms`}> 
       <button className="hidden sm:flex items-center text-sm rounded-full px-8 py-3 my-6 bg-primary text-white md:mr-8 border-primary border">
         <Image src={BrainstormSvg} className="mr-2" alt="brainstorm svg" />
         <p>Brainstorm idea</p>
       </button>
+      </Link>
       <div className="flex flex-wrap items-center  mt-8">
         <div className="mr-4 w-[3rem]">
           <Image src={AvatarLarge} alt="avatar" />
         </div>
         <div className="w-full mt-3 sm:mt-0 sm:w-auto">
           <div className="text-black1 text-xs mr-auto ">
-            <p className="  text-lg mb-[0..5rem]">Demilade Odetara</p>
+            <p className="  text-lg mb-[0..5rem]">{data.user.fname} {data.user.lname}</p>
             <p className="text-gray1 leading-5 text-[0.9rem]">
-              C.E.O Pledre Solutions • 5 min read •{" "}
+              {data.profile.title} {data.profile.pow} • 5 min read •{" "}
               {moment(data.idea.createdAt).startOf("day").fromNow()}
             </p>
           </div>
@@ -112,13 +116,7 @@ const IdeaGrid = ({ data }: Props) => {
           idea
           filterVal={curentTab}
           setVal={(el) => setCurrentTab(el)}
-          elements={[
-            "Body",
-            "Steps",
-            "Budget",
-            "Documents",
-            "Discussions",
-          ]}
+          elements={["Body", "Steps", "Budget", "Documents", "Discussions"]}
         />
       </div>
       <div className="my-8">{component}</div>

@@ -10,7 +10,7 @@ import ArchiveImg from "/public/assets/archive.svg";
 import LogoutImg from "/public/assets/logout.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/lib/store";
-import { useLazyGetUserProfileQuery } from "@/lib/features/auth/profile";
+import { useLazyGetUserProfileQuery } from "@/lib/features/profile";
 import { getCookie, removeCookie } from "@/utils/storage";
 import { setProfile } from "@/lib/reducers/profile";
 import Image from "next/image";

@@ -6,11 +6,13 @@ type Props = {
   onClose: () => void;
   children: ReactNode;
   size?: string
+  centered?: boolean
+  withCloseButton?: boolean 
 };
 
 const ModalComponent = (props: Props) => {
   return (
-    <Modal  size={props.size} opened={props.opened} onClose={props.onClose}>
+    <Modal withCloseButton={!props.withCloseButton}  centered={props.centered}  size={props.size} opened={props.opened} onClose={props.onClose}>
       {props.children}
     </Modal>
   );

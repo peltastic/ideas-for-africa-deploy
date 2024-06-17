@@ -6,15 +6,18 @@ import ProfileForm from "./ProfileForm";
 import Ideas from "../Ideas/Ideas";
 import ProfileNotifications from "../ProfileNotifications/ProfileNotifications";
 import Archive from "../Archive/Archive";
+import ProfileSettings from "./ProfileSettings";
 
 type Props = {
   data: IGetUserProfileResponse;
   isFetching: boolean;
+  tempPfp?: string;
+  setTempPfp: (pfp: string) => void;
 };
 
-const Profile = ({ data, isFetching }: Props) => {
+const Profile = ({ data, isFetching, tempPfp, setTempPfp }: Props) => {
   const [curentTab, setCurrentTab] = useState<
-    "Profile" | "Ideas" | "Notifications" | "Archive"
+    "Profile" | "Ideas" | "Notifications" | "Archive" | "Settings"
   >("Profile");
   let component = <ProfileForm data={data} />;
   switch (curentTab) {
@@ -30,6 +33,11 @@ const Profile = ({ data, isFetching }: Props) => {
     case "Archive":
       component = <Archive />;
       break;
+    case "Settings":
+      component = (
+        <ProfileSettings tempPfp={tempPfp || data.profile?.ppicture } setTempPfp={setTempPfp} />
+      );
+      break;
 
     default:
       break;
@@ -39,7 +47,13 @@ const Profile = ({ data, isFetching }: Props) => {
       <div className="my-8">
         <Tabs
           profile
-          elements={["Profile", "Ideas", "Notifications", "Archive"]}
+          elements={[
+            "Profile",
+            "Ideas",
+            "Notifications",
+            "Archive",
+            "Settings",
+          ]}
           filterVal={curentTab}
           setVal={(el) => setCurrentTab(el)}
         />

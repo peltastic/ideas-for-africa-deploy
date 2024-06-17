@@ -20,5 +20,6 @@ interface IGetUserProfileResponse {
       title: string
       country: string
       url: string
+      ppicture: string
      } | null
 } 

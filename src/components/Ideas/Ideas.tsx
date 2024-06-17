@@ -1,7 +1,7 @@
 import React from "react";
 import Idea from "./Idea";
 import ProfileFilters from "../Profile/ProfileFilters";
-import { useGetIdeasQuery } from "@/lib/features/auth/ideas";
+import { useGetIdeasQuery } from "@/lib/features/ideas";
 import IdeasSkeleton from "../Skeleton/IdeasSkeleton";
 
 type Props = {
@@ -29,7 +29,7 @@ const Ideas = (props: Props) => {
           </div>
         ) : (
           <>
-           {data?.ideas.map(el => <Idea banner={el.banner} key={el.headline} description={el.summary}  title={el.headline}  />)}
+           {data?.ideas.map(el => <Idea id={el._id} banner={el.banner} key={el.headline} description={el.summary}  title={el.headline}  />)}
           </>
         )}  
       </div>

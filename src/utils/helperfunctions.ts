@@ -15,3 +15,8 @@ export function truncateStr(word: string, length: number): string {
     }
     return formData
   }
+
+  export function replacePTags(inputString: string) {
+    // Use regular expressions to replace <p></p> with <br/>
+    return inputString.replace(/<p><\/p>/g, '<br/>');
+}

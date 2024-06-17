@@ -2,15 +2,10 @@ import { Form, Formik } from "formik";
 import React, { useEffect, useState } from "react";
 import SelectComponent from "../Select/Select";
 import Field from "../Input/Field";
-import NoProfilePic from "/public/assets/no-profile.jpg";
-import Image from "next/image";
-import Photo from "/public/assets/photo.svg";
-import Delete from "/public/assets/delete.svg";
 import { getCookie } from "@/utils/storage";
 import {
-  useLazyGetUserProfileQuery,
   useUpdateProfileMutation,
-} from "@/lib/features/auth/profile";
+} from "@/lib/features/profile";
 import ThreeDotLoader from "../Loader/ThreeDotLoader";
 import Button from "../Button/Button";
 import Spinner from "../Spinner/Spinner";
@@ -22,18 +17,12 @@ type Props = {
 
 const ProfileForm = ({ data }: Props) => {
   const id = getCookie("id");
-  // const [getUserProfile, { data, isFetching }] = useLazyGetUserProfileQuery();
   const [updateProfile, result] = useUpdateProfileMutation();
   const [nonInputValues, setNonInputValues] = useState({
     title: data?.profile?.title,
     location: data?.profile?.country,
   });
 
-  // useEffect(() => {
-  //   getUserProfile({
-  //     id,
-  //   });
-  // }, []);
   useEffect(() => {
     if (result.isSuccess) {
       notify("Profile updated successfully", "success");
@@ -175,48 +164,7 @@ const ProfileForm = ({ data }: Props) => {
                 placeholder=""
               />
             </div> */}
-            <div className="mt-8">
-              <p className="font-semibold">Image</p>
-              <div className="flex flex-wrap items-center mt-4 gap-10">
-                <div className="w-[6rem] mx-auto sm:mx-0">
-                  <Image src={NoProfilePic} alt="no-profile-image" />
-                </div>
-                <div className="flex flex-wrap  justify-center xxs:justify-start w-full items-center gap-2 sm:gap-10">
-                  <div className="gap-3 w-full  xxs:w-auto justify-center xxs:justify-start flex border rounded-full px-3 sm:px-7 py-3">
-                    <Image src={Photo} alt="photo" />
-                    <p className="text-sm sm:text-base">Change image</p>
-                  </div>
-                  <div className="gap-3 w-full justify-center xxs:justify-start  xxs:w-auto flex border rounded-full px-3 sm:px-7 py-3">
-                    <Image src={Delete} alt="delete-photo" />
-                    <p className="text-sm sm:text-base">Delete image</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="mt-10 sm:mt-8">
-              <Field
-                classname=""
-                name="first"
-                label="Old password"
-                placeholder=""
-              />
-            </div>
-            <div className="mt-10 sm:mt-8">
-              <Field
-                classname=""
-                name="first"
-                label="New password"
-                placeholder=""
-              />
-            </div>
-            <div className="mt-10 sm:mt-8">
-              <Field
-                classname=""
-                name="first"
-                label="Confirm new password"
-                placeholder=""
-              />
-            </div>
+          
             <div className="flex justify-between my-10">
               <Button
                 type="button"

@@ -5,7 +5,7 @@ import AdditionalInformation from "@/components/ShareIdea/AdditionalInformation"
 import BasicInformation from "@/components/ShareIdea/BasicInformation";
 import Spinner from "@/components/Spinner/Spinner";
 import { ICreateIdeaPayload } from "@/interface/idea";
-import { useCreateIdeaMutation } from "@/lib/features/auth/ideas";
+import { useCreateIdeaMutation } from "@/lib/features/ideas";
 import { getCookie } from "@/utils/storage";
 import { notify } from "@/utils/toast";
 import { useRouter } from "next/navigation";

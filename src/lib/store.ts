@@ -1,11 +1,12 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { authApi } from "./features/auth/auth";
-import { profileApi } from "./features/auth/profile";
+import { profileApi } from "./features/profile";
 import storage from "redux-persist/lib/storage";
 import persistReducer from "redux-persist/lib/persistReducer";
 import authReducer from "./reducers/auth";
-import profileReducer from "./reducers/profile"
-import { ideasApi } from "./features/auth/ideas";
+import profileReducer from "./reducers/profile";
+import { ideasApi } from "./features/ideas";
+import { brainstormsApi } from "./features/brainstorms";
 
 const persistConfig = {
   key: "root",
@@ -13,21 +14,26 @@ const persistConfig = {
 };
 const combinedReducers = combineReducers({
   auth: authReducer,
-  profile: profileReducer
-
-})
+  profile: profileReducer,
+});
 const persistedReducer = persistReducer(persistConfig, combinedReducers);
 export const store = configureStore({
   reducer: {
     persistedState: persistedReducer,
     [authApi.reducerPath]: authApi.reducer,
     [profileApi.reducerPath]: profileApi.reducer,
-    [ideasApi.reducerPath]: ideasApi.reducer
+    [ideasApi.reducerPath]: ideasApi.reducer,
+    [brainstormsApi.reducerPath]: brainstormsApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
-    }).concat([authApi.middleware, profileApi.middleware, ideasApi.middleware]),
+    }).concat([
+      authApi.middleware,
+      profileApi.middleware,
+      ideasApi.middleware,
+      brainstormsApi.middleware,
+    ]),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

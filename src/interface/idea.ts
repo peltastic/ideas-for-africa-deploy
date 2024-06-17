@@ -27,6 +27,7 @@ export interface IGetIdeasResponse {
 
 export interface IGetSingleIdeaResponse {
   idea: {
+    _id: string;
     maxbud?: string;
     minbud?: string;
     category: string;
@@ -41,4 +42,13 @@ export interface IGetSingleIdeaResponse {
   thumbs: {
     path: string;
   }[];
+  user: {
+    _id: string;
+    fname: string;
+    lname: string;
+  };
+  profile: {
+    pow: string;
+    title: string;
+  };
 }

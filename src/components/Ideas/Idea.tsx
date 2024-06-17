@@ -4,17 +4,20 @@ import Image from "next/image";
 import ChatImg from "/public/assets/chat.svg";
 import LikeImg from "/public/assets/like-img.svg";
 import { truncateStr } from "@/utils/helperfunctions";
+import { useRouter } from "next/navigation";
 type Props = {
   modified?: boolean;
   title?: string;
   banner?: string;
   description?: string;
+  id?: string
 };
 
 const Idea = (props: Props) => {
+  const router = useRouter()
   return (
-    <div className="sm:flex flex-wrap sm:flex-nowrap items-center my-10">
-      <div className="w-[95%] mx-auto sm:mx-0 sm:w-[20%] md:w-[30%] des:w-[20%] overflow-hidden rounded-md sm:mr-4">
+    <div  className="sm:flex flex-wrap sm:flex-nowrap items-center my-10">
+      <div onClick={() => router.push(`/idea/${props.id}`)} className="cursor-pointer w-[95%] mx-auto sm:mx-0 sm:w-[20%] md:w-[30%] des:w-[20%] overflow-hidden rounded-md sm:mr-4">
         <Image
           src={props.banner||IdeaImg}
           width={100}
@@ -24,10 +27,10 @@ const Idea = (props: Props) => {
         />
       </div>
       <div className="w-[95%] mx-auto sm:mx-0 mt-3 sm:mt-0">
-        <h1 className="font-semibold text-sm mb-1">
+        <h1 onClick={() => router.push(`/idea/${props.id}`)} className=" cursor-pointer font-semibold text-sm mb-1">
           {props.title || "Affiliate Mastery: Pathway to Seven-Figure Success"}
         </h1>
-        <p className="text-xs mb-1">
+        <p onClick={() => router.push(`/idea/${props.id}`)} className="text-xs mb-1 cursor-pointer">
           {truncateStr(
             props.description ||
               "The ideal way to run a hydro plant involves maximizing efficiency by regulating water flow to match energy demand, while also considering environmental impacts to maintain ecological...",

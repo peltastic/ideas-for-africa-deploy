@@ -4,7 +4,7 @@ import InnovativeIdeasFilters from "../Filters/InnovativeIdeasFilters";
 import InnovativeIdeasCard from "../Cards/InnovativeIdeasCard";
 
 import InnovativeIdeasSkeleton from "../Skeleton/InnovativeIdeasSkeleton";
-import { useGetIdeasQuery } from "@/lib/features/auth/ideas";
+import { useGetIdeasQuery } from "@/lib/features/ideas";
 
 type Props = {};
 

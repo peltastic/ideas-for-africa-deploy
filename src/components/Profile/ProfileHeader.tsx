@@ -1,15 +1,17 @@
 import EditImg from "/public/assets/edit.svg";
 import Image from "next/image";
 import React from "react";
-import AvatarLarge from "/public/assets/avatar-large.png";
 import ProfileSvg from "/public/assets/profile-svg.svg";
+
+import NoProfilePic from "/public/assets/no-profile.jpg";
 
 import ProfileSvgMobile from "/public/assets/profile-svg-mobile.svg";
 
 type Props = {
-  fname: string
-  lname: string
-  email: string
+  fname: string;
+  lname: string;
+  email: string;
+  url?: string;
   // setEdit: (param: boolean) => void
 };
 
@@ -17,8 +19,8 @@ const ProfileHeader = (props: Props) => {
   return (
     <div className="relative flex items-center overflow-hidden bg-gradient-to-b py-6 rounded-xl mt-9 px-4 sm:px-10 from-primary-light to-primary">
       <div className="flex flex-wrap items-center ">
-        <div className="mr-4">
-          <Image src={AvatarLarge} alt="avatar" />
+        <div className="mr-4 w-[4.5rem] overflow-hidden rounded-full">
+          <Image src={props.url || NoProfilePic} width={100} height={100}  alt="avatar" />
         </div>
         <div className="w-full mt-3 sm:mt-0 sm:w-auto">
           <div className="text-xs mr-auto text-white ">

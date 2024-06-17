@@ -15,3 +15,9 @@ export const loginSchema = Yup.object({
   email: Yup.string().required("Email is required"),
   password: Yup.string().required("Password is required")
 })
+
+export const changePasswordSchema = Yup.object({
+  oldPassword: Yup.string().required("fill required field"),
+  newPassword: Yup.string().required("fill required field"),
+  newPasswordConfrim: Yup.string().oneOf([Yup.ref("newPassword")], "passwords must match").required("fill required field")
+})

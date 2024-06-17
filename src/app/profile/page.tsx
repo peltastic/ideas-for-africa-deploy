@@ -2,9 +2,9 @@
 import Navbar from "@/components/Navbar/Navbar";
 import Profile from "@/components/Profile/Profile";
 import ProfileHeader from "@/components/Profile/ProfileHeader";
-import { useLazyGetUserProfileQuery } from "@/lib/features/auth/profile";
+import { useLazyGetUserProfileQuery } from "@/lib/features/profile";
 import { getCookie } from "@/utils/storage";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import ThreeDotLoader from "@/components/Loader/ThreeDotLoader";
 
 type Props = {};
@@ -12,21 +12,37 @@ type Props = {};
 const ProfilePage = (props: Props) => {
   const id = getCookie("id");
   const [getUserProfile, { data, isFetching }] = useLazyGetUserProfileQuery();
+  const [tempPfp, setTempPfp] = useState<string>("");
   useEffect(() => {
     getUserProfile({
       id,
     });
   }, []);
+  const setTempPfpHandler = (pfp: string) => {
+    setTempPfp(pfp);
+  };
   return (
     <div className="">
       <Navbar />
       {data ? (
         <div className="px-4 xs:px-10 md:px-20 mx-auto max-w-[1700px]">
-          <ProfileHeader email={data.email} fname={data.fname} lname={data.lname} />
-          <Profile data={data} isFetching={isFetching} />
+          <ProfileHeader
+           url={tempPfp || data.profile?.ppicture}
+            email={data.email}
+            fname={data.fname}
+            lname={data.lname}
+          />
+          <Profile
+            tempPfp={tempPfp}
+            setTempPfp={setTempPfpHandler}
+            data={data}
+            isFetching={isFetching}
+          />
         </div>
       ) : (
-        <ThreeDotLoader />
+        <div className="ml-10">
+          <ThreeDotLoader />
+        </div>
       )}
     </div>
   );

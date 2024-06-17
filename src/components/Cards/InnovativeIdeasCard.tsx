@@ -61,7 +61,7 @@ const InnovativeIdeasCard = (props: Props) => {
               <Image src={Avatar} alt="avatar" />
             </div>
             <div className="text-xs mr-auto ">
-              <p className="font-bold">{props.data.fname} {props.data.lname}</p>
+              <p className="font-bold mb-[0.1rem]">{props.data.fname} {props.data.lname}</p>
               <p className="leading-5 text-gray1">{props.data.pow}</p>
             </div>
             

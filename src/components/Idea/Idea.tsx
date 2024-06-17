@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import IdeaGrid from "./IdeaGrid";
 import ModifyIdeaGrid from "./ModifyIdeaGrid";
-import { useLazyGetSingleIdeaQuery } from "@/lib/features/auth/ideas";
+import { useLazyGetSingleIdeaQuery } from "@/lib/features/ideas";
 import { useParams } from "next/navigation";
 import IdeaPageSkeleton from "../Skeleton/IdeaPageSkeleton";
 
@@ -13,11 +13,6 @@ const Idea = (props: Props) => {
   useEffect(() => {
     getIdea({ id: id as string });
   }, []);
-  useEffect(() => {
-    if (data) {
-      console.log(data);
-    }
-  }, [data]);
   return (
     <div className="mx-auto max-w-[2000px] rounded-tr-xl relative overflow-hidden rounded-tl-xl bg-white flex px-4 xs:px-10 py-10">
       <div className="w-full des:w-[60%] mr-auto">

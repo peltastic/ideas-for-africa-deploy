@@ -118,7 +118,7 @@ const RegisterForm = (props: Props) => {
             }}
           >
             <Form className="transition-all">
-              <div className="grid grid-cols-2 mt-8 gap-8">
+              <div className="grid sm:grid-cols-2 mt-8 gap-8">
                 <Field
                   classname=""
                   name="fname"

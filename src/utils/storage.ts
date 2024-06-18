@@ -1,4 +1,4 @@
-import Cookies from "universal-cookie";
+import Cookies, { CookieSetOptions } from "universal-cookie";
 const cookies = new Cookies();
 export function setTokenCookie(token: string) {
   cookies.set("token", token, {
@@ -7,9 +7,14 @@ export function setTokenCookie(token: string) {
   });
 }
 
-export function setCookie(key: string, value: string) {
+export function setCookie(
+  key: string,
+  value: string,
+  options?: CookieSetOptions
+) {
   cookies.set(key, value, {
     path: "/",
+    ...options,
   });
 }
 

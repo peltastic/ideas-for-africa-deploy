@@ -41,7 +41,6 @@ const ProfileMenu = (props: Props) => {
   }, [authState]);
   useEffect(() => {
     if (data) {
-      console.log(data);
       dispatch(
         setProfile({
           profile: {

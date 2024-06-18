@@ -22,6 +22,7 @@ const ProfileView = (props: Props) => {
     <div>
       <div className="my-8">
         <Tabs
+        profile
           elements={["Ideas", "Modified Ideas", "Brainstorm"]}
           filterVal={currentTab}
           setVal={(el) => setCurrentTab(el)}

@@ -18,12 +18,15 @@ import Document from "./Tabs/Document";
 import Steps from "./Tabs/Steps";
 import { replacePTags } from "@/utils/helperfunctions";
 import Link from "next/link";
+import IdeaOptionsMobile from "./IdeaOptionsMobile";
+import NoProfilePic from "/public/assets/no-profile.jpg";
 
 type Props = {
   data: IGetSingleIdeaResponse;
+  setOpenVH: () => void;
 };
 
-const IdeaGrid = ({ data }: Props) => {
+const IdeaGrid = ({ data, setOpenVH }: Props) => {
   const [curentTab, setCurrentTab] = useState<
     "Body" | "Steps" | "Budget" | "Documents" | "Discussions"
   >("Body");
@@ -61,19 +64,26 @@ const IdeaGrid = ({ data }: Props) => {
   return (
     <div className="w-full">
       <h1 className="text-2xl font-bold">{data.idea.headline}</h1>
-      <Link href={`/idea/${data.idea._id}/brainstorms`}> 
-      <button className="hidden sm:flex items-center text-sm rounded-full px-8 py-3 my-6 bg-primary text-white md:mr-8 border-primary border">
-        <Image src={BrainstormSvg} className="mr-2" alt="brainstorm svg" />
-        <p>Brainstorm idea</p>
-      </button>
+      <Link href={`/idea/${data.idea._id}/brainstorms`}>
+        <button className="hidden sm:flex items-center text-sm rounded-full px-8 py-3 my-6 bg-primary text-white md:mr-8 border-primary border">
+          <Image src={BrainstormSvg} className="mr-2" alt="brainstorm svg" />
+          <p>Brainstorm idea</p>
+        </button>
       </Link>
       <div className="flex flex-wrap items-center  mt-8">
-        <div className="mr-4 w-[3rem]">
-          <Image src={AvatarLarge} alt="avatar" />
+        <div className="rounded-full overflow-hidden mr-4 w-[3rem]">
+          <Image
+            width={50}
+            height={50}
+            src={data.profile.ppicture || NoProfilePic}
+            alt="avatar"
+          />
         </div>
         <div className="w-full mt-3 sm:mt-0 sm:w-auto">
           <div className="text-black1 text-xs mr-auto ">
-            <p className="  text-lg mb-[0..5rem]">{data.user.fname} {data.user.lname}</p>
+            <p className="  text-lg mb-[0..5rem]">
+              {data.user.fname} {data.user.lname}
+            </p>
             <p className="text-gray1 leading-5 text-[0.9rem]">
               {data.profile.title} {data.profile.pow} • 5 min read •{" "}
               {moment(data.idea.createdAt).startOf("day").fromNow()}
@@ -101,7 +111,10 @@ const IdeaGrid = ({ data }: Props) => {
         </div>
       </div>
       <p>{data.idea.summary}</p>
-      <div className="my-8">
+      <div className="my-8 relative">
+        <div className="block des:hidden">
+          <IdeaOptionsMobile setOpenVH={setOpenVH} />
+        </div>
         <Image
           src={data.thumbs[0].path}
           width={300}

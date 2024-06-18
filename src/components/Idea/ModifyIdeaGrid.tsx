@@ -5,29 +5,34 @@ import InfoImg from "/public/assets/info.svg";
 import Avatar1 from "/public/assets/version-pfp-1.jpg";
 import Avatar2 from "/public/assets/version-pfp-2.png";
 import LikeImg from "/public/assets/unlike.svg";
-import ArrowFoward from "/public/assets/arrow_forward.svg";
-import Trending from "/public/assets/trending.png";
+import CancelSvg from "/public/assets/cancel2.svg";
+import TrendingIdeas from "./TrendingIdeas";
 
-type Props = {};
+type Props = {
+  closeVH: () => void;
+};
 
 const ModifyIdeaGrid = (props: Props) => {
   return (
-    <div className="border rounded-md border-gray3 px-6">
-      <div className="flex justify-between items-center">
+    <div className="border h-screen des:h-auto rounded-md bg-white border-gray3 px-2 xxs:px-6">
+      <div onClick={props.closeVH} className="my-8 flex des:hidden">
+        <Image src={CancelSvg} alt="cancel-svg" className=" w-[1.2rem]" />
+      </div>
+      <div className="flex  justify-between items-center">
         <h1 className="text-black1 font-semibold text-lg">Version History</h1>
         <button className="flex items-center text-sm rounded-full px-4 py-2 my-6 bg-primary text-white border-primary border">
           <Image src={ModifyIdeaImg} className="mr-2" alt="brainstorm svg" />
           <p>Modify idea</p>
         </button>
       </div>
-      <div className="bg-amber-bg text-amber-dark flex px-5 py-3 gap-3 items-center justify-center rounded-lg">
-        <Image src={InfoImg} alt="info-img" className="w-[3rem]" />
+      <div className="bg-amber-bg text-amber-dark flex flex-wrap xs:flex-nowrap px-5 py-3 gap-3 items-center justify-center rounded-lg">
+        <Image src={InfoImg} alt="info-img" className="w-[2rem] xxs:w-[3rem]" />
         <p>
           Have a different perspective? Modify the original idea and share your
           thought process with fellow users.
         </p>
       </div>
-      <div className="border my-6 border-gray3 rounded-md p-4">
+      <div className="xxs:border my-6 border-gray3 rounded-md p-2 xxs:p-4">
         <div className="flex  py-4 px-4 rounded-md bg-gray3 items-center mb-4 ">
           <div className="mr-4 ">
             <Image src={Avatar1} alt="avatar" className="w-[3rem]" />
@@ -102,42 +107,8 @@ const ModifyIdeaGrid = (props: Props) => {
           </div>
         </div>
       </div>
-      <h1 className="font-semibold text-lg">Trending ideas</h1>
-      <div className="border-gray3 border py-4 px-4 rounded-lg my-4">
-        <div className="flex items-center">
-          <Image src={Trending} alt="avatar" className="w-[3rem] mr-6" />
-          <div className="mr-auto w-[70%]">
-            <p className="font-semibold text-sm">Green revolution. The scam and scum</p>
-            <p className="text-xs text-gray1">Dr Ajibike Shola</p>
-          </div>
-          <div className="">
-            <Image src={ArrowFoward} alt="avatar" className="w-[1.1rem]" />
-          </div>
-        </div>
-      </div>
-      <div className="border-gray3 border py-4 px-4 rounded-lg my-4">
-        <div className="flex items-center">
-          <Image src={Trending} alt="avatar" className="w-[3rem] mr-6" />
-          <div className="mr-auto w-[70%]">
-            <p className="font-semibold text-sm">Green revolution. The scam and scum</p>
-            <p className="text-xs text-gray1">Dr Ajibike Shola</p>
-          </div>
-          <div className="">
-            <Image src={ArrowFoward} alt="avatar" className="w-[1.1rem]" />
-          </div>
-        </div>
-      </div>
-      <div className="border-gray3 border py-4 px-4 rounded-lg my-4">
-        <div className="flex items-center">
-          <Image src={Trending} alt="avatar" className="w-[3rem] mr-6" />
-          <div className="mr-auto w-[70%]">
-            <p className="font-medium text-sm">Green revolution. The scam and scum</p>
-            <p className="text-xs text-gray1">Dr Ajibike Shola</p>
-          </div>
-          <div className="">
-            <Image src={ArrowFoward} alt="avatar" className="w-[1.1rem]" />
-          </div>
-        </div>
+      <div className="hidden des:block">
+        <TrendingIdeas />
       </div>
     </div>
   );

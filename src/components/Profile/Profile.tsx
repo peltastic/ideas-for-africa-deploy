@@ -44,7 +44,7 @@ const Profile = ({ data, isFetching, tempPfp, setTempPfp }: Props) => {
   }
   return (
     <div className="">
-      <div className="my-8">
+      <div className="my-8 text-xs xs:text-sm">
         <Tabs
           profile
           elements={[

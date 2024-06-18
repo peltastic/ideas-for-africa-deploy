@@ -17,25 +17,26 @@ type Props = {
     summary: string;
     createdAt: string;
     category: string;
-    banner: string
-    fname: string
-    lname: string
-    pow?: string
-    id: string
+    banner: string;
+    fname: string;
+    lname: string;
+    pow?: string;
+    id: string;
+    userId: string
   };
 };
 
 const InnovativeIdeasCard = (props: Props) => {
-  const router = useRouter()
+  const router = useRouter();
   return (
     <div className=" relative h-[30rem] py-4 mb-6 px-4 shadow-[0_0px_10px_rgba(0,0,0,0.1)] w-full rounded-xl">
-      <div onClick={()=> router.push(`/idea/${props.data.id}`)} className="cursor-pointer">
+      <div
+        onClick={() => router.push(`/idea/${props.data.id}`)}
+        className="cursor-pointer"
+      >
         <div className=" relative rounded-lg overflow-hidden h-[10rem]">
           <Image
-            src={
-              props.data.banner||
-              InnovativeImg
-            }
+            src={props.data.banner || InnovativeImg}
             width={100}
             height={100}
             alt="innovative-idea-img"
@@ -56,18 +57,20 @@ const InnovativeIdeasCard = (props: Props) => {
             {truncateStr(props.data.summary, 150)}
           </h2>
         </div>
-          <div className="absolute w-[90%] bottom-4 flex mt-6 items-center">
-            <div className="mr-4">
-              <Image src={Avatar} alt="avatar" />
-            </div>
-            <div className="text-xs mr-auto ">
-              <p className="font-bold mb-[0.1rem]">{props.data.fname} {props.data.lname}</p>
-              <p className="leading-5 text-gray1">{props.data.pow}</p>
-            </div>
-            
-            <IoShareSocialOutline className="mr-3" />
-            <Image src={LikeImg} alt="like-img" />
-          </div>
+      </div>
+      <div  className="cursor-pointer absolute w-[90%] bottom-4 flex mt-6 items-center">
+        <div className="mr-4 " onClick={() => router.push(`/profile/${props.data.userId}`)}>
+          <Image src={Avatar} alt="avatar" />
+        </div>
+        <div onClick={() => router.push(`/profile/${props.data.userId}`)} className="text-xs mr-auto ">
+          <p className="font-bold mb-[0.1rem]">
+            {props.data.fname} {props.data.lname}
+          </p>
+          <p className="leading-5 text-gray1">{props.data.pow}</p>
+        </div>
+
+        <IoShareSocialOutline className="mr-3" />
+        <Image src={LikeImg} alt="like-img" />
       </div>
     </div>
   );

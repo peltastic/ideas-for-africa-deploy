@@ -146,7 +146,7 @@ const ShareIdea = (props: Props) => {
     <div className="">
       <Navbar />
       <div className="max-w-[1700px] mx-auto">
-        <div className="flex gap-3  px-[2.4rem] des:px-[10rem] mt-[3rem]">
+        <div className="flex gap-3 px-6 xs:px-[2.4rem] des:px-[10rem] mt-[3rem]">
           <div className=" hidden lg:block w-[30%]">
             <div className="flex mb-6">
               <div

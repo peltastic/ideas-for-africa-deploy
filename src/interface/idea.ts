@@ -22,6 +22,7 @@ export interface IGetIdeasResponse {
   banner: string;
   fname: string;
   lname: string;
+  userId: string;
   pow?: string;
 }
 
@@ -50,5 +51,7 @@ export interface IGetSingleIdeaResponse {
   profile: {
     pow: string;
     title: string;
+    _id: string;
+    ppicture: string
   };
 }

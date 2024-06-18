@@ -38,6 +38,7 @@ const config: Config = {
         gray8: "#D7DBEC",
         gray9: "#A1A7C4",
         gray10: "#2B2B2F",
+        gray11: "#D9D9D9",
         "bg-grey1": "#F3F3F3",
         lightBlue: "#F3F3F3",
         butter: "#FFF3EA",

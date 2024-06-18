@@ -40,7 +40,7 @@ const ProfilePage = (props: Props) => {
           />
         </div>
       ) : (
-        <div className="ml-10">
+        <div className="ml-10 mt-10">
           <ThreeDotLoader />
         </div>
       )}

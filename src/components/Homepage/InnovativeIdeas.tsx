@@ -53,7 +53,8 @@ const InnovativeIdeas = (props: Props) => {
                     fname: el.fname,
                     lname: el.lname,
                     pow: el.pow,
-                    id: el._id
+                    id: el._id,
+                    userId: el.userId
                   }}
                   image={el.banner}
                   key={index}

@@ -52,7 +52,9 @@ const LoginForm = (props: Props) => {
     if (isSuccess) {
       notify("Login Successful!", "success");
       dispatch(setAuthState("LOGGED_IN"));
-      setCookie("id", result.data?.user.id as string);
+      setCookie("id", result.data?.user.id as string, {
+        expires: new Date(Date.now() + 8 * 24 * 60 * 60 * 1000)
+      });
       setLoading(false);
       router.push("/share-idea");
     }

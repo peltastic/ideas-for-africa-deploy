@@ -1,5 +1,9 @@
 import config from "@/config/config";
-import { ICreateIdeaPayload, IGetIdeasResponse, IGetSingleIdeaResponse } from "@/interface/idea";
+import {
+  ICreateIdeaPayload,
+  IGetIdeasResponse,
+  IGetSingleIdeaResponse,
+} from "@/interface/idea";
 import { formDataHandler } from "@/utils/helperfunctions";
 import { getCookie } from "@/utils/storage";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
@@ -55,10 +59,30 @@ export const ideasApi = createApi({
     getIdeas: build.query<{ ideas: IGetIdeasResponse[] }, void>({
       query: () => "/users/ideas",
     }),
-    getSingleIdea: build.query<IGetSingleIdeaResponse, {id: string}>({
-      query: ({id}) => `/users/ideas/${id}`
-    })
+    getSingleIdea: build.query<IGetSingleIdeaResponse, { id: string }>({
+      query: ({ id }) => `/users/ideas/${id}`,
+    }),
+    likeIdea: build.mutation<
+      unknown,
+      {
+        ideaId: string;
+        userId: string;
+      }
+    >({
+      query: ({ userId, ideaId }) => ({
+        url: `/users/ideas/${ideaId}/like`,
+        method: "POST",
+        body: {
+          userId,
+        },
+      }),
+    }),
   }),
 });
 
-export const { useCreateIdeaMutation, useGetIdeasQuery, useLazyGetSingleIdeaQuery } = ideasApi;
+export const {
+  useCreateIdeaMutation,
+  useGetIdeasQuery,
+  useLazyGetSingleIdeaQuery,
+  useLikeIdeaMutation
+} = ideasApi;

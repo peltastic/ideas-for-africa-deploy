@@ -20,6 +20,9 @@ import { replacePTags } from "@/utils/helperfunctions";
 import Link from "next/link";
 import IdeaOptionsMobile from "./IdeaOptionsMobile";
 import NoProfilePic from "/public/assets/no-profile.jpg";
+import UnlikedImg from "/public/assets/unlike.svg";
+import { useLikeIdeaMutation } from "@/lib/features/ideas";
+import { getCookie } from "@/utils/storage";
 
 type Props = {
   data: IGetSingleIdeaResponse;
@@ -27,8 +30,12 @@ type Props = {
 };
 
 const IdeaGrid = ({ data, setOpenVH }: Props) => {
+  const id = getCookie("id");
+  const [likesCount, setLikesCount] = useState<number>(data.likes);
+  const [liked, setLiked] = useState<boolean>(data.userHasLiked);
+  const [likeIdea, {}] = useLikeIdeaMutation();
   const [curentTab, setCurrentTab] = useState<
-    "Body" | "Steps" | "Budget" | "Documents" | "Discussions"
+    "Body" | "Steps" | "Budget" | "Documents" | "Discussions" | string
   >("Body");
   const body = (
     <div
@@ -49,7 +56,7 @@ const IdeaGrid = ({ data, setOpenVH }: Props) => {
       );
       break;
     case "Discussions":
-      component = <Discussions />;
+      component = <Discussions ideaId={data.idea._id} />;
       break;
     case "Documents":
       component = <Document />;
@@ -61,6 +68,18 @@ const IdeaGrid = ({ data, setOpenVH }: Props) => {
     default:
       break;
   }
+  const likeHandler = () => {
+    likeIdea({
+      ideaId: data.idea._id,
+      userId: id,
+    });
+    if (liked) {
+      setLikesCount((prev) => prev - 1);
+    } else {
+      setLikesCount((prev) => prev + 1);
+    }
+    setLiked(!liked);
+  };
   return (
     <div className="w-full">
       <h1 className="text-2xl font-bold">{data.idea.headline}</h1>
@@ -75,7 +94,7 @@ const IdeaGrid = ({ data, setOpenVH }: Props) => {
           <Image
             width={50}
             height={50}
-            src={data.profile.ppicture || NoProfilePic}
+            src={data.profile?.ppicture || NoProfilePic}
             alt="avatar"
           />
         </div>
@@ -85,19 +104,25 @@ const IdeaGrid = ({ data, setOpenVH }: Props) => {
               {data.user.fname} {data.user.lname}
             </p>
             <p className="text-gray1 leading-5 text-[0.9rem]">
-              {data.profile.title} {data.profile.pow} • 5 min read •{" "}
+              {data.profile?.title} {data.profile?.pow} • 5 min read •{" "}
               {moment(data.idea.createdAt).startOf("day").fromNow()}
             </p>
           </div>
         </div>
       </div>
       <div className="flex items-center text-gray1 text-xs my-8">
-        <Image src={LikeImg} alt="chat-img" className="mr-1 w-[1.3rem]" />
+        <div onClick={likeHandler} className="cursor-pointer">
+          <Image
+            src={liked ? LikeImg : UnlikedImg}
+            alt="chat-img"
+            className=" active:scale-110 transition-all mr-1 w-[1.3rem]"
+          />
+        </div>
         &nbsp;
-        <p className="mr-3 text-[0.9rem]">46</p>
+        <p className="mr-3 text-[1rem]">{likesCount}</p>
         <Image src={ChatImg} alt="chat-img" className="mr-1 w-[1.3rem]" />
         &nbsp;
-        <p className="mr-3">10</p>
+        <p className="mr-3 text-[1rem]">{data.count}</p>
         <div className="flex">
           <div className="bg-black1 mr-2 p-[0.27rem] flex justify-center items-center w-[1.5rem] h-[1.5rem] rounded-full">
             <Image src={Instagram} alt="instagram" className="" />

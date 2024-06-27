@@ -93,5 +93,6 @@ export const brainstormsApi = createApi({
 export const {
   useGetGroupsQuery,
   useCreateGroupMutation,
+  useRequestToJoinGroupMutation,
   useLazyGetGroupsQuery,
 } = brainstormsApi;

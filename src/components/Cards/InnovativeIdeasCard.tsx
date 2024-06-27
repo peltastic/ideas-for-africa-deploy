@@ -29,12 +29,12 @@ type Props = {
 const InnovativeIdeasCard = (props: Props) => {
   const router = useRouter();
   return (
-    <div className=" relative h-[30rem] py-4 mb-6 px-4 shadow-[0_0px_10px_rgba(0,0,0,0.1)] w-full rounded-xl">
+    <div className=" bg-white relative sm:h-[30rem] py-4 mb-6 px-4 shadow-[0_0px_10px_rgba(0,0,0,0.1)] w-full rounded-xl">
       <div
         onClick={() => router.push(`/idea/${props.data.id}`)}
         className="cursor-pointer"
       >
-        <div className=" relative rounded-lg overflow-hidden h-[10rem]">
+        <div className=" relative rounded-lg overflow-hidden h-[12rem] sm:h-[10rem]">
           <Image
             src={props.data.banner || InnovativeImg}
             width={100}
@@ -58,7 +58,7 @@ const InnovativeIdeasCard = (props: Props) => {
           </h2>
         </div>
       </div>
-      <div  className="cursor-pointer absolute w-[90%] bottom-4 flex mt-6 items-center">
+      <div  className="cursor-pointer bg-white sm:absolute w-[90%] bottom-4 flex mt-6 items-center">
         <div className="mr-4 " onClick={() => router.push(`/profile/${props.data.userId}`)}>
           <Image src={Avatar} alt="avatar" />
         </div>

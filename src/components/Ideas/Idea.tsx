@@ -17,7 +17,7 @@ const Idea = (props: Props) => {
   const router = useRouter()
   return (
     <div  className="sm:flex flex-wrap sm:flex-nowrap items-center my-10">
-      <div onClick={() => router.push(`/idea/${props.id}`)} className="cursor-pointer w-[95%] mx-auto sm:mx-0 sm:w-[20%] md:w-[30%] des:w-[20%] overflow-hidden rounded-md sm:mr-4">
+      <div onClick={() => router.push(`/idea/${props.id}`)} className="border sm:h-[7rem] lg:h-[6rem] cursor-pointer w-[95%] mx-auto sm:mx-0  sm:w-[30%] des:w-[20%] overflow-hidden rounded-md sm:mr-4 flex items-center">
         <Image
           src={props.banner||IdeaImg}
           width={100}

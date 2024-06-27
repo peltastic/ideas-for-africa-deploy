@@ -18,25 +18,30 @@ import {
 import Spinner from "@/components/Spinner/Spinner";
 import { notify } from "@/utils/toast";
 import { setCookie, setTokenCookie } from "@/utils/storage";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setAuthState } from "@/lib/reducers/auth";
 import { loginSchema } from "@/utils/validation";
 import AuthError from "@/components/Error/AuthError";
+import useFCMToken from "@/hooks/useFcmToken";
+import { useSetFcmTokenMutation } from "@/lib/features/notifications";
+import { RootState } from "@/lib/store";
 
 type Props = {};
 
 const LoginForm = (props: Props) => {
+  const fcmtoken = useSelector((state: RootState) => state.fcm.fcm)
   const [errorMessage, setErrorMessage] = useState<string>("");
   const dispatch = useDispatch();
   const [loginUser, { isLoading, isError, isSuccess, data, error }] =
     useLoginUserMutation();
+  const [setFcm, fcmResult] = useSetFcmTokenMutation();
   const [checkSession, result] = useLazyCheckSessionQuery();
   const [loading, setLoading] = useState<boolean>();
   const router = useRouter();
   useEffect(() => {
     if (isError) {
-      setErrorMessage((error as any)?.data?.message|| "Something went wrong")
-      setLoading(false)
+      setErrorMessage((error as any)?.data?.message || "Something went wrong");
+      setLoading(false);
     }
     if (isSuccess) {
       setTokenCookie(data?.token);
@@ -46,15 +51,21 @@ const LoginForm = (props: Props) => {
 
   useEffect(() => {
     if (isError) {
-      setErrorMessage((error as any)?.data?.message|| "Something went wrong")
-      setLoading(false)
+      setErrorMessage((error as any)?.data?.message || "Something went wrong");
+      setLoading(false);
     }
     if (isSuccess) {
       notify("Login Successful!", "success");
       dispatch(setAuthState("LOGGED_IN"));
       setCookie("id", result.data?.user.id as string, {
-        expires: new Date(Date.now() + 8 * 24 * 60 * 60 * 1000)
+        expires: new Date(Date.now() + 8 * 24 * 60 * 60 * 1000),
       });
+      if (result.data && fcmtoken) {
+        setFcm({
+          userId: result.data?.user.id,
+          fcmtoken
+        });
+      }
       setLoading(false);
       router.push("/share-idea");
     }

@@ -37,6 +37,9 @@ export interface IGetSingleIdeaResponse {
     headline: string;
     summary: string;
   };
+  userHasLiked: boolean
+  likes: number
+  count: number
   pitches?: {
     step: string;
   }[];

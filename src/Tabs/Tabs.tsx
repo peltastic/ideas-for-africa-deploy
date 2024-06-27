@@ -1,8 +1,8 @@
 import React from "react";
 
 type Props = {
-  elements: any[];
-  setVal: (el: any) => void;
+  elements: string[];
+  setVal: (el: string) => void;
   filterVal: string;
   profile?: boolean;
   idea?: boolean;
@@ -22,7 +22,7 @@ const Tabs = (props: Props) => {
               onClick={() => props.setVal(el)}
               key={el}
               className={`transition-all ${
-                props.filterVal === el
+                props.filterVal === el.toLowerCase()
                   ? " text-black1 font-medium bg-white rounded-full"
                   : "text-gray1"
               } cursor-pointer text-sm  font-medium py-3 px-2 xxs:px-4`}
@@ -47,7 +47,7 @@ const Tabs = (props: Props) => {
             onClick={() => props.setVal(el)}
             key={el}
             className={`transition-all ${
-              props.filterVal === el
+              props.filterVal === el.toLowerCase()
                 ? " text-black1 font-medium bg-white rounded-full"
                 : "text-gray1"
             } cursor-pointer text-sm  font-medium py-3 px-2 xxs:px-4`}
@@ -63,14 +63,14 @@ const Tabs = (props: Props) => {
         props.profile
           ? "flex overflow-scroll "
           : "hidden lg:flex"
-      }w-fit  `}
+      } w-fit  `}
     >
       {props.elements.map((el, index) => (
         <div
           onClick={() => props.setVal(el)}
           key={el}
           className={` transition-all ${
-            props.filterVal === el
+            props.filterVal === el.toLowerCase()
               ? " text-black1 font-medium bg-white rounded-full"
               : "text-gray1"
           } cursor-pointer   font-medium ${

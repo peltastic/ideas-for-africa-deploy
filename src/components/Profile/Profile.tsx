@@ -7,6 +7,7 @@ import Ideas from "../Ideas/Ideas";
 import ProfileNotifications from "../ProfileNotifications/ProfileNotifications";
 import Archive from "../Archive/Archive";
 import ProfileSettings from "./ProfileSettings";
+import { useRouter, useSearchParams } from "next/navigation";
 
 type Props = {
   data: IGetUserProfileResponse;
@@ -16,24 +17,27 @@ type Props = {
 };
 
 const Profile = ({ data, isFetching, tempPfp, setTempPfp }: Props) => {
-  const [curentTab, setCurrentTab] = useState<
+  const router = useRouter()
+  const searchParams = useSearchParams()
+  const tab = searchParams.get("tab")
+   const [curentTab, setCurrentTab] = useState<
     "Profile" | "Ideas" | "Notifications" | "Archive" | "Settings"
   >("Profile");
   let component = <ProfileForm data={data} />;
-  switch (curentTab) {
-    case "Profile":
+  switch (tab) {
+    case "profile":
       component = <ProfileForm data={data} />;
       break;
-    case "Ideas":
+    case "ideas":
       component = <Ideas />;
       break;
-    case "Notifications":
+    case "notifications":
       component = <ProfileNotifications />;
       break;
-    case "Archive":
+    case "archives":
       component = <Archive />;
       break;
-    case "Settings":
+    case "settings":
       component = (
         <ProfileSettings tempPfp={tempPfp || data.profile?.ppicture } setTempPfp={setTempPfp} />
       );
@@ -54,8 +58,8 @@ const Profile = ({ data, isFetching, tempPfp, setTempPfp }: Props) => {
             "Archive",
             "Settings",
           ]}
-          filterVal={curentTab}
-          setVal={(el) => setCurrentTab(el)}
+          filterVal={tab|| "profile"}
+          setVal={(el) => router.push(`/profile/?tab=${el.toLowerCase()}`)}
         />
       </div>
       {component}

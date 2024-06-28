@@ -55,7 +55,7 @@ export const brainstormsApi = createApi({
       }
     >({
       query: (body) => ({
-        url: `/groups/request`,
+        url: `/groups/groups/request-to-join`,
         method: "POST",
         body,
       }),

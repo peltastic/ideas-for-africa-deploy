@@ -62,6 +62,9 @@ export const ideasApi = createApi({
     getSingleIdea: build.query<IGetSingleIdeaResponse, { id: string }>({
       query: ({ id }) => `/users/ideas/${id}`,
     }),
+    getIdeaBycategory: build.query<{ ideas: IGetIdeasResponse[] }, string>({
+      query: (category) => `/users/ideas/active/${category}`
+    }),
     likeIdea: build.mutation<
       unknown,
       {
@@ -84,5 +87,7 @@ export const {
   useCreateIdeaMutation,
   useGetIdeasQuery,
   useLazyGetSingleIdeaQuery,
-  useLikeIdeaMutation
+  useLikeIdeaMutation,
+  useLazyGetIdeasQuery,
+  useLazyGetIdeaBycategoryQuery
 } = ideasApi;

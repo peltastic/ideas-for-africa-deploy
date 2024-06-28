@@ -10,6 +10,10 @@ import { getCookie } from "@/utils/storage";
 import { useRequestToJoinGroupMutation } from "@/lib/features/brainstorms";
 import Spinner from "../Spinner/Spinner";
 import { notify } from "@/utils/toast";
+import {
+  sendNotification,
+  useReturnFcmTokenQuery,
+} from "@/lib/features/notifications";
 
 type Props = {
   groups: {
@@ -28,19 +32,36 @@ type Props = {
 };
 
 const BrainstormGrid = (props: Props) => {
-  const [requestToJoin, { isLoading, isSuccess, isError, error }] = useRequestToJoinGroupMutation();
+  const getAdminFcm = useReturnFcmTokenQuery(props.groups.admin);
+  const [requestToJoin, { isLoading, isSuccess, isError, error }] =
+    useRequestToJoinGroupMutation();
   const [requestSent, setRequestSent] = useState<boolean>();
   const id = getCookie("id");
+  const [adminFcm, setAdminFcm] = useState<string>("");
 
-useEffect(() => {
+  useEffect(() => {
     if (isError) {
-      notify((error as any)?.data?.message|| "Something went wrong")
+      notify((error as any)?.data?.message || "Something went wrong");
     }
 
     if (isSuccess) {
-      
+      notify("Request Sent", "success");
+      if (adminFcm) {
+        sendNotification(
+          adminFcm,
+          "New request",
+          "Request to join your brainstorm group"
+        );
+        setRequestSent(true)
+      }
     }
-}, [isSuccess, isError])
+  }, [isSuccess, isError]);
+
+  useEffect(() => {
+    if (getAdminFcm.data) {
+      setAdminFcm(getAdminFcm.data.fcmtoken);
+    }
+  }, [getAdminFcm.data]);
 
   const handleButtonAction = () => {
     if (props.groups.admin === id) {
@@ -89,7 +110,7 @@ useEffect(() => {
             </div>
           ) : (
             <p>
-              {props.groups.admin === id ? "Open group" : "Request To Join"}
+              {requestSent? "Pending..." : props.groups.admin === id ? "Open group" : "Request To Join"}
             </p>
           )}
         </Button>

@@ -5,6 +5,7 @@ import SelectComponent from "../Select/Select";
 import Upload from "../Upload/Upload";
 import { ICreateIdeaPayload } from "@/interface/idea";
 import File from "./File";
+import { idea_categories_list } from "@/utils/constants";
 
 type Props = {
   setIdea: (key: string, value: string | File | null) => void;
@@ -101,7 +102,7 @@ const AdditionalInformation = ({
         <SelectComponent
           value={idea.category}
           changed={(val) => setIdea("category", val)}
-          options={[{ label: "Technology", value: "Technology" }]}
+          options={idea_categories_list}
           placeholder="Select an option"
           size="sm"
         />

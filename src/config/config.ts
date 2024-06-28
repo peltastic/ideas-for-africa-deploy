@@ -6,7 +6,8 @@ const config = {
    MESSAGING_SENDER_ID: process.env.NEXT_PUBLIC_MESSAGING_SENDER_ID,
    FIREBASE_APP_ID: process.env.NEXT_PUBLIC_APP_ID,
    MEASUREMENT_ID: process.env.NEXT_PUBLIC_MEASUREMENT_ID,
-   VAPID_KEY: process.env.NEXT_PUBLIC_VAPID_KEY
+   VAPID_KEY: process.env.NEXT_PUBLIC_VAPID_KEY,
+   FCM_API_KEY: process.env.NEXT_PUBLIC_FCM_API_KEY
 }
 
 export default config

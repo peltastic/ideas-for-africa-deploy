@@ -2,6 +2,8 @@
 import React from "react";
 import SelectComponent from "../Select/Select";
 import Tabs from "@/Tabs/Tabs";
+import { idea_categories_list } from "@/utils/constants";
+import InnovativeIdeasTab from "@/Tabs/InnovativeIdeasTab";
 
 type Props = {
   filterVal: string;
@@ -15,21 +17,15 @@ const InnovativeIdeasFilters = (props: Props) => {
       label: "Most Viewed",
     },
   ];
-  const filterEl = [
-    "All ideas",
-    "Business",
-    "Technology",
-    "Manufucturing",
-    "Analytics",
-    "Academia",
-    "Healthcare",
-    "Sustainability",
-  ];
-
+  const filterEl = ["All ideas", ...idea_categories_list.map((el) => el.value)];
   return (
     <div className="my-10 flex items-center">
       <div className=" mr-auto hidden des:block">
-        <SelectComponent size="lg" placeholder="Most viewed" options={options} />
+        <SelectComponent
+          size="lg"
+          placeholder="Most viewed"
+          options={options}
+        />
       </div>
       <div className="items-center bg-gray3 px-1  py-1 rounded-full hidden lg:flex  ">
         {/* {filterEl.map((el) => (
@@ -37,7 +33,11 @@ const InnovativeIdeasFilters = (props: Props) => {
             <p>{el}</p>
           </div>
         ))} */}
-        <Tabs elements={filterEl} filterVal={props.filterVal} setVal={el => props.setFilterVal(el)} />
+        <InnovativeIdeasTab
+          elements={filterEl}
+          filterVal={props.filterVal}
+          setVal={(el) => props.setFilterVal(el)}
+        />
       </div>
     </div>
   );

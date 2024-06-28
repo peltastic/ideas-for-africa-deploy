@@ -1,5 +1,4 @@
 import config from "@/config/config";
-import axios from "axios";
 
 import { getCookie } from "@/utils/storage";
 
@@ -31,22 +30,40 @@ export const notificationApi = createApi({
         method: "POST",
       }),
     }),
+    returnFcmToken: build.query<
+      {
+        fcmtoken: string;
+        message: string;
+      },
+      string
+    >({
+      query: (id) => `/users/profile/returnfcm/${id}`,
+    }),
   }),
 });
 
-export const sendNotification = async (
-  fcm_token: string,
-  title: string,
-  notification: string
-) => {
-  await axios.post("https://fcm.googleapis.com/fcm/send", {
-    priority: "HIGH",
-    data: {
-      title,
-      notification,
-    },
-    to: fcm_token,
-  });
-};
+// export function getAccessToken() {
+//     const SCOPES  = "https://www.googleapis.com/auth/firebase.messaging"
+//     return new Promise(function(resolve, reject) {
+//     //   const key = require('../placeholders/service-account.json');
+//       const jwtClient = new google.auth.JWT(
+//         keys.client_email,
+//         undefined,
+//         keys.private_key,
+//         SCOPES,
+//         undefined
+//       );
+//       jwtClient.authorize(function(err, tokens) {
+//         if (err) {
+//           reject(err);
+//           return;
+//         }
+//         resolve(tokens?.access_token);
+//       });
+//     });
+//   }
 
-export const { useSetFcmTokenMutation } = notificationApi;
+// ;
+
+export const { useSetFcmTokenMutation, useReturnFcmTokenQuery } =
+  notificationApi;

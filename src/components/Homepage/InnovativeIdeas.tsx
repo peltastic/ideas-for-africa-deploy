@@ -1,19 +1,55 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import InnovativeIdeasFilters from "../Filters/InnovativeIdeasFilters";
 import InnovativeIdeasCard from "../Cards/InnovativeIdeasCard";
 
 import InnovativeIdeasSkeleton from "../Skeleton/InnovativeIdeasSkeleton";
-import { useGetIdeasQuery } from "@/lib/features/ideas";
+import {
+  useGetIdeasQuery,
+  useLazyGetIdeaBycategoryQuery,
+  useLazyGetIdeasQuery,
+} from "@/lib/features/ideas";
+import { IGetIdeasResponse } from "@/interface/idea";
 
 type Props = {};
 
 const InnovativeIdeas = (props: Props) => {
   const [selectedFilter, setSelectedFilter] = useState<string>("All ideas");
+  const [ideasData, setIdeasData] = useState<IGetIdeasResponse[] | null>(null);
   const { data, isFetching } = useGetIdeasQuery();
+  const [getIdeas, ideasRes] = useLazyGetIdeasQuery();
+  const [filterIdeasbyCategory, result] = useLazyGetIdeaBycategoryQuery();
   const setSelectedFilterHandler = (el: string) => {
     setSelectedFilter(el);
+    if (el === "All ideas") {
+      getIdeas();
+    } else {
+      filterIdeasbyCategory(el);
+    }
   };
+
+  useEffect(() => {
+    if (data) {
+      setIdeasData(data.ideas);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (ideasRes.data) {
+      setIdeasData(ideasRes.data.ideas);
+    }
+  }, [ideasRes]);
+
+  useEffect(() => {
+    if (result.isError) {
+      setIdeasData(null);
+    }
+    if (result.isSuccess) {
+      console.log(result.data);
+      setIdeasData(result.data.ideas);
+    }
+  }, [result.isError, result.isSuccess]);
+
   return (
     <section className=" mt-10 xxs:mt-28">
       <div className="">
@@ -32,7 +68,7 @@ const InnovativeIdeas = (props: Props) => {
         />
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 mm:grid-cols-3 des:grid-cols-4 gap-6 sm:mr-10">
-        {isFetching ? (
+        {isFetching || result.isFetching ? (
           <>
             <InnovativeIdeasSkeleton />
             <InnovativeIdeasSkeleton />
@@ -41,8 +77,8 @@ const InnovativeIdeas = (props: Props) => {
           </>
         ) : (
           <>
-            {data &&
-              data.ideas.map((el, index) => (
+            {ideasData &&
+              ideasData.map((el, index) => (
                 <InnovativeIdeasCard
                   data={{
                     category: el.category,
@@ -54,7 +90,7 @@ const InnovativeIdeas = (props: Props) => {
                     lname: el.lname,
                     pow: el.pow,
                     id: el._id,
-                    userId: el.userId
+                    userId: el.userId,
                   }}
                   image={el.banner}
                   key={index}

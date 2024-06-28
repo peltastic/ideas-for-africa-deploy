@@ -7,7 +7,7 @@ type Props = {};
 
 const ProfileView = (props: Props) => {
   const [currentTab, setCurrentTab] = useState<
-    "Ideas" | "Modified Ideas" | "Brainstorm"
+    "Ideas" | "Modified Ideas" | "Brainstorm" | string
   >("Ideas");
   let component = <Ideas hideFilter />
   switch (currentTab) {

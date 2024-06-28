@@ -19,24 +19,27 @@ import { setCookie, setTokenCookie } from "@/utils/storage";
 import ModalComponent from "@/components/Modal/Modal";
 import { useDisclosure } from "@mantine/hooks";
 import AdditionalInfo from "./AdditionalInfo";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setAuthState } from "@/lib/reducers/auth";
 import AuthError from "@/components/Error/AuthError";
+import { useSetFcmTokenMutation } from "@/lib/features/notifications";
+import { RootState } from "@/lib/store";
 
 type Props = {};
 
 const RegisterForm = (props: Props) => {
-
+  const fcmtoken = useSelector((state: RootState) => state.fcm.fcm);
   const [errorMessage, setErrorMessage] = useState<string>("");
   const dispatch = useDispatch();
   const [opened, { open, close }] = useDisclosure(false);
+
+  const [setFcm, fcmResult] = useSetFcmTokenMutation();
   const router = useRouter();
   const [registerUser, { isLoading, isSuccess, isError, data, error }] =
     useRegisterUserMutation();
   useEffect(() => {
     if (isError) {
-      setErrorMessage((error as any)?.data?.message|| "Something went wrong")
-      
+      setErrorMessage((error as any)?.data?.message || "Something went wrong");
     }
     if (isSuccess) {
       notify(
@@ -46,15 +49,21 @@ const RegisterForm = (props: Props) => {
       setTokenCookie(data.token);
       setCookie("id", data.userId);
       dispatch(setAuthState("LOGGED_IN"));
+      if (data && fcmtoken) {
+        setFcm({
+          userId: data.userId,
+          fcmtoken,
+        });
+      }
       open();
     }
   }, [isError, isSuccess]);
 
   return (
     <>
-        <ModalComponent size="lg" opened={opened} onClose={close}>
-          <AdditionalInfo />
-        </ModalComponent>
+      <ModalComponent size="lg" opened={opened} onClose={close}>
+        <AdditionalInfo />
+      </ModalComponent>
       <div
         className="hidden des:block absolute cursor-pointer right-10 top-10"
         onClick={() => router.push("/")}
@@ -108,7 +117,7 @@ const RegisterForm = (props: Props) => {
             }}
             validationSchema={registerSchema}
             onSubmit={(values) => {
-              setErrorMessage("")
+              setErrorMessage("");
               registerUser({
                 email: values.email,
                 password: values.password,
@@ -167,12 +176,15 @@ const RegisterForm = (props: Props) => {
                 classname="rounded-full justify-center flex items-center w-full mt-8 py-3 border border-primary bg-primary text-gray7"
                 clicked={() => {}}
               >
-                <div className="">{isLoading ?
-                <div className="py-1">
-
-                 <Spinner />
+                <div className="">
+                  {isLoading ? (
+                    <div className="py-1">
+                      <Spinner />
+                    </div>
+                  ) : (
+                    "Sign up"
+                  )}
                 </div>
-                  : "Sign up"}</div>
                 {/* Log in */}
               </Button>
               <p className="text-xs text-gray1 text-center mt-5">

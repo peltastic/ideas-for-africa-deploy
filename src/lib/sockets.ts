@@ -17,7 +17,7 @@ export function leaveRoom(username: string, roomID: string) {
 }
 
 export function sendMessage(roomID: string, text: string) {
-  console.log("clicked");
+  console.log(roomID, text);
   chat_socket.emit("chatMessage", {
     roomID,
     text,

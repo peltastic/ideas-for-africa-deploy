@@ -29,7 +29,7 @@ const BrainstormGroupPage = (props: Props) => {
         </div>
       </nav>
       <div className="flex items-center">
-        <div className="w-[70%]">
+        <div className="w-full lg:w-[70%]">
           <ChatRoom />
         </div>
       </div>

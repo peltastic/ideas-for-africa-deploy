@@ -1,17 +1,27 @@
 import React, { useEffect, useState } from "react";
 import IdeaGrid from "./IdeaGrid";
 import ModifyIdeaGrid from "./ModifyIdeaGrid";
-import { useLazyGetSingleIdeaQuery } from "@/lib/features/ideas";
+import {
+  useLazyGetSingleIdeaQuery,
+  useLazyGetSingleModifiedIdeaQuery,
+} from "@/lib/features/ideas";
 import { useParams } from "next/navigation";
 import IdeaPageSkeleton from "../Skeleton/IdeaPageSkeleton";
 
-type Props = {};
+type Props = {
+  modified?: boolean;
+};
 
 const Idea = (props: Props) => {
   const [openVH, setOpenVH] = useState<boolean>(false);
-  const { id } = useParams();
+  const { id, mid } = useParams();
+
   const [getIdea, { data }] = useLazyGetSingleIdeaQuery();
+  const [getModifiedIdea, result] = useLazyGetSingleModifiedIdeaQuery();
   useEffect(() => {
+    if (props.modified) {
+      getModifiedIdea(mid as string);
+    }
     getIdea({ id: id as string });
   }, []);
   const setOpenVHHandler = () => {
@@ -23,8 +33,10 @@ const Idea = (props: Props) => {
   return (
     <div className="mx-auto max-w-[2000px] rounded-tr-xl relative overflow-hidden rounded-tl-xl bg-white flex px-4 xs:px-10 py-10">
       <div className="w-full des:w-[60%] mr-auto">
-        {data ? (
+        {data && !props.modified ? (
           <IdeaGrid setOpenVH={setOpenVHHandler} data={data} />
+        ) : result.data ? (
+          <IdeaGrid setOpenVH={setOpenVHHandler} data={result.data} />
         ) : (
           <IdeaPageSkeleton />
         )}
@@ -36,6 +48,12 @@ const Idea = (props: Props) => {
       >
         {data ? (
           <ModifyIdeaGrid
+            modifiedIdea={props.modified || false}
+            original={{
+              fname: data.user.fname,
+              lname: data.user.lname,
+              pow: data.profile?.pow,
+            }}
             id={data.idea._id}
             name={data.idea.headline}
             closeVH={closeVHHandler}

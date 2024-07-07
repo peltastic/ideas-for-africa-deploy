@@ -45,10 +45,9 @@ const InnovativeIdeas = (props: Props) => {
       setIdeasData(null);
     }
     if (result.isSuccess) {
-      console.log(result.data);
       setIdeasData(result.data.ideas);
     }
-  }, [result.isError, result.isSuccess]);
+  }, [result.isError, result.isSuccess, result.data]);
 
   return (
     <section className=" mt-10 xxs:mt-28">
@@ -85,14 +84,15 @@ const InnovativeIdeas = (props: Props) => {
                     createdAt: el.createdAt,
                     headline: el.headline,
                     summary: el.summary,
-                    banner: el.banner,
+                    banner:  el.thumb && el.thumb[0]?.path || el.banner,
                     fname: el.fname,
                     lname: el.lname,
                     pow: el.pow,
                     id: el._id,
                     userId: el.userId,
+                    ppicture: el.profile?.ppicture,
                   }}
-                  image={el.banner}
+                  // image={el.banner || el.thumb && el.thumb[0].path}
                   key={index}
                 />
               ))}

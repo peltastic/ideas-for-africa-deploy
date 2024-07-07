@@ -1,15 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Idea from "./Idea";
 import ProfileFilters from "../Profile/ProfileFilters";
-import { useGetIdeasQuery } from "@/lib/features/ideas";
+import {
+  useGetIdeasQuery,
+  useLazyGetUserIdeasQuery,
+} from "@/lib/features/ideas";
 import IdeasSkeleton from "../Skeleton/IdeasSkeleton";
+import { getCookie } from "@/utils/storage";
 
 type Props = {
   hideFilter?: boolean;
 };
 
 const Ideas = (props: Props) => {
-  const { data, isFetching } = useGetIdeasQuery();
+  const id = getCookie("id");
+  // const { data, isFetching } = useGetIdeasQuery();
+  const [getUserIdeas, { isFetching, data }] = useLazyGetUserIdeasQuery();
+
+  useEffect(() => {
+    getUserIdeas(id);
+  }, []);
+
   return (
     <div className="">
       {props.hideFilter ? null : (
@@ -21,17 +32,25 @@ const Ideas = (props: Props) => {
       <div className="w-full lg:w-[80%] des:w-[60%]">
         {isFetching ? (
           <div className="mt-4 w-full">
-
-          <IdeasSkeleton />
-          <IdeasSkeleton />
-          <IdeasSkeleton />
-          <IdeasSkeleton />
+            <IdeasSkeleton />
+            <IdeasSkeleton />
+            <IdeasSkeleton />
+            <IdeasSkeleton />
           </div>
         ) : (
-          <>
-           {data?.ideas.map(el => <Idea id={el._id} banner={el.banner} key={el.headline} description={el.summary}  title={el.headline}  />)}
-          </>
-        )}  
+          <div className=""></div>
+          // <>
+          //   {data?.ideas.map((el) => (
+          //     <Idea
+          //       id={el._id}
+          //       banner={el.banner}
+          //       key={el.headline}
+          //       description={el.summary}
+          //       title={el.headline}
+          //     />
+          //   ))}
+          // </>
+        )}
       </div>
     </div>
   );

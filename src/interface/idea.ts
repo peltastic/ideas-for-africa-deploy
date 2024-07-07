@@ -24,17 +24,23 @@ export interface IGetIdeasResponse {
   lname: string;
   userId: string;
   pow?: string;
+  profile?: {
+    ppicture: string;
+  };
+  thumb?: {
+    path: string;
+  }[];
 }
 
 export interface IModifyIdeaPayload {
   headline: string;
   summary: string;
   body: string;
-  pitches: string
-  minbud: string
-  maxbud: string
-  category: string
-  userId: string
+  pitches: string;
+  minbud: string;
+  maxbud: string;
+  category: string;
+  userId: string;
 }
 
 export interface IGetSingleIdeaResponse {

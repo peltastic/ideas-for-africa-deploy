@@ -6,12 +6,16 @@ import Button from "../Button/Button";
 import Image from "next/image";
 import ModifyIdeaImg from "/public/assets/auto_fix _black.svg";
 import Brainstorm from "/public/assets/psychology_alt_black.svg";
+import { useRouter } from "next/navigation";
 
 type Props = {
   setOpenVH: () => void;
+  headline: string
+  id: string
 };
 
 const IdeaOptionsMobile = (props: Props) => {
+  const router = useRouter()
   const [clicked, setClicked] = useState<boolean>(false);
 
   return (
@@ -29,13 +33,13 @@ const IdeaOptionsMobile = (props: Props) => {
               <Image src={Hamburger} alt="hamburger" />
             </Button>
           </li>
-          <li onClick={props.setOpenVH} className="flex items-center mt-6">
+          <li onClick={() => router.push(`/idea/${props.id}/${props.headline}/modify`) } className="flex items-center mt-6">
             <p className="mr-3 ml-auto">Modify Idea</p>
             <Button classname="bg-gray11 h-[3.5rem] w-[3.5rem] flex justify-center items-center rounded-full">
               <Image src={ModifyIdeaImg} alt="modify-idea" />
             </Button>
           </li>
-          <li className="flex items-center mt-6">
+          <li onClick={() => router.push(`/idea/${props.id}/${props.headline}/brainstorms`)} className="flex items-center mt-6">
             <p className="mr-3 ml-auto">Brainstorm idea</p>
             <Button classname="bg-gray11 h-[3.5rem] w-[3.5rem] flex justify-center items-center rounded-full">
               <Image src={Brainstorm} alt="modify-idea" />

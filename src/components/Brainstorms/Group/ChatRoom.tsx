@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { IoIosArrowRoundBack } from "react-icons/io";
 import Avatar from "/public/assets/avatar.png";
 import ChatMessage from "./ChatMessage";
@@ -8,11 +8,21 @@ import { chat_socket, joinBrainstormRoom } from "@/lib/sockets";
 import { useParams } from "next/navigation";
 import { useSelector } from "react-redux";
 import { RootState } from "@/lib/store";
+import { sendMessage } from "@/lib/sockets";
 
 type Props = {};
 
 const ChatRoom = (props: Props) => {
+  const profile = useSelector(
+    (state: RootState) => state.persistedState.profile.profile
+  );
   const { subId } = useParams<{ subId: string }>();
+  const [messgaes, setMessages] = useState<
+    {
+      username: string;
+      text: string;
+    }[]
+  >([]);
   const userProfile = useSelector(
     (state: RootState) => state.persistedState.profile.profile
   );
@@ -23,13 +33,41 @@ const ChatRoom = (props: Props) => {
   }, [subId]);
 
   useEffect(() => {
-    chat_socket.on("chatMessage", (msgData) => {
-      console.log(msgData);
-    });
+    chat_socket.on(
+      "chatMessage",
+      (msgData: { username: string; text: string }) => {
+        console.log("aa")
+        updateMessageHandler(msgData.text, msgData.username);
+      }
+    );
+  }, []);
+  useEffect(() => {
     chat_socket.on("message", (msgData) => {
-      console.log(msgData);
+      console.log(msgData, "ssjsj");
     });
   }, []);
+  const updateMessageHandler = (message: string, username?: string) => {
+    // const currMessages = [...messgaes];
+    // console.log(currMessages);
+    // currMessages.push({
+    //   text: message,
+    //   username: username || `${profile.fname} ${profile.lname}`,
+    // });
+    // console.log(currMessages);
+    // setMessages(currMessages);
+    setMessages((prev) => [
+      ...prev,
+      {
+        text: message,
+
+        username: username || `${profile.fname} ${profile.lname}`,
+      },
+    ]);
+  };
+  const sendMessageHandler = (message: string) => {
+    // updateMessageHandler(message);
+    sendMessage(subId, message);
+  };
 
   return (
     <div className="bg-white py-6 px-8 w-full rounded-md">
@@ -57,18 +95,27 @@ const ChatRoom = (props: Props) => {
       </div>
       <div className="bg-gray3 relative py-6 px-4 rounded-md mt-8 min-h-[70vh]">
         <div className="h-[100vh] mb-[10rem] overflow-y-auto">
-          <ChatMessage />
-          <ChatMessage isUser />
-          <ChatMessage />
-          <ChatMessage />
-          <ChatMessage />
-          <ChatMessage />
-          <ChatMessage />
-          <ChatMessage />
+          {messgaes.length === 0 ? (
+            <div className="text-center text-gray3 text-xs bg-gray1 w-fit py-2 rounded-md px-4 mx-auto">
+              {" "}
+              Conversation is currently empty
+            </div>
+          ) : (
+            <div className="">
+              {messgaes.map((el, index) => (
+                <ChatMessage
+                  isUser={el.username === `${profile.fname} ${profile.lname}`}
+                  key={index + el.username}
+                  message={el.text}
+                  username={el.username}
+                />
+              ))}
+            </div>
+          )}
         </div>
         <div className="absolute bottom-5 w-full left-0 bg-gray3 py-4 ">
           <div className="w-[90%] mx-auto">
-            <ChatInput groupId={subId} />
+            <ChatInput sendMessageFunc={sendMessageHandler} />
           </div>
         </div>
       </div>

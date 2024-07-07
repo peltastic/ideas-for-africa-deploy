@@ -1,23 +1,24 @@
 import Button from "@/components/Button/Button";
-import { sendMessage } from "@/lib/sockets";
+
 import React, { useEffect, useState } from "react";
 
 type Props = {
-  groupId: string
+  sendMessageFunc: (message: string) => void;
 };
 
 const ChatInput = (props: Props) => {
   const [message, setMessage] = useState<string>("");
 
-  const sendMessageHandler = () => {
-    // console.log(props.groupId)
-    // console.log(props.groupId, message)
-    sendMessage(props.groupId, message)
-  }
+  // const sendMessageHandler = () => {
+  //   // console.log(props.groupId)
+  //   // console.log(props.groupId, message)
+  //   sendMessage(props.groupId, message)
+  // }
 
   return (
     <div className="bg-white rounded-lg p-6 w-full">
       <textarea
+        value={message}
         onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
           setMessage(e.target.value);
         }}
@@ -26,7 +27,10 @@ const ChatInput = (props: Props) => {
       ></textarea>
       <div className="flex">
         <Button
-        clicked={sendMessageHandler}
+          clicked={() => {
+            props.sendMessageFunc(message);
+            setMessage("");
+          }}
           // clicked={createCommentHandler}
           // disabled={!comment}
           classname="bg-primary ml-auto flex items-center justify-center  disabled:bg-gray6  text-white w-[6rem] py-2 rounded-full text-sm font-medium"

@@ -86,6 +86,18 @@ export const ideasApi = createApi({
     getIdeaBycategory: build.query<{ ideas: IGetIdeasResponse[] }, string>({
       query: (category) => `/users/ideas/active/${category}`,
     }),
+    getUserIdeas: build.query<any, string>({
+      query: (id) => `/users/ideas/post?status=allowed&userId=${id}`,
+    }),
+    getModifiedIdeas: build.query<
+      { modifiedIdeas: IGetIdeasResponse[] },
+      string
+    >({
+      query: (ideaId) => `/users/modified-ideas/?ideaId=${ideaId}`,
+    }),
+    getSingleModifiedIdea: build.query<IGetSingleIdeaResponse, string>({
+      query: (id) => `/users/mideas/${id}`
+    }),
     likeIdea: build.mutation<
       unknown,
       {
@@ -112,4 +124,7 @@ export const {
   useLazyGetIdeasQuery,
   useLazyGetIdeaBycategoryQuery,
   useModifyIdeaMutation,
+  useLazyGetUserIdeasQuery,
+  useLazyGetModifiedIdeasQuery,
+  useLazyGetSingleModifiedIdeaQuery
 } = ideasApi;

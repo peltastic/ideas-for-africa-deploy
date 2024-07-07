@@ -14,13 +14,19 @@ import Budget from "./Tabs/Budget";
 import Discussions from "./Tabs/Discussions";
 import Document from "./Tabs/Document";
 import Steps from "./Tabs/Steps";
-import { formDataHandler, formatNameRoute, replacePTags } from "@/utils/helperfunctions";
+import {
+  formDataHandler,
+  formatNameRoute,
+  replacePTags,
+} from "@/utils/helperfunctions";
 import Link from "next/link";
 import IdeaOptionsMobile from "./IdeaOptionsMobile";
 import NoProfilePic from "/public/assets/no-profile.jpg";
 import UnlikedImg from "/public/assets/unlike.svg";
 import { useLikeIdeaMutation } from "@/lib/features/ideas";
 import { getCookie } from "@/utils/storage";
+import IdeaTab from "@/Tabs/IdeaTab";
+import TestImg from "/public/assets/ShareAnIdea.png"
 
 type Props = {
   data: IGetSingleIdeaResponse;
@@ -28,6 +34,7 @@ type Props = {
 };
 
 const IdeaGrid = ({ data, setOpenVH }: Props) => {
+  const el = ["Body", "Steps", "Budget", "Documents", "Discussions"];
   const id = getCookie("id");
   const [likesCount, setLikesCount] = useState<number>(data.likes);
   const [liked, setLiked] = useState<boolean>(data.userHasLiked);
@@ -81,7 +88,11 @@ const IdeaGrid = ({ data, setOpenVH }: Props) => {
   return (
     <div className="w-full">
       <h1 className="text-2xl font-bold">{data.idea.headline}</h1>
-      <Link href={`/idea/${data.idea._id}/${formatNameRoute(data.idea.headline)}/brainstorms`}>
+      <Link
+        href={`/idea/${data.idea._id}/${formatNameRoute(
+          data.idea.headline
+        )}/brainstorms`}
+      >
         <button className="hidden sm:flex items-center text-sm rounded-full px-8 py-3 my-6 bg-primary text-white md:mr-8 border-primary border">
           <Image src={BrainstormSvg} className="mr-2" alt="brainstorm svg" />
           <p>Brainstorm idea</p>
@@ -136,10 +147,14 @@ const IdeaGrid = ({ data, setOpenVH }: Props) => {
       <p>{data.idea.summary}</p>
       <div className="my-8 relative">
         <div className="block des:hidden">
-          <IdeaOptionsMobile setOpenVH={setOpenVH} />
+          <IdeaOptionsMobile
+            id={data.idea._id}
+            headline={formatNameRoute(data.idea.headline)}
+            setOpenVH={setOpenVH}
+          />
         </div>
         <Image
-          src={data.thumbs[0].path}
+          src={data.thumbs[0]?.path || TestImg }
           width={300}
           height={300}
           className="w-full"
@@ -147,13 +162,21 @@ const IdeaGrid = ({ data, setOpenVH }: Props) => {
         />
       </div>
       <div className="">
-        <Tabs
-          profile
-          idea
+        <IdeaTab
           filterVal={curentTab}
           setVal={(el) => setCurrentTab(el)}
-          elements={["Body", "Steps", "Budget", "Documents", "Discussions"]}
+          elements={el}
         />
+        <div className="flex sm:hidden flex-wrap">
+          {el.map((el) => (
+            <div
+            onClick={() => setCurrentTab(el)}
+              className={`${curentTab === el ? "bg-gray1 text-white" : ""} px-4 py-1 border border-gray1 mr-4 mb-5 rounded-full`}
+            >
+              {el}
+            </div>
+          ))}
+        </div>
       </div>
       <div className="my-8">{component}</div>
     </div>

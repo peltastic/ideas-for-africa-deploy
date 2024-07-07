@@ -6,12 +6,14 @@ import Avatar from "/public/assets/avatar.png";
 import LikeImg from "/public/assets/like.svg";
 import { IoShareSocialOutline } from "react-icons/io5";
 import moment from "moment";
+import { AspectRatio } from "@mantine/core";
+import NoProfilePic from "/public/assets/no-profile.jpg";
 
 import InnovativeImg from "/public/assets/innovative7.png";
 import { useRouter } from "next/navigation";
 
 type Props = {
-  image: string;
+  // image: string;
   data: {
     headline: string;
     summary: string;
@@ -23,6 +25,7 @@ type Props = {
     pow?: string;
     id: string;
     userId: string;
+    ppicture?: string
   };
 };
 
@@ -38,14 +41,16 @@ const InnovativeIdeasCard = (props: Props) => {
         }
         className="cursor-pointer"
       >
-        <div className=" relative rounded-lg overflow-hidden h-[12rem] sm:h-[10rem]">
-          <Image
-            src={props.data.banner || InnovativeImg}
-            width={100}
-            height={100}
-            alt="innovative-idea-img"
-            className="mx-auto w-full"
-          />
+        <div className=" relative rounded-lg overflow-hidden">
+          <AspectRatio ratio={1280 / 720} mx={"auto"}>
+            <Image
+              src={props.data.banner || InnovativeImg}
+              width={100}
+              height={100}
+              alt="innovative-idea-img"
+              className="mx-auto  "
+            />
+          </AspectRatio>
           <p className="bg-white absolute left-4 bottom-4 py-1 px-2 rounded-full text-[.7rem] font-semibold text-black">
             {props.data.category}
           </p>
@@ -64,10 +69,10 @@ const InnovativeIdeasCard = (props: Props) => {
       </div>
       <div className="cursor-pointer bg-white sm:absolute w-[90%] bottom-4 flex mt-6 items-center">
         <div
-          className="mr-4 "
+          className="mr-4 w-[2rem] rounded-full overflow-hidden"
           onClick={() => router.push(`/profile/${props.data.userId}`)}
         >
-          <Image src={Avatar} alt="avatar" />
+          <Image src={props.data.ppicture || NoProfilePic } alt="avatar" width={100} height={100} />
         </div>
         <div
           onClick={() => router.push(`/profile/${props.data.userId}`)}

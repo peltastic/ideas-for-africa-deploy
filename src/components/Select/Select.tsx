@@ -12,6 +12,7 @@ type Props = {
   label?: string;
   size: "sm" | "lg" | "md" | "xs" | "xl";
   thinLabel?: boolean
+  radius?: "sm" | "lg" | "md" | "xs" | "xl";
   
 };
 
@@ -20,7 +21,7 @@ const SelectComponent = (props: Props) => {
   return (
     <Select
       label={props.label}
-      radius={"xl"}
+      radius={props.radius || "xl"}
       size={props.size}
       classNames={{label: props.thinLabel ? classes.label2 : classes.label}}
       className="font-semibold placeholder:text-black" 

@@ -1,7 +1,7 @@
 import React from "react";
 import ClockIcon from "/public/assets/clock-icon.svg";
 import Image from "next/image";
-import { truncateStr } from "@/utils/helperfunctions";
+import { formatNameRoute, truncateStr } from "@/utils/helperfunctions";
 import Avatar from "/public/assets/avatar.png";
 import LikeImg from "/public/assets/like.svg";
 import { IoShareSocialOutline } from "react-icons/io5";
@@ -22,7 +22,7 @@ type Props = {
     lname: string;
     pow?: string;
     id: string;
-    userId: string
+    userId: string;
   };
 };
 
@@ -31,7 +31,11 @@ const InnovativeIdeasCard = (props: Props) => {
   return (
     <div className=" bg-white relative sm:h-[30rem] py-4 mb-6 px-4 shadow-[0_0px_10px_rgba(0,0,0,0.1)] w-full rounded-xl">
       <div
-        onClick={() => router.push(`/idea/${props.data.id}`)}
+        onClick={() =>
+          router.push(
+            `/idea/${props.data.id}/${formatNameRoute(props.data.headline)}`
+          )
+        }
         className="cursor-pointer"
       >
         <div className=" relative rounded-lg overflow-hidden h-[12rem] sm:h-[10rem]">
@@ -58,11 +62,17 @@ const InnovativeIdeasCard = (props: Props) => {
           </h2>
         </div>
       </div>
-      <div  className="cursor-pointer bg-white sm:absolute w-[90%] bottom-4 flex mt-6 items-center">
-        <div className="mr-4 " onClick={() => router.push(`/profile/${props.data.userId}`)}>
+      <div className="cursor-pointer bg-white sm:absolute w-[90%] bottom-4 flex mt-6 items-center">
+        <div
+          className="mr-4 "
+          onClick={() => router.push(`/profile/${props.data.userId}`)}
+        >
           <Image src={Avatar} alt="avatar" />
         </div>
-        <div onClick={() => router.push(`/profile/${props.data.userId}`)} className="text-xs mr-auto ">
+        <div
+          onClick={() => router.push(`/profile/${props.data.userId}`)}
+          className="text-xs mr-auto "
+        >
           <p className="font-bold mb-[0.1rem]">
             {props.data.fname} {props.data.lname}
           </p>

@@ -44,7 +44,7 @@ const BasicInformation = ({ setIdea, idea, setBannerPreview, preview }: Props) =
         </div>
         <div className="">
           <label className="text-sm font-bold mt-8 mb-4 block">Body</label>
-          <Editor content={idea.body} setIdea={setIdea} />
+          <Editor contentProps={idea.body} setIdea={setIdea} />
         </div>
         <div className="mb-[5rem]">
           <label className="text-sm font-bold mt-8 mb-4 block">Image</label>

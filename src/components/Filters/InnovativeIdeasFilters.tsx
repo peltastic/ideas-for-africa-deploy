@@ -4,6 +4,7 @@ import SelectComponent from "../Select/Select";
 import Tabs from "@/Tabs/Tabs";
 import { idea_categories_list } from "@/utils/constants";
 import InnovativeIdeasTab from "@/Tabs/InnovativeIdeasTab";
+import FloatingTabs from "../FloatingTabs/FloatingTabs";
 
 type Props = {
   filterVal: string;
@@ -33,6 +34,7 @@ const InnovativeIdeasFilters = (props: Props) => {
             <p>{el}</p>
           </div>
         ))} */}
+   {/* <FloatingTabs /> */}
         <InnovativeIdeasTab
           elements={filterEl}
           filterVal={props.filterVal}

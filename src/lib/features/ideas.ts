@@ -3,6 +3,7 @@ import {
   ICreateIdeaPayload,
   IGetIdeasResponse,
   IGetSingleIdeaResponse,
+  IModifyIdeaPayload,
 } from "@/interface/idea";
 import { formDataHandler } from "@/utils/helperfunctions";
 import { getCookie } from "@/utils/storage";
@@ -56,6 +57,26 @@ export const ideasApi = createApi({
         };
       },
     }),
+    modifyIdea: build.mutation<
+      unknown,
+      { body: IModifyIdeaPayload; ideaId: string }
+    >({
+      query: ({ body, ideaId }) => {
+        const formData = new FormData();
+
+        for (const key in body) {
+          if (body.hasOwnProperty(key)) {
+            formData.append(key, body[key as keyof typeof body] as string);
+          }
+        }
+
+        return {
+          url: `/users/ideas/${ideaId}/modify`,
+          method: "PUT",
+          body: formData,
+        };
+      },
+    }),
     getIdeas: build.query<{ ideas: IGetIdeasResponse[] }, void>({
       query: () => "/users/ideas",
     }),
@@ -63,7 +84,7 @@ export const ideasApi = createApi({
       query: ({ id }) => `/users/ideas/${id}`,
     }),
     getIdeaBycategory: build.query<{ ideas: IGetIdeasResponse[] }, string>({
-      query: (category) => `/users/ideas/active/${category}`
+      query: (category) => `/users/ideas/active/${category}`,
     }),
     likeIdea: build.mutation<
       unknown,
@@ -89,5 +110,6 @@ export const {
   useLazyGetSingleIdeaQuery,
   useLikeIdeaMutation,
   useLazyGetIdeasQuery,
-  useLazyGetIdeaBycategoryQuery
+  useLazyGetIdeaBycategoryQuery,
+  useModifyIdeaMutation,
 } = ideasApi;

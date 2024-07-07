@@ -1,9 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { SlOptions } from "react-icons/sl";
+
+
 
 type Props = {};
 
 const Notification = (props: Props) => {
+
+
+
+  useEffect(() => {
+
+  }, [])
+
   return (
     <div className="my-10">
       <div className="flex items-center ">

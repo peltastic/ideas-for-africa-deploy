@@ -42,8 +42,7 @@ const ShareIdea = (props: Props) => {
   });
   useEffect(() => {
     if (isError) {
-      console.log("error");
-      // notify(error?.data)
+      notify((error as any)?.data?.message || "Something went wrong")
     }
     if (isSuccess) {
       notify("Idea Posted Successfully", "success");

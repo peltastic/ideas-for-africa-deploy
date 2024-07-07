@@ -58,7 +58,7 @@ const CreateBrainstormGroup = (props: Props) => {
       />
       <Button
         clicked={createGroupHandler}
-        disabled={description === "<p></p>"}
+        disabled={description === "<p></p>" || isLoading}
         classname="mt-8 bg-primary disabled:bg-gray6 disabled:cursor-not-allowed py-3 px-8 text-sm text-center flex justify-center rounded-3xl w-full text-white "
       >
         {isLoading ?

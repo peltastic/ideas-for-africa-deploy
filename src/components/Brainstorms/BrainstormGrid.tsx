@@ -11,6 +11,7 @@ import { useRequestToJoinGroupMutation } from "@/lib/features/brainstorms";
 import Spinner from "../Spinner/Spinner";
 import { notify } from "@/utils/toast";
 import { useReturnFcmTokenQuery } from "@/lib/features/notifications";
+import { useParams, useRouter } from "next/navigation";
 
 type Props = {
   groups: {
@@ -19,6 +20,7 @@ type Props = {
     name: string;
     ideadId: string;
     _id: string;
+    status: "Not a member" | "requested";
   };
   title: string;
   ideaCreator: {
@@ -29,10 +31,14 @@ type Props = {
 };
 
 const BrainstormGrid = (props: Props) => {
+  const params = useParams<{ id: string; nameId: string }>();
+  const router = useRouter();
   // const getAdminFcm = useReturnFcmTokenQuery(props.groups.admin);
   const [requestToJoin, { isLoading, isSuccess, isError, error }] =
     useRequestToJoinGroupMutation();
-  const [requestSent, setRequestSent] = useState<boolean>();
+  const [userStatus, setUserStatus] = useState<"Not a member" | "requested">(
+    props.groups.status
+  );
   const id = getCookie("id");
   const [adminFcm, setAdminFcm] = useState<string>("");
 
@@ -43,6 +49,7 @@ const BrainstormGrid = (props: Props) => {
 
     if (isSuccess) {
       notify("Request Sent", "success");
+      setUserStatus("requested");
     }
   }, [isSuccess, isError]);
 
@@ -54,7 +61,9 @@ const BrainstormGrid = (props: Props) => {
 
   const handleButtonAction = () => {
     if (props.groups.admin === id) {
-      return;
+      return router.push(
+        `/idea/${params.id}/${params.nameId}/brainstorms/${props.groups._id}`
+      );
     }
     requestToJoin({
       groupId: props.groups._id,
@@ -65,17 +74,30 @@ const BrainstormGrid = (props: Props) => {
   const url =
     "https://res.cloudinary.com/da9gqyswp/image/upload/v1718374149/fictpkp627qfootj0o8g.jpg";
   return (
-    <div className="shadow-[0_0px_10px_rgba(0,0,0,0.1)] rounded-xl py-6 px-4">
-      <Image src={BrainstromImg} alt="brainstorm-group-image" />
-      <h2 className="text-black1 font-semibold text-sm mt-4 mb-6">
-        {props.groups.adminFname}&apos;s brainstorm group on {props.title}
-      </h2>
-      <p
-        dangerouslySetInnerHTML={{
-          __html: `${replacePTags(props.groups.name)}`,
+    <div className="hover:bg-[#c2c2c21d] transition-all cursor-pointer shadow-[0_0px_10px_rgba(0,0,0,0.1)] rounded-xl py-6 px-4">
+      <div
+        className=""
+        onClick={() => {
+          if (userStatus === "requested") {
+            return;
+          }
+
+          router.push(
+            `/idea/${params.id}/${params.nameId}/brainstorms/${props.groups._id}`
+          );
         }}
-        className="text-gray1 text-sm h-[5rem] overflow-hidden"
-      ></p>
+      >
+        <Image src={BrainstromImg} alt="brainstorm-group-image" />
+        <h2 className="text-black1 font-semibold text-sm mt-4 mb-6">
+          {props.groups.adminFname}&apos;s brainstorm group on {props.title}
+        </h2>
+        <p
+          dangerouslySetInnerHTML={{
+            __html: `${replacePTags(props.groups.name)}`,
+          }}
+          className="text-gray1 text-sm h-[5rem] overflow-hidden"
+        ></p>
+      </div>
       <div className=" flex mt-8 items-center">
         <div className="mr-3 w-[2.4rem]">
           <Image src={Avatar} className="w-full" alt="avatar" />
@@ -90,8 +112,9 @@ const BrainstormGrid = (props: Props) => {
       <div className="mt-6 flex flex-wrap lg:flex-nowrap  items-center">
         <AvatarGroup avatars={[url, url, url, url]} />
         <Button
+          disabled={userStatus === "requested"}
           clicked={handleButtonAction}
-          classname="flex ml-auto sm:ml-0 md:ml-auto  items-center text-xs des:text-sm rounded-full px-5 py-2 my-6 bg-primary disabled:bg-gray6 disabled:border-0 disabled:cursor-not-allowed text-white  border-primary border mt-6"
+          classname="flex  ml-auto sm:ml-0 md:ml-auto  items-center text-xs des:text-sm rounded-full px-5 py-2 my-6 bg-primary disabled:bg-gray6 disabled:border-0 disabled:cursor-not-allowed text-white  border-primary border mt-6"
         >
           {isLoading ? (
             <div className="py-1 flex justify-center w-[4rem]">
@@ -99,12 +122,21 @@ const BrainstormGrid = (props: Props) => {
             </div>
           ) : (
             <p>
-              {requestSent
-                ? "Pending..."
-                : props.groups.admin === id
+              {props.groups.admin === id
                 ? "Open group"
-                : "Request To Join"}
+                : userStatus === "Not a member"
+                ? "Request To Join"
+                : userStatus === "requested"
+                ? "Pending"
+                : ""}
             </p>
+            // <p>
+            //   {requestSent
+            //     ? "Pending..."
+            //     : props.groups.admin === id
+            //     ? "Open group"
+            //     : "Request To Join"}
+            // </p>
           )}
         </Button>
       </div>

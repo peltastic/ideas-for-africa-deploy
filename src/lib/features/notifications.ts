@@ -39,6 +39,9 @@ export const notificationApi = createApi({
     >({
       query: (id) => `/users/profile/returnfcm/${id}`,
     }),
+    getUserNotification: build.query<unknown, string>({
+      query: (id) => `/users/notifications/unread/${id}`,
+    }),
   }),
 });
 
@@ -65,5 +68,9 @@ export const notificationApi = createApi({
 
 // ;
 
-export const { useSetFcmTokenMutation, useReturnFcmTokenQuery } =
-  notificationApi;
+export const {
+  useSetFcmTokenMutation,
+  useReturnFcmTokenQuery,
+  useGetUserNotificationQuery,
+  useLazyGetUserNotificationQuery
+} = notificationApi;

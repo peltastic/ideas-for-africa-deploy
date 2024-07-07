@@ -5,6 +5,8 @@ export interface IGetBrainstormGroupsResponse {
     name: string;
     ideadId: string;
     _id: string;
+    status: "Not a member" | "requested"
+    canJoin: boolean
   }[];
   ideaCreator: {
     fname: string;

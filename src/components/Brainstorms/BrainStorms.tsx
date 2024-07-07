@@ -41,6 +41,7 @@ const BrainStorms = (props: Props) => {
               groups={el}
               ideaCreator={props.data.ideaCreator}
               title={props.data.title}
+             
             />
           ))}
         </div>

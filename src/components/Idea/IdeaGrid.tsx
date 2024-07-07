@@ -1,14 +1,12 @@
 import React, { useState } from "react";
 import BrainstormSvg from "/public/assets/brainstorm.svg";
 import Image from "next/image";
-import AvatarLarge from "/public/assets/avatar-large.png";
 import ChatImg from "/public/assets/chat.svg";
 import LikeImg from "/public/assets/like-img.svg";
 
 import Instagram from "/public/assets/instagram.svg";
 import Facebook from "/public/assets/facebook.svg";
 import Twitter from "/public/assets/twitter.svg";
-import TestIdeaImg from "/public/assets/test-idea-img.png";
 import Tabs from "@/Tabs/Tabs";
 import moment from "moment";
 import { IGetSingleIdeaResponse } from "@/interface/idea";
@@ -16,7 +14,7 @@ import Budget from "./Tabs/Budget";
 import Discussions from "./Tabs/Discussions";
 import Document from "./Tabs/Document";
 import Steps from "./Tabs/Steps";
-import { replacePTags } from "@/utils/helperfunctions";
+import { formDataHandler, formatNameRoute, replacePTags } from "@/utils/helperfunctions";
 import Link from "next/link";
 import IdeaOptionsMobile from "./IdeaOptionsMobile";
 import NoProfilePic from "/public/assets/no-profile.jpg";
@@ -83,7 +81,7 @@ const IdeaGrid = ({ data, setOpenVH }: Props) => {
   return (
     <div className="w-full">
       <h1 className="text-2xl font-bold">{data.idea.headline}</h1>
-      <Link href={`/idea/${data.idea._id}/brainstorms`}>
+      <Link href={`/idea/${data.idea._id}/${formatNameRoute(data.idea.headline)}/brainstorms`}>
         <button className="hidden sm:flex items-center text-sm rounded-full px-8 py-3 my-6 bg-primary text-white md:mr-8 border-primary border">
           <Image src={BrainstormSvg} className="mr-2" alt="brainstorm svg" />
           <p>Brainstorm idea</p>

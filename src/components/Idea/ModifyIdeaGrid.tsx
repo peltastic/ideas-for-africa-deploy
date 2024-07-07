@@ -7,12 +7,18 @@ import Avatar2 from "/public/assets/version-pfp-2.png";
 import LikeImg from "/public/assets/unlike.svg";
 import CancelSvg from "/public/assets/cancel2.svg";
 import TrendingIdeas from "./TrendingIdeas";
+import { useRouter } from "next/navigation";
+import { formatNameRoute } from "@/utils/helperfunctions";
 
 type Props = {
   closeVH: () => void;
+  name: string;
+  id: string;
 };
 
 const ModifyIdeaGrid = (props: Props) => {
+  const router = useRouter();
+
   return (
     <div className="border h-screen des:h-auto rounded-md bg-white border-gray3 px-2 xxs:px-6">
       <div onClick={props.closeVH} className="my-8 flex des:hidden">
@@ -20,7 +26,12 @@ const ModifyIdeaGrid = (props: Props) => {
       </div>
       <div className="flex  justify-between items-center">
         <h1 className="text-black1 font-semibold text-lg">Version History</h1>
-        <button className="flex items-center text-sm rounded-full px-4 py-2 my-6 bg-primary text-white border-primary border">
+        <button
+          onClick={() =>
+            router.push(`/idea/${props.id}/${formatNameRoute(props.name)}/modify`)
+          }
+          className="flex items-center text-sm rounded-full px-4 py-2 my-6 bg-primary text-white border-primary border"
+        >
           <Image src={ModifyIdeaImg} className="mr-2" alt="brainstorm svg" />
           <p>Modify idea</p>
         </button>

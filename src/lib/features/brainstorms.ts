@@ -17,7 +17,10 @@ export const brainstormsApi = createApi({
   }),
   endpoints: (build) => ({
     getGroups: build.query<IGetBrainstormGroupsResponse, string>({
-      query: (id) => `/users/groups/idea/${id}`,
+      query: (id) => {
+        const userId = getCookie("id");
+        return { url: `/users/groups/idea/${id}?userId=${userId}` };
+      },
     }),
     createGroup: build.mutation<
       unknown,

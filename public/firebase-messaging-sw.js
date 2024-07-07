@@ -4,13 +4,13 @@ importScripts("https://www.gstatic.com/firebasejs/8.8.0/firebase-app.js");
 importScripts("https://www.gstatic.com/firebasejs/8.8.0/firebase-messaging.js");
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBGxug5D9xVSenU6V0Y5bFO4360Zo4btOY",
-  authDomain: "ideas-for-africa-test.firebaseapp.com",
-  projectId: "ideas-for-africa-test",
+  apiKey: "AIzaSyBEtaKIh7UucwxSLMCkCCUivdGo39oP5Pk",
+  authDomain: "ideas-for-africa-test-app.firebaseapp.com",
+  projectId: "ideas-for-africa-test-app",
   storageBucket: "your_keys",
-  messagingSenderId: "612720130324",
-  appId: "1:612720130324:web:b6ba5dd2e27c19e3a26a01",
-  measurementId: "G-RGHX9MEDYY",
+  messagingSenderId: "632778017296",
+  appId: "1:632778017296:web:ef4ab3aca350b025f19895",
+  measurementId: "G-K2Z2FNEV42",
 };
 // eslint-disable-next-line no-undef
 firebase.initializeApp(firebaseConfig);

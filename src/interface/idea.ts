@@ -26,6 +26,17 @@ export interface IGetIdeasResponse {
   pow?: string;
 }
 
+export interface IModifyIdeaPayload {
+  headline: string;
+  summary: string;
+  body: string;
+  pitches: string
+  minbud: string
+  maxbud: string
+  category: string
+  userId: string
+}
+
 export interface IGetSingleIdeaResponse {
   idea: {
     _id: string;
@@ -37,11 +48,12 @@ export interface IGetSingleIdeaResponse {
     headline: string;
     summary: string;
   };
-  userHasLiked: boolean
-  likes: number
-  count: number
+  userHasLiked: boolean;
+  likes: number;
+  count: number;
   pitches?: {
     step: string;
+    count: string;
   }[];
   thumbs: {
     path: string;
@@ -55,6 +67,6 @@ export interface IGetSingleIdeaResponse {
     pow: string;
     title: string;
     _id: string;
-    ppicture: string
+    ppicture: string;
   };
 }

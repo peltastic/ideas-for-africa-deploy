@@ -1,13 +1,28 @@
-import React from "react";
+import {
+  useGetUserNotificationQuery,
+  useLazyGetUserNotificationQuery,
+} from "@/lib/features/notifications";
+import { getCookie } from "@/utils/storage";
+import React, { useEffect } from "react";
 import Notification from "./Notification";
 import { IoIosArrowDown } from "react-icons/io";
 
 type Props = {};
 
 const ProfileNotifications = (props: Props) => {
+  const id = getCookie("id");
+  const [getUserNotification, {}] = useLazyGetUserNotificationQuery();
+  // const {data} = useGetUserNotificationQuery(id, {
+  //   ref
+  // })
+
+  useEffect(() => {
+    getUserNotification(id);
+  }, []);
+
   return (
     <div>
-      <div className="flex items-center">
+      {/* <div className="flex items-center">
         <div className="border py-2 px-2 xxs:px-3 border-black1 mr-4 rounded-full text-xs xxs:text-sm">
           <p>Unread (3)</p>
         </div>
@@ -17,7 +32,7 @@ const ProfileNotifications = (props: Props) => {
         <div className="border rounded-full text-xs xxs:text-sm text-gray1 py-2 px-2 xxs:px-3">
           <p>Deleted (2)</p>
         </div>
-      </div>
+      </div> */}
       <div className="w-full mm:w-[90%] lg:w-[80%] des:w-[60%]">
         <Notification />
         <Notification />

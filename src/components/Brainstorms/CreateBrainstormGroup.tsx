@@ -53,7 +53,7 @@ const CreateBrainstormGroup = (props: Props) => {
       </div>
       <p className="mb-2">Describe your spinoff idea</p>
       <Editor
-        content={description}
+        contentProps={description}
         setIdea={(key, value) => setDescription(value as string)}
       />
       <Button

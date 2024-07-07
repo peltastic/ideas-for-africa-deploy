@@ -15,16 +15,16 @@ function FloatingTabs() {
   };
 
   const controls = data.map((item, index) => (
-    <div className=""></div>
-    // <UnstyledButton
-    //   key={item}
-    //   className={classes.control}
-    //   ref={setControlRef(index)}
-    //   onClick={() => setActive(index)}
-    //   mod={{ active: active === index }}
-    // >
-    //   <span className={classes.controlLabel}>{item}</span>
-    // </UnstyledButton>
+    // <div className=""></div>
+    <UnstyledButton
+      key={item}
+      className={classes.control}
+      ref={setControlRef(index)}
+      onClick={() => setActive(index)}
+      mod={{ active: active === index }}
+    >
+      <span className={classes.controlLabel}>{item}</span>
+    </UnstyledButton>
   ));
 
   return (

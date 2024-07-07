@@ -248,9 +248,10 @@ const ModifyIdea = ({ data }: Props) => {
             className="w-[2rem] xxs:w-[2.5rem]"
           />
           <p>
-            When making changes to an idea, you can't delete it entirely; you
-            can only modify it. The 'Delete' function will only “strikethrough”
-            selected characters, and your new text will appear in red print.
+            When making changes to an idea, you can&apos;t delete it entirely;
+            you can only modify it. The &lsquo;Delete&rsquo; function will only
+            &lsquo;strikethrough&rsquo; selected characters, and your new text
+            will appear in red print.
           </p>
         </div>
         <div className="mt-6">

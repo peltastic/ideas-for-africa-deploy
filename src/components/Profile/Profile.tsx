@@ -55,7 +55,7 @@ const Profile = ({ data, isFetching, tempPfp, setTempPfp }: Props) => {
             "Profile",
             "Ideas",
             "Notifications",
-            "Archive",
+            // "Archive",
             "Settings",
           ]}
           filterVal={tab|| "profile"}

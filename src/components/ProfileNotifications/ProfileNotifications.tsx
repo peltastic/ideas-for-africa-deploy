@@ -6,12 +6,14 @@ import { getCookie } from "@/utils/storage";
 import React, { useEffect } from "react";
 import Notification from "./Notification";
 import { IoIosArrowDown } from "react-icons/io";
+import IdeasSkeleton from "../Skeleton/IdeasSkeleton";
 
 type Props = {};
 
 const ProfileNotifications = (props: Props) => {
   const id = getCookie("id");
-  const [getUserNotification, {}] = useLazyGetUserNotificationQuery();
+  const [getUserNotification, { data, isFetching }] =
+    useLazyGetUserNotificationQuery();
   // const {data} = useGetUserNotificationQuery(id, {
   //   ref
   // })
@@ -34,10 +36,20 @@ const ProfileNotifications = (props: Props) => {
         </div>
       </div> */}
       <div className="w-full mm:w-[90%] lg:w-[80%] des:w-[60%]">
-        <Notification />
-        <Notification />
-        <Notification />
-        <Notification />
+        {isFetching ? (
+          <div className="w-full">
+            <IdeasSkeleton />
+            <IdeasSkeleton />
+            <IdeasSkeleton />
+            <IdeasSkeleton />
+          </div>
+        ) : (
+          <>
+            {data?.notifications.map((el) => (
+              <Notification key={el._id} title={el.title} body={el.body} />
+            ))}
+          </>
+        )}
       </div>
       <div className="mb-20 flex flex-wrap  w-fit mx-auto gap-6 text-sm mt-20">
         <div className="w-fit rounded-full  px-6 py-3 bg-gray3  flex items-center">

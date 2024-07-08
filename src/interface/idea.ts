@@ -18,6 +18,7 @@ export interface IGetIdeasResponse {
   subcategory: string;
   summary: string;
   files: any;
+  likes: string
   createdAt: string;
   banner: string;
   fname: string;

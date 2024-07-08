@@ -38,18 +38,19 @@ const Ideas = (props: Props) => {
             <IdeasSkeleton />
           </div>
         ) : (
-          <div className=""></div>
-          // <>
-          //   {data?.ideas.map((el) => (
-          //     <Idea
-          //       id={el._id}
-          //       banner={el.banner}
-          //       key={el.headline}
-          //       description={el.summary}
-          //       title={el.headline}
-          //     />
-          //   ))}
-          // </>
+          // <div className=""></div>
+          <>
+            {data?.ideasWithDetails.map((el) => (
+              <Idea
+                id={el._id}
+                banner={el.banner}
+                key={el.headline}
+                description={el.summary}
+                title={el.headline}
+                likes={el.likes}
+              />
+            ))}
+          </>
         )}
       </div>
     </div>

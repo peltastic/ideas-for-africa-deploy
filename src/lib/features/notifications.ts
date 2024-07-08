@@ -1,4 +1,5 @@
 import config from "@/config/config";
+import { IGetProfileNotificationResponse } from "@/interface/notifications";
 
 import { getCookie } from "@/utils/storage";
 
@@ -39,7 +40,10 @@ export const notificationApi = createApi({
     >({
       query: (id) => `/users/profile/returnfcm/${id}`,
     }),
-    getUserNotification: build.query<unknown, string>({
+    getUserNotification: build.query<
+      { notifications: IGetProfileNotificationResponse[] },
+      string
+    >({
       query: (id) => `/users/notifications/unread/${id}`,
     }),
   }),
@@ -72,5 +76,5 @@ export const {
   useSetFcmTokenMutation,
   useReturnFcmTokenQuery,
   useGetUserNotificationQuery,
-  useLazyGetUserNotificationQuery
+  useLazyGetUserNotificationQuery,
 } = notificationApi;

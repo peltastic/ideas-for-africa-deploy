@@ -12,12 +12,12 @@ const Archive = (props: Props) => {
         title="Archive"
       />
       <div className="w-full mm:w-[90%] lg:w-[80%] des:w-[60%]">
+        {/* <Idea />
         <Idea />
         <Idea />
         <Idea />
         <Idea />
-        <Idea />
-        <Idea />
+        <Idea /> */}
       </div>
     </div>
   );

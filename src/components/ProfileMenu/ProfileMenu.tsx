@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useEffect } from "react";
 import MenuComponent from "../Menu/Menu";
 import TestProfile from "/public/assets/dp.png";
@@ -55,7 +55,7 @@ const ProfileMenu = (props: Props) => {
   }, [data]);
 
   const router = useRouter();
-  
+
   return (
     <div>
       {authState === "LOGGED_IN" ? (
@@ -87,14 +87,22 @@ const ProfileMenu = (props: Props) => {
                 <p className="font-semibold">Profile</p>
               </div>
             </Link>
-            <div className="my-8 flex">
-              <Image src={IdeaImg} alt="" className="mr-4 w-[1.4rem]" />
-              <p className="font-semibold">Idea</p>
-            </div>
-            <div className="my-8 flex">
-              <Image src={NotificationImg} alt="" className="mr-4 w-[1.4rem]" />
-              <p className="font-semibold">Notifications</p>
-            </div>
+            <Link href={"/profile?tab=ideas"}>
+              <div className="my-8 flex">
+                <Image src={IdeaImg} alt="" className="mr-4 w-[1.4rem]" />
+                <p className="font-semibold">Idea</p>
+              </div>
+            </Link>
+            <Link href={"/profile?tab=notifications"}>
+              <div className="my-8 flex">
+                <Image
+                  src={NotificationImg}
+                  alt=""
+                  className="mr-4 w-[1.4rem]"
+                />
+                <p className="font-semibold">Notifications</p>
+              </div>
+            </Link>
             <div className="my-8 flex">
               <Image src={ArchiveImg} alt="" className="mr-4 w-[1.4rem]" />
               <p className="font-semibold">Archive</p>

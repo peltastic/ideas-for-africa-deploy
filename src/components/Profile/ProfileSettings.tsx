@@ -63,7 +63,7 @@ const router = useRouter()
       <div className="mt-8">
         <p className="font-semibold text-xl mb-5">Image</p>
         <div className="flex flex-wrap items-center mt-4 gap-8">
-          <div className="w-[5rem] overflow-hidden rounded-full mx-auto sm:mx-0">
+          <div className="w-[5rem] overflow-hidden rounded-full mx-0">
             <Image
               src={imagePreview || props.tempPfp || NoProfilePic}
               width={100}
@@ -71,7 +71,7 @@ const router = useRouter()
               alt="no-profile-image"
             />
           </div>
-          <div className="flex flex-wrap  justify-center xxs:justify-start w-full sm:w-auto items-center gap-2 sm:gap-10">
+          <div className="flex flex-wrap  sm:justify-center xxs:justify-start w-full sm:w-auto items-center gap-2 sm:gap-10">
             <FileButtonComponent
               setFile={(_, value) => {
                 setPfpFile(value);
@@ -86,7 +86,7 @@ const router = useRouter()
                 <p className="text-sm sm:text-base">Change image</p>
               </div>
             </FileButtonComponent>
-            <div className="gap-3 w-full justify-center xxs:justify-start  xxs:w-auto flex border rounded-full px-3 sm:px-7 py-3">
+            <div className="gap-3 w-fit justify-center xxs:justify-start  xxs:w-auto flex border rounded-full px-3 sm:px-7 py-3">
               <Image src={Delete} alt="delete-photo" />
               <p className="text-sm sm:text-base">Delete image</p>
             </div>
@@ -121,7 +121,7 @@ const router = useRouter()
         }}
         validationSchema={changePasswordSchema}
       >
-        <Form className="w-[60%]">
+        <Form className="w-full sm:w-[60%]">
           <h1 className="mt-20 font-semibold text-xl">Change Password</h1>
           <div className="mt-10 sm:mt-8">
             <Field

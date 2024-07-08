@@ -51,7 +51,7 @@ const ProfileNotifications = (props: Props) => {
           </>
         )}
       </div>
-      <div className="mb-20 flex flex-wrap  w-fit mx-auto gap-6 text-sm mt-20">
+      {/* <div className="mb-20 flex flex-wrap  w-fit mx-auto gap-6 text-sm mt-20">
         <div className="w-fit rounded-full  px-6 py-3 bg-gray3  flex items-center">
           <div className="mr-2">
             <p>10 items per page</p>
@@ -69,7 +69,7 @@ const ProfileNotifications = (props: Props) => {
             <p className="text-gray6">Next</p>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

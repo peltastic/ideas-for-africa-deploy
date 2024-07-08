@@ -170,6 +170,7 @@ const IdeaGrid = ({ data, setOpenVH }: Props) => {
         <div className="flex sm:hidden flex-wrap">
           {el.map((el) => (
             <div
+            key={el}
             onClick={() => setCurrentTab(el)}
               className={`${curentTab === el ? "bg-gray1 text-white" : ""} px-4 py-1 border border-gray1 mr-4 mb-5 rounded-full`}
             >

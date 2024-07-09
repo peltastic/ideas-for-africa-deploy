@@ -37,8 +37,12 @@ const Discussions = (props: Props) => {
           <div className=""></div>
         ) : (
           <div className="">
-            {data?.comments.map((el) => (
-              <IdeaComments content={el.content} replies={el.replies} />
+            {data?.comments.map((el, index) => (
+              <IdeaComments
+                key={el.content + el.replies + index}
+                content={el.content}
+                replies={el.replies}
+              />
             ))}
           </div>
         )}

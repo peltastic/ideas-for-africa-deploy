@@ -37,6 +37,7 @@ const IdeaComments = (props: Props) => {
               {props.replies.map((el) => (
                 <IdeaComments
                   fname={el.user.fname}
+                  key={el._id}
                   lname={el.user.lname}
                   content={el.content}
                 />

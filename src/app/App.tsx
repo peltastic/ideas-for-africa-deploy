@@ -12,9 +12,7 @@ type Props = {};
 const App = (props: Props) => {
   const id = getCookie("id");
   const dispatch = useDispatch();
-  const authStatus = useSelector(
-    (state: RootState) => state.persistedState.auth.authStatus
-  );
+
   const { messages, fcmToken } = useFCM();
   const [setFcm, fcmResult] = useSetFcmTokenMutation();
 
@@ -33,13 +31,7 @@ const App = (props: Props) => {
       });
     }
   }, [fcmToken]);
-  // const a = async () => {
-  //   const b = await getAccessToken();
-  //   console.log(b, "sdsdj");
-  // };
-  // useEffect(() => {
-  //   a();
-  // }, []);
+
   return null;
 };
 

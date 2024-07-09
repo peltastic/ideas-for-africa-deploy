@@ -60,7 +60,7 @@ const BrainstormGrid = (props: Props) => {
   // }, [getAdminFcm.data]);
 
   const handleButtonAction = () => {
-    if (props.groups.admin === id) {
+    if (props.groups.admin === id || userStatus === "Accepted") {
       return router.push(
         `/idea/${params.id}/${params.nameId}/brainstorms/${props.groups._id}`
       );

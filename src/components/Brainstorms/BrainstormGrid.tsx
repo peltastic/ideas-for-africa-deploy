@@ -36,7 +36,7 @@ const BrainstormGrid = (props: Props) => {
   // const getAdminFcm = useReturnFcmTokenQuery(props.groups.admin);
   const [requestToJoin, { isLoading, isSuccess, isError, error }] =
     useRequestToJoinGroupMutation();
-  const [userStatus, setUserStatus] = useState<"Not a member" | "requested">(
+  const [userStatus, setUserStatus] = useState<"Not a member" | "requested" | "Accepted">(
     props.groups.status
   );
   const id = getCookie("id");
@@ -128,7 +128,7 @@ const BrainstormGrid = (props: Props) => {
                 ? "Request To Join"
                 : userStatus === "requested"
                 ? "Pending"
-                : ""}
+                : userStatus === "Accepted" ? "Open group" : ""}
             </p>
             // <p>
             //   {requestSent

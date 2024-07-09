@@ -72,7 +72,7 @@ export const brainstormsApi = createApi({
       }
     >({
       query: (body) => ({
-        url: "/groups/respond",
+        url: "/groups/groups/respond-to-request",
         method: "POST",
         body,
       }),

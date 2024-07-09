@@ -51,7 +51,7 @@ const Notification = (props: Props) => {
           <Button
             clicked={() =>
               respondToRequest({
-                memberId: props.data._id,
+                memberId: props.data.action.memberId,
                 status: "accepted",
                 userId: id,
               })

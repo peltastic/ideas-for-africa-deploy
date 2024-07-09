@@ -20,7 +20,7 @@ const BrainstormGroupPage = (props: Props) => {
     setShowMembers(val);
   };
   return (
-    <div className="bg-gray3 px-10 pb-20 min-h-[100vh] overflow-hidden relative">
+    <div className="bg-gray3 sm:px-10 pb-20 min-h-[100vh] overflow-hidden relative">
       <nav className="w-full py-4 ">
         <div className="flex items-center ">
           <div className="cursor-pointer mr-auto">

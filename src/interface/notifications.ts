@@ -6,6 +6,7 @@ export interface IGetProfileNotificationResponse {
   type?: "Request" | "Comment"
   action: {
     userId: string;
+    memberId: string
     groupId: string;
     indicatorId: string;
     username: string;

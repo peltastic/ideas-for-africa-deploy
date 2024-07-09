@@ -5,7 +5,7 @@ import Avatar from "/public/assets/avatar.png";
 import ChatMessage from "./ChatMessage";
 import ChatInput from "./ChatInput";
 import { chat_socket, joinBrainstormRoom } from "@/lib/sockets";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
 import { RootState } from "@/lib/store";
 import { sendMessage } from "@/lib/sockets";
@@ -17,6 +17,8 @@ type Props = {
 };
 
 const ChatRoom = (props: Props) => {
+  const [showChat, setShowChat] = useState<boolean>(false);
+  const router = useRouter();
   const profile = useSelector(
     (state: RootState) => state.persistedState.profile.profile
   );
@@ -47,7 +49,7 @@ const ChatRoom = (props: Props) => {
   }, []);
   useEffect(() => {
     chat_socket.on("message", (msgData) => {
-      console.log(msgData, "ssjsj");
+      setShowChat(true);
     });
   }, []);
   const updateMessageHandler = (message: string, username?: string) => {
@@ -76,7 +78,9 @@ const ChatRoom = (props: Props) => {
   return (
     <div className="bg-white py-6 px-8 w-full rounded-md">
       <div className="flex mb-6 ">
-        <IoIosArrowRoundBack className="text-3xl mr-auto" />
+        <div className="w-fil cursor-pointer" onClick={() => router.back()}>
+          <IoIosArrowRoundBack className="text-3xl mr-auto" />
+        </div>
         <Button
           clicked={() => props.setShowProps(true)}
           classname="bg-gray3 block lg:hidden rounded-full py-2 px-6 ml-auto text-sm"
@@ -105,7 +109,7 @@ const ChatRoom = (props: Props) => {
           </p>
         </div>
       </div>
-      <div className="bg-gray3 no-scrollbar relative py-6 px-4 rounded-md mt-8 min-h-[70vh]">
+      {showChat ?  <div className="bg-gray3 no-scrollbar relative py-6 px-4 rounded-md mt-8 min-h-[70vh]">
         <div className="h-[100vh] mb-[10rem] overflow-y-auto no-scrollbar">
           {messgaes.length === 0 ? (
             <div className="text-center text-gray3 text-xs bg-gray1 w-fit py-2 rounded-md px-4 mx-auto">
@@ -129,7 +133,7 @@ const ChatRoom = (props: Props) => {
             <ChatInput sendMessageFunc={sendMessageHandler} />
           </div>
         </div>
-      </div>
+      </div>: <p className="mt-6">Loading Chat...</p> }
     </div>
   );
 };

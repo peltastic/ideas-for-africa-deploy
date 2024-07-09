@@ -9,8 +9,12 @@ import { useParams } from "next/navigation";
 import { useSelector } from "react-redux";
 import { RootState } from "@/lib/store";
 import { sendMessage } from "@/lib/sockets";
+import Button from "@/components/Button/Button";
 
-type Props = {};
+type Props = {
+  setShowProps: (val: boolean) => void;
+  show?: boolean;
+};
 
 const ChatRoom = (props: Props) => {
   const profile = useSelector(
@@ -36,7 +40,7 @@ const ChatRoom = (props: Props) => {
     chat_socket.on(
       "chatMessage",
       (msgData: { username: string; text: string }) => {
-        console.log("aa")
+        console.log("aa");
         updateMessageHandler(msgData.text, msgData.username);
       }
     );
@@ -71,7 +75,15 @@ const ChatRoom = (props: Props) => {
 
   return (
     <div className="bg-white py-6 px-8 w-full rounded-md">
-      <IoIosArrowRoundBack className="text-3xl" />
+      <div className="flex mb-6 ">
+        <IoIosArrowRoundBack className="text-3xl mr-auto" />
+        <Button
+          clicked={() => props.setShowProps(true)}
+          classname="bg-gray3 block lg:hidden rounded-full py-2 px-6 ml-auto text-sm"
+        >
+          Members
+        </Button>
+      </div>
       <h1 className="text-xl font-bold mt-3">
         Kunle&apos;s brainstorm group on Energy generation for recycling in
         rubber

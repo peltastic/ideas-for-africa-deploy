@@ -1,4 +1,5 @@
 import config from "@/config/config";
+import { IGetIdeaCommentResponse } from "@/interface/coments";
 import { getCookie } from "@/utils/storage";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
@@ -31,7 +32,16 @@ export const commentsApi = createApi({
         body,
       }),
     }),
+    getIdeaComments: build.query<
+      {
+        comments: IGetIdeaCommentResponse[];
+      },
+      string
+    >({
+      query: (id) => `/comments/ideas/${id}/getcomments`,
+    }),
   }),
 });
 
-export const { useCommentOnIdeaMutation } = commentsApi;
+export const { useCommentOnIdeaMutation, useLazyGetIdeaCommentsQuery } =
+  commentsApi;

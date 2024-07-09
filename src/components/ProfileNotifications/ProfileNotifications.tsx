@@ -46,7 +46,7 @@ const ProfileNotifications = (props: Props) => {
         ) : (
           <>
             {data?.notifications.map((el) => (
-              <Notification key={el._id} title={el.title} body={el.body} />
+              <Notification data={el} key={el._id} />
             ))}
           </>
         )}

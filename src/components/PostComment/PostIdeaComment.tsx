@@ -9,9 +9,10 @@ type Props = {
   ideaId: string;
   fname: string
   lname: string
+  getIdeaComments: () => void
 };
 
-const PostIdeaComment = ({ ideaId, fname, lname }: Props) => {
+const PostIdeaComment = ({ ideaId, fname, lname, getIdeaComments }: Props) => {
   const id = getCookie("id");
   const [commentOnIdea, { isLoading, isSuccess, isError, error }] =
     useCommentOnIdeaMutation();
@@ -34,6 +35,8 @@ const PostIdeaComment = ({ ideaId, fname, lname }: Props) => {
     if (isSuccess) {
       notify("Comment posted successfully", "success");
       setComment("")
+      getIdeaComments()
+      
     }
   }, [isSuccess, isError]);
 

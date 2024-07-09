@@ -67,7 +67,7 @@ export const brainstormsApi = createApi({
       unknown,
       {
         memberId: string;
-        status: string;
+        status: "accepted" | "rejected";
         userId: string;
       }
     >({
@@ -90,6 +90,9 @@ export const brainstormsApi = createApi({
         body,
       }),
     }),
+    getGroupMembers: build.query<unknown, string>({
+      query: (id) => `/groups/${id}/members`,
+    }),
   }),
 });
 
@@ -98,4 +101,6 @@ export const {
   useCreateGroupMutation,
   useRequestToJoinGroupMutation,
   useLazyGetGroupsQuery,
+  useGetGroupMembersQuery,
+  useRespondToRequestMutation
 } = brainstormsApi;

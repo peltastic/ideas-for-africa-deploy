@@ -78,7 +78,7 @@ const BrainstormGrid = (props: Props) => {
       <div
         className=""
         onClick={() => {
-          if (userStatus === "requested") {
+          if (userStatus === "requested" || userStatus === "Not a member") {
             return;
           }
 

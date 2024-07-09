@@ -6,25 +6,30 @@
 
 body {
   font-family: "Poppins", sans-serif !important ;
-  background-color: #FFFCFA;
- 
+  background-color: #fffcfa;
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
 }
-
 
 .lds-ring {
   /* change color here */
-  color: #fff
+  color: #fff;
 }
 .bgAuth {
   background-image: url("../../public/assets/auth-image.png");
 }
-
 
 .lds-ring,
 .lds-ring div {
@@ -65,4 +70,3 @@ body {
     transform: rotate(360deg);
   }
 }
-

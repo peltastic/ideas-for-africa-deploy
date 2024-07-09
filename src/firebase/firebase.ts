@@ -18,7 +18,6 @@ const firebaseConfig: FirebaseOptions = {
 
 // Initialize Firebase
 const firebaseapp = initializeApp(firebaseConfig);
-console.log(firebaseConfig)
 export const messaging = () => getMessaging(firebaseapp);
 
 export default firebaseapp;

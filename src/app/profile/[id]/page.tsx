@@ -27,7 +27,7 @@ const ProfileViewPage = (props: Props) => {
   return (
     <div className="">
       <Navbar />
-      <div className="px-20">
+      <div className="px-3 sm:px-20">
         {data ? (
           <>
             <ProfileHeader
@@ -36,7 +36,7 @@ const ProfileViewPage = (props: Props) => {
               fname={data.fname}
               lname={data.lname}
             />
-            <ProfileView />
+            <ProfileView id={id as string} />
           </>
         ) : (
           <div className="ml-10 mt-10">

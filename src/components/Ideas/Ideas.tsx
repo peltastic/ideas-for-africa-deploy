@@ -7,18 +7,20 @@ import {
 } from "@/lib/features/ideas";
 import IdeasSkeleton from "../Skeleton/IdeasSkeleton";
 import { getCookie } from "@/utils/storage";
+import { useParams } from "next/navigation";
 
 type Props = {
   hideFilter?: boolean;
 };
 
 const Ideas = (props: Props) => {
-  const id = getCookie("id");
+  const {id} = useParams()
+  const userId = getCookie("id");
   // const { data, isFetching } = useGetIdeasQuery();
   const [getUserIdeas, { isFetching, data }] = useLazyGetUserIdeasQuery();
 
   useEffect(() => {
-    getUserIdeas(id);
+    getUserIdeas(id as string || userId);
   }, []);
 
   return (

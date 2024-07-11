@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/lib/store";
 import { sendMessage } from "@/lib/sockets";
 import Button from "@/components/Button/Button";
+import BrainstormChatSkeleton from "@/components/Skeleton/BrainstormChatSkeleton";
 
 type Props = {
   setShowProps: (val: boolean) => void;
@@ -138,7 +139,7 @@ const ChatRoom = (props: Props) => {
           </div>
         </div>
       ) : (
-        <p className="mt-6">Loading Chat...</p>
+        <BrainstormChatSkeleton />
       )}
     </div>
   );

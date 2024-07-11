@@ -39,6 +39,8 @@ const Discussions = (props: Props) => {
           <div className="">
             {data?.comments?.map((el, index) => (
               <IdeaComments
+                fname={el.user?.fname}
+                lname={el.user?.lname}
                 key={el.content + el.replies + index}
                 content={el.content}
                 replies={el.replies}

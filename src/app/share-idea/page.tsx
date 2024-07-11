@@ -11,6 +11,7 @@ import { notify } from "@/utils/toast";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import WIthAuth from "@/components/HOC/ProtectRoute";
 
 type Props = {};
 
@@ -145,9 +146,7 @@ const ShareIdea = (props: Props) => {
   return (
     <div className="">
       <Navbar />
-      <motion.div
-        className="max-w-[1700px] mx-auto"
-      >
+      <motion.div className="max-w-[1700px] mx-auto">
         <div className="flex gap-3 px-6 xs:px-[2.4rem] des:px-[10rem] mt-[3rem]">
           <div className=" hidden lg:block w-[30%]">
             <div className="flex mb-6">
@@ -248,4 +247,4 @@ const ShareIdea = (props: Props) => {
   );
 };
 
-export default ShareIdea;
+export default WIthAuth(ShareIdea);

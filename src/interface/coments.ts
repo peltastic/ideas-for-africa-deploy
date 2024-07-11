@@ -1,6 +1,9 @@
 export interface IGetIdeaCommentResponse {
   content: string;
-
+  user: {
+    fname: string;
+    lname: string;
+  };
   replies: {
     _id: string;
     commentId: string;

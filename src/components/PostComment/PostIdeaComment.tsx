@@ -89,12 +89,13 @@ const PostIdeaComment = ({ ideaId, fname, lname, getIdeaComments }: Props) => {
                 </div>
               </div>
             ) : null}
-            <p className="text-xs">0/250</p>
+            <p className="text-xs">{comment.length}/250</p>
           </div>
           <textarea
+            value={comment}
             onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
               if (authStatus === "LOGGED_OUT") {
-                open()
+                open();
               }
               setComment(e.target.value);
             }}

@@ -7,21 +7,57 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/lib/store";
 import { notify } from "@/utils/toast";
 import { useRouter } from "next/navigation";
+import { HeaderStrokeSvg } from "../svgs/Svgs";
 type Props = {};
+import { motion } from "framer-motion";
 
 const HomepageHeader = (props: Props) => {
-  const router = useRouter()
-  const authStatus =  useSelector((state: RootState) => state.persistedState.auth.authStatus)
+  const router = useRouter();
+  const authStatus = useSelector(
+    (state: RootState) => state.persistedState.auth.authStatus
+  );
   return (
     <header className="text-center w-[90%] sm:w-[95%] md:w-[70%] mx-auto mt-2 pt-14">
       <div className=" hidden sm:block text-[2.5rem] sm:text-[3.5rem] md:text-[4rem] leading-[1.07] font-bold md:font-semibold ">
         <h1 className="relative w-fit mx-auto text-black1">
-          <span> A space where ideas</span>
+          <motion.span
+            className="block"
+            initial={{
+              y: 100,
+              opacity: 0,
+            }}
+            animate={{
+              y: 0,
+              opacity: 1,
+            }}
+            transition={{
+              duration: 0.5,
+              // ease: "easeIn"
+            }}
+          >
+            A space where ideas
+          </motion.span>
           <div className="absolute right-[-1.1rem] top-[-.4rem] hidden lg:block">
-            <Image src={HeaderStroke} alt="header-stroke" />
+            <HeaderStrokeSvg />
+            {/* <Image src={HeaderStroke} alt="header-stroke" /> */}
           </div>
         </h1>
-        <h1>blossom & minds connect</h1>
+        <motion.h1
+          initial={{
+            y: 100,
+            opacity: 0,
+          }}
+          animate={{
+            y: 0,
+            opacity: 1,
+          }}
+          transition={{
+            duration: 0.5,
+            delay: 0.2,
+          }}
+        >
+          blossom & minds connect
+        </motion.h1>
       </div>
       <div className="">
         <h1 className="text-[2.7rem] xxs:text-[2.9rem] block sm:hidden font-bold xs:font-semibold leading-[1.07]">
@@ -29,34 +65,110 @@ const HomepageHeader = (props: Props) => {
         </h1>
       </div>
       <div className="flex justify-center mt-6 gap-4">
-        <div className="hidden md:block">
+        <motion.div
+          initial={{
+            x: -100,
+            opacity: 0,
+          }}
+          animate={{
+            x: 0,
+            opacity: 1,
+          }}
+          transition={{
+            duration: 0.5,
+            delay: 0.5,
+          }}
+          className="hidden md:block"
+        >
           <Image src={HeaderStar} alt="header-stroke" />
-        </div>
-        <h2 className=" text-[#333752] md:text-gray1  xxs:text-lg ">
+        </motion.div>
+        <motion.h2
+          initial={{
+            y: 100,
+            opacity: 0,
+          }}
+          animate={{
+            y: 0,
+            opacity: 1,
+          }}
+          transition={{
+            duration: 0.5,
+            delay: 0.5,
+          }}
+          className=" text-[#333752] md:text-gray1  xxs:text-lg "
+        >
           Collaborate, share, and breathe life into your ideas. Let others help
           bring your vision to fruition.
-        </h2>
-        <div className="hidden md:block ">
+        </motion.h2>
+        <motion.div
+          initial={{
+            x: 100,
+            opacity: 0,
+          }}
+          animate={{
+            x: 0,
+            opacity: 1,
+          }}
+          transition={{
+            duration: 0.5,
+            delay: 0.5,
+          }}
+          className="hidden md:block "
+        >
           <Image src={HeaderStar} alt="header-stroke" />
-        </div>
+        </motion.div>
       </div>
       <div className="  flex flex-wrap justify-center mt-12 items-center">
-        <button onClick={() => {
-          if (authStatus === "LOGGED_OUT") {
-            notify("Login to share an idea")
-            router.push("/auth/login")
-          } else {
-            router.push("/share-idea")
-          }
-        }} className="w-full xs:w-[60%] md:w-auto mb-6 md:mb-0 rounded-full px-8 py-4 md:py-3 bg-primary text-white md:mr-8 border-primary border">
-          Share an idea
-        </button>
-        <Link
-          className="w-full xs:w-[60%] md:w-auto rounded-full px-8 py-4 md:py-3 text-primary md:mr-8 border-primary border"
-          href={"/meet-the-team"}
+        <motion.button
+          initial={{
+            x: -100,
+            opacity: 0,
+          }}
+          animate={{
+            x: 0,
+            opacity: 1,
+          }}
+          transition={{
+            duration: 0.5,
+            delay: 0.7,
+            bounce: 1,
+          }}
+          onClick={() => {
+            if (authStatus === "LOGGED_OUT") {
+              notify("Login to share an idea");
+              router.push("/auth/login");
+            } else {
+              router.push("/share-idea");
+            }
+          }}
+          className="w-full xs:w-[60%] md:w-auto mb-6 md:mb-0 rounded-full px-8 py-4 md:py-3 bg-primary text-white md:mr-8 border-primary border"
         >
-          <button>Meet the team</button>
-        </Link>
+          Share an idea
+        </motion.button>
+        <motion.div  initial={{
+                x: 100,
+                opacity: 0,
+              }}
+              animate={{
+                x: 0,
+                opacity: 1,
+              }}
+              transition={{
+                duration: 0.5,
+                delay: 0.7,
+                bounce: 1,
+              }} className="w-full xs:w-[60%] md:w-auto rounded-full px-8 py-4 md:py-3 text-primary md:mr-8 border-primary border">
+          <Link
+            className=""
+            href={"/meet-the-team"}
+          >
+            <motion.button
+             
+            >
+              Meet the team
+            </motion.button>
+          </Link>
+        </motion.div>
       </div>
     </header>
   );

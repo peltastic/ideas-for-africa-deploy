@@ -18,13 +18,13 @@ const Budget = (props: Props) => {
           </p>
         </div>
       ) : (
-        <div className="text-black2 flex justify-between">
-        <div className="">
+        <div className="text-black2 flex flex-wrap sm:flex-nowrap justify-between">
+        <div className="w-full sm:w-auto">
             <p>Estimate Budget <span className="text-black1 font-semibold">{props.minbud}</span></p>
            <p>(Minimum)</p> 
         </div>
-        <Image src={ArrowRight} alt="arrow-right" className="w-[1.2rem]"  />
-        <div className="">
+        <Image src={ArrowRight} alt="arrow-right" className="w-[1.2rem] hidden sm:block"  />
+        <div className="mt-9 sm:mt-0">
             <p>Estimate Budget <span className="text-black1 font-semibold">{props.maxbud}</span></p>
             <p>(Maximum)</p>
         </div>

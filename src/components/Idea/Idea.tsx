@@ -7,22 +7,25 @@ import {
 } from "@/lib/features/ideas";
 import { useParams } from "next/navigation";
 import IdeaPageSkeleton from "../Skeleton/IdeaPageSkeleton";
+import { getCookie } from "@/utils/storage";
+import VersionHistorySkeleton from "../Skeleton/VersionHistorySkeleton";
 
 type Props = {
   modified?: boolean;
 };
 
 const Idea = (props: Props) => {
+  const userId = getCookie("id");
   const [openVH, setOpenVH] = useState<boolean>(false);
   const { id, mid } = useParams();
 
-  const [getIdea, { data }] = useLazyGetSingleIdeaQuery();
+  const [getIdea, { data, isFetching }] = useLazyGetSingleIdeaQuery();
   const [getModifiedIdea, result] = useLazyGetSingleModifiedIdeaQuery();
   useEffect(() => {
     if (props.modified) {
       getModifiedIdea(mid as string);
     }
-    getIdea({ id: id as string });
+    getIdea({ id: id as string, userId });
   }, []);
   const setOpenVHHandler = () => {
     setOpenVH(true);
@@ -58,7 +61,9 @@ const Idea = (props: Props) => {
             name={data.idea.headline}
             closeVH={closeVHHandler}
           />
-        ) : null}
+        ) : (
+          <VersionHistorySkeleton />
+        )}
       </div>
     </div>
   );

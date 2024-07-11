@@ -80,8 +80,14 @@ export const ideasApi = createApi({
     getIdeas: build.query<{ ideas: IGetIdeasResponse[] }, void>({
       query: () => "/users/ideas",
     }),
-    getSingleIdea: build.query<IGetSingleIdeaResponse, { id: string }>({
-      query: ({ id }) => `/users/ideas/${id}`,
+    getSingleIdea: build.query<IGetSingleIdeaResponse, { id: string, userId?: string }>({
+      query: ({ id, userId }) => {
+        let query = ""
+        if (userId) {
+          query = `?userId=${userId}`
+        }
+        return { url: `/users/ideas/${id}${query}` };
+      },
     }),
     getIdeaBycategory: build.query<{ ideas: IGetIdeasResponse[] }, string>({
       query: (category) => `/users/ideas/active/${category}`,

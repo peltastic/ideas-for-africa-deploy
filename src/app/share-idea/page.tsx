@@ -10,6 +10,7 @@ import { getCookie } from "@/utils/storage";
 import { notify } from "@/utils/toast";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 
 type Props = {};
 
@@ -19,7 +20,7 @@ const ShareIdea = (props: Props) => {
   const [createIdea, { isLoading, isError, isSuccess, error }] =
     useCreateIdeaMutation();
   const [step, setStep] = useState<"basic" | "additional">("basic");
-  const [bannerPreview, setBannerPreview] = useState<string>("")
+  const [bannerPreview, setBannerPreview] = useState<string>("");
   const [ideaPayload, setIdeaPayload] = useState<ICreateIdeaPayload>({
     headline: "",
     summary: "",
@@ -42,7 +43,7 @@ const ShareIdea = (props: Props) => {
   });
   useEffect(() => {
     if (isError) {
-      notify((error as any)?.data?.message || "Something went wrong")
+      notify((error as any)?.data?.message || "Something went wrong");
     }
     if (isSuccess) {
       notify("Idea Posted Successfully", "success");
@@ -139,12 +140,14 @@ const ShareIdea = (props: Props) => {
   };
 
   const setBannerPreviewHandler = (preview: string) => {
-    setBannerPreview(preview)
-  }
+    setBannerPreview(preview);
+  };
   return (
     <div className="">
       <Navbar />
-      <div className="max-w-[1700px] mx-auto">
+      <motion.div
+        className="max-w-[1700px] mx-auto"
+      >
         <div className="flex gap-3 px-6 xs:px-[2.4rem] des:px-[10rem] mt-[3rem]">
           <div className=" hidden lg:block w-[30%]">
             <div className="flex mb-6">
@@ -177,8 +180,8 @@ const ShareIdea = (props: Props) => {
           <div className="w-full sm:w-[95%] mm:w-[80%] lg:w-[65%] mx-auto ">
             {step === "basic" ? (
               <BasicInformation
-              setBannerPreview={setBannerPreviewHandler}
-              preview={bannerPreview}
+                setBannerPreview={setBannerPreviewHandler}
+                preview={bannerPreview}
                 idea={ideaPayload}
                 setIdea={setIdeaPayloadHandler}
               />
@@ -240,7 +243,7 @@ const ShareIdea = (props: Props) => {
             </Button>
           </div>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };

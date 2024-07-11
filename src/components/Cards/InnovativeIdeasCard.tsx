@@ -30,6 +30,7 @@ import { notify } from "@/utils/toast";
 import { useSelector } from "react-redux";
 import { RootState } from "@/lib/store";
 import Link from "next/link";
+import NotLoggedInModal from "../ModalComponents/NotLoggedInModal";
 
 type Props = {
   // image: string;
@@ -87,7 +88,6 @@ const InnovativeIdeasCard = (props: Props) => {
             classname="bg-gray3 py-2 px-4 text-sm rounded-md"
             clicked={() => {
               navigator.clipboard.writeText(url);
-
               notify("Copied", "success");
             }}
           >
@@ -101,23 +101,7 @@ const InnovativeIdeasCard = (props: Props) => {
         opened={authModalOpened}
         onClose={funcs.close}
       >
-        <div className="">
-          <h1 className="font-semibold mb-4 text-lg">You need to be logged in to interact</h1>
-          <div className="flex text-sm">
-            <Link
-              className="border border-primary text-sm text-primary xxs:mr-4 rounded-full py-2 px-5"
-              href={"/auth/login"}
-            >
-              Log in
-            </Link>
-            <Link
-              className="hidden xxs:block border text-sm border-primary bg-primary text-white rounded-full py-2 px-5"
-              href={"/auth/register"}
-            >
-              Sign up
-            </Link>
-          </div>
-        </div>
+        <NotLoggedInModal />
       </ModalComponent>
       <div className=" bg-white relative sm:h-[30rem] py-4 mb-6 px-4 shadow-[0_0px_10px_rgba(0,0,0,0.1)] w-full rounded-xl">
         <div

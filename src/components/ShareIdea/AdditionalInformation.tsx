@@ -6,6 +6,7 @@ import Upload from "../Upload/Upload";
 import { ICreateIdeaPayload } from "@/interface/idea";
 import File from "./File";
 import { idea_categories_list } from "@/utils/constants";
+import { motion } from "framer-motion";
 
 type Props = {
   setIdea: (key: string, value: string | File | null) => void;
@@ -14,7 +15,7 @@ type Props = {
   addNewPitchHandler: () => void;
   addDocHandler: (file: File | null) => void;
   deleteFileHandler: (index: number) => void;
-  updateDocHandler: (file: File | null, index: number) => void
+  updateDocHandler: (file: File | null, index: number) => void;
 };
 
 const AdditionalInformation = ({
@@ -24,10 +25,24 @@ const AdditionalInformation = ({
   addNewPitchHandler,
   addDocHandler,
   deleteFileHandler,
-  updateDocHandler
+  updateDocHandler,
 }: Props) => {
   return (
-    <div className="pb-[5rem]">
+    <motion.div
+      initial={{
+        y: 100,
+        opacity: 0,
+      }}
+      animate={{
+        y: 0,
+        opacity: 1,
+      }}
+      transition={{
+        duration: 0.5,
+        bounce: 1,
+      }}
+      className="pb-[5rem]"
+    >
       <h1 className="font-bold text-2xl xxs:text-3xl">
         Share your existing idea
       </h1>
@@ -123,8 +138,8 @@ const AdditionalInformation = ({
         {idea
           ? idea.files?.map((el, index) => (
               <File
-              key={el.name}
-              updateDocHandler={updateDocHandler}
+                key={el.name}
+                updateDocHandler={updateDocHandler}
                 deleteFileHandler={deleteFileHandler}
                 index={index}
                 name={el.name}
@@ -133,7 +148,7 @@ const AdditionalInformation = ({
             ))
           : null}
       </div>
-    </div>
+    </motion.div>
   );
 };
 

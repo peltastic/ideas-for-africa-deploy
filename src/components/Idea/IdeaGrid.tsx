@@ -26,7 +26,12 @@ import UnlikedImg from "/public/assets/unlike.svg";
 import { useLikeIdeaMutation } from "@/lib/features/ideas";
 import { getCookie } from "@/utils/storage";
 import IdeaTab from "@/Tabs/IdeaTab";
-import TestImg from "/public/assets/ShareAnIdea.png"
+import TestImg from "/public/assets/ShareAnIdea.png";
+import ModalComponent from "../Modal/Modal";
+import NotLoggedInModal from "../ModalComponents/NotLoggedInModal";
+import { useDisclosure } from "@mantine/hooks";
+import { useSelector } from "react-redux";
+import { RootState } from "@/lib/store";
 
 type Props = {
   data: IGetSingleIdeaResponse;
@@ -34,6 +39,8 @@ type Props = {
 };
 
 const IdeaGrid = ({ data, setOpenVH }: Props) => {
+  const authStatus = useSelector((state: RootState) => state.persistedState.auth.authStatus )
+  const [opened, { open, close }] = useDisclosure();
   const el = ["Body", "Steps", "Budget", "Documents", "Discussions"];
   const id = getCookie("id");
   const [likesCount, setLikesCount] = useState<number>(data.likes);
@@ -74,6 +81,9 @@ const IdeaGrid = ({ data, setOpenVH }: Props) => {
       break;
   }
   const likeHandler = () => {
+    if (authStatus === "LOGGED_OUT") {
+      return open()
+    }
     likeIdea({
       ideaId: data.idea._id,
       userId: id,
@@ -86,101 +96,108 @@ const IdeaGrid = ({ data, setOpenVH }: Props) => {
     setLiked(!liked);
   };
   return (
-    <div className="w-full">
-      <h1 className="text-2xl font-bold">{data.idea.headline}</h1>
-      <Link
-        href={`/idea/${data.idea._id}/${formatNameRoute(
-          data.idea.headline
-        )}/brainstorms`}
-      >
-        <button className="hidden sm:flex items-center text-sm rounded-full px-8 py-3 my-6 bg-primary text-white md:mr-8 border-primary border">
-          <Image src={BrainstormSvg} className="mr-2" alt="brainstorm svg" />
-          <p>Brainstorm idea</p>
-        </button>
-      </Link>
-      <div className="flex flex-wrap items-center  mt-8">
-        <div className="rounded-full overflow-hidden mr-4 w-[3rem]">
-          <Image
-            width={50}
-            height={50}
-            src={data.profile?.ppicture || NoProfilePic}
-            alt="avatar"
-          />
-        </div>
-        <div className="w-full mt-3 sm:mt-0 sm:w-auto">
-          <div className="text-black1 text-xs mr-auto ">
-            <p className="  text-lg mb-[0..5rem]">
-              {data.user.fname} {data.user.lname}
-            </p>
-            <p className="text-gray1 leading-5 text-[0.9rem]">
-              {data.profile?.title} {data.profile?.pow} • 5 min read •{" "}
-              {moment(data.idea.createdAt).startOf("day").fromNow()}
-            </p>
+    <>
+     <ModalComponent size="md" centered opened={opened} onClose={close}>
+        <NotLoggedInModal/>
+      </ModalComponent>
+      <div className="w-full">
+        <h1 className="text-2xl font-bold">{data.idea.headline}</h1>
+        <Link
+          href={`/idea/${data.idea._id}/${formatNameRoute(
+            data.idea.headline
+          )}/brainstorms`}
+        >
+          <button className="hidden sm:flex items-center text-sm rounded-full px-8 py-3 my-6 bg-primary text-white md:mr-8 border-primary border">
+            <Image src={BrainstormSvg} className="mr-2" alt="brainstorm svg" />
+            <p>Brainstorm idea</p>
+          </button>
+        </Link>
+        <div className="flex flex-wrap items-center  mt-8">
+          <div className="rounded-full overflow-hidden mr-4 w-[3rem]">
+            <Image
+              width={50}
+              height={50}
+              src={data.profile?.ppicture || NoProfilePic}
+              alt="avatar"
+            />
           </div>
-        </div>
-      </div>
-      <div className="flex items-center text-gray1 text-xs my-8">
-        <div onClick={likeHandler} className="cursor-pointer">
-          <Image
-            src={liked ? LikeImg : UnlikedImg}
-            alt="chat-img"
-            className=" active:scale-110 transition-all mr-1 w-[1.3rem]"
-          />
-        </div>
-        &nbsp;
-        <p className="mr-3 text-[1rem]">{likesCount}</p>
-        <Image src={ChatImg} alt="chat-img" className="mr-1 w-[1.3rem]" />
-        &nbsp;
-        <p className="mr-3 text-[1rem]">{data.count}</p>
-        <div className="flex">
-          <div className="bg-black1 mr-2 p-[0.27rem] flex justify-center items-center w-[1.5rem] h-[1.5rem] rounded-full">
-            <Image src={Instagram} alt="instagram" className="" />
-          </div>
-          <div className="bg-black1 mr-2 p-[0.27rem] flex justify-center items-center w-[1.5rem] h-[1.5rem] rounded-full">
-            <Image src={Facebook} alt="instagram" className="" />
-          </div>
-          <div className="bg-black1 mr-2 p-[0.27rem] flex justify-center items-center w-[1.5rem] h-[1.5rem] rounded-full">
-            <Image src={Twitter} alt="instagram" className="" />
-          </div>
-        </div>
-      </div>
-      <p>{data.idea.summary}</p>
-      <div className="my-8 relative">
-        <div className="block des:hidden">
-          <IdeaOptionsMobile
-            id={data.idea._id}
-            headline={formatNameRoute(data.idea.headline)}
-            setOpenVH={setOpenVH}
-          />
-        </div>
-        <Image
-          src={data.thumbs[0]?.path || TestImg }
-          width={300}
-          height={300}
-          className="w-full"
-          alt="test-idea"
-        />
-      </div>
-      <div className="">
-        <IdeaTab
-          filterVal={curentTab}
-          setVal={(el) => setCurrentTab(el)}
-          elements={el}
-        />
-        <div className="flex sm:hidden flex-wrap">
-          {el.map((el) => (
-            <div
-            key={el}
-            onClick={() => setCurrentTab(el)}
-              className={`${curentTab === el ? "bg-gray1 text-white" : ""} px-4 py-1 border border-gray1 mr-4 mb-5 rounded-full`}
-            >
-              {el}
+          <div className="w-full mt-3 sm:mt-0 sm:w-auto">
+            <div className="text-black1 text-xs mr-auto ">
+              <p className="  text-lg mb-[0..5rem]">
+                {data.user.fname} {data.user.lname}
+              </p>
+              <p className="text-gray1 leading-5 text-[0.9rem]">
+                {data.profile?.title} {data.profile?.pow} • 5 min read •{" "}
+                {moment(data.idea.createdAt).startOf("day").fromNow()}
+              </p>
             </div>
-          ))}
+          </div>
         </div>
+        <div className="flex items-center text-gray1 text-xs my-8">
+          <div onClick={likeHandler} className="cursor-pointer">
+            <Image
+              src={liked ? LikeImg : UnlikedImg}
+              alt="chat-img"
+              className=" active:scale-110 transition-all mr-1 w-[1.3rem]"
+            />
+          </div>
+          &nbsp;
+          <p className="mr-3 text-[1rem]">{likesCount}</p>
+          <Image src={ChatImg} alt="chat-img" className="mr-1 w-[1.3rem]" />
+          &nbsp;
+          <p className="mr-3 text-[1rem]">{data.count}</p>
+          <div className="flex">
+            <div className="bg-black1 mr-2 p-[0.27rem] flex justify-center items-center w-[1.5rem] h-[1.5rem] rounded-full">
+              <Image src={Instagram} alt="instagram" className="" />
+            </div>
+            <div className="bg-black1 mr-2 p-[0.27rem] flex justify-center items-center w-[1.5rem] h-[1.5rem] rounded-full">
+              <Image src={Facebook} alt="instagram" className="" />
+            </div>
+            <div className="bg-black1 mr-2 p-[0.27rem] flex justify-center items-center w-[1.5rem] h-[1.5rem] rounded-full">
+              <Image src={Twitter} alt="instagram" className="" />
+            </div>
+          </div>
+        </div>
+        <p>{data.idea.summary}</p>
+        <div className="my-8 relative">
+          <div className="block des:hidden">
+            <IdeaOptionsMobile
+              id={data.idea._id}
+              headline={formatNameRoute(data.idea.headline)}
+              setOpenVH={setOpenVH}
+            />
+          </div>
+          <Image
+            src={data.thumbs[0]?.path || TestImg}
+            width={300}
+            height={300}
+            className="w-full"
+            alt="test-idea"
+          />
+        </div>
+        <div className="">
+          <IdeaTab
+            filterVal={curentTab}
+            setVal={(el) => setCurrentTab(el)}
+            elements={el}
+          />
+          <div className="flex sm:hidden flex-wrap">
+            {el.map((el) => (
+              <div
+                key={el}
+                onClick={() => setCurrentTab(el)}
+                className={`${
+                  curentTab === el ? "bg-gray1 text-white" : ""
+                } px-4 py-1 border border-gray1 mr-4 mb-5 rounded-full`}
+              >
+                {el}
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="my-8">{component}</div>
       </div>
-      <div className="my-8">{component}</div>
-    </div>
+    </>
   );
 };
 

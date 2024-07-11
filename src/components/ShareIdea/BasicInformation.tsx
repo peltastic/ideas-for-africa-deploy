@@ -4,18 +4,39 @@ import Input from "../Input/Input";
 import Editor from "../Editor/Editor";
 import Upload from "../Upload/Upload";
 import { ICreateIdeaPayload } from "@/interface/idea";
+import { motion } from "framer-motion";
 
 type Props = {
   setIdea: (key: string, value: string | File | null) => void;
   idea: ICreateIdeaPayload;
-  setBannerPreview?: (preview: string) => void
-  preview?: string
+  setBannerPreview?: (preview: string) => void;
+  preview?: string;
 };
 
-const BasicInformation = ({ setIdea, idea, setBannerPreview, preview }: Props) => {
+const BasicInformation = ({
+  setIdea,
+  idea,
+  setBannerPreview,
+  preview,
+}: Props) => {
   return (
-    <div>
-      <h1 className="font-bold text-2xl xxs:text-3xl">Share your existing idea</h1>
+    <motion.div
+      initial={{
+        y: 100,
+        opacity: 0,
+      }}
+      animate={{
+        y: 0,
+        opacity: 1,
+      }}
+      transition={{
+        duration: 0.5,
+        bounce: 1,
+      }}
+    >
+      <h1 className="font-bold text-2xl xxs:text-3xl">
+        Share your existing idea
+      </h1>
       <p className="text-xs xxs:text-sm mt-2 text-gray4">
         Turn your idea into a sensation. Share it now and let the buzz begin!
       </p>
@@ -48,10 +69,16 @@ const BasicInformation = ({ setIdea, idea, setBannerPreview, preview }: Props) =
         </div>
         <div className="mb-[5rem]">
           <label className="text-sm font-bold mt-8 mb-4 block">Image</label>
-          <Upload preview={preview} setBannerPreview={setBannerPreview}  basic accept="image/png,image/jpeg" setFile={setIdea} />
+          <Upload
+            preview={preview}
+            setBannerPreview={setBannerPreview}
+            basic
+            accept="image/png,image/jpeg"
+            setFile={setIdea}
+          />
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

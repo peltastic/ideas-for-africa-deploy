@@ -1,8 +1,8 @@
-// eslint-disable-next-line no-undef
+// eslint-disable-next-line no-undef 
+// dotenv.config()
 importScripts("https://www.gstatic.com/firebasejs/8.8.0/firebase-app.js");
 // eslint-disable-next-line no-undef
 importScripts("https://www.gstatic.com/firebasejs/8.8.0/firebase-messaging.js");
-
 const firebaseConfig = {
   apiKey: "AIzaSyBEtaKIh7UucwxSLMCkCCUivdGo39oP5Pk",
   authDomain: "ideas-for-africa-test-app.firebaseapp.com",

@@ -7,7 +7,6 @@ const firebaseConfig = {
   apiKey: "AIzaSyBEtaKIh7UucwxSLMCkCCUivdGo39oP5Pk",
   authDomain: "ideas-for-africa-test-app.firebaseapp.com",
   projectId: "ideas-for-africa-test-app",
-  storageBucket: "your_keys",
   messagingSenderId: "632778017296",
   appId: "1:632778017296:web:ef4ab3aca350b025f19895",
   measurementId: "G-K2Z2FNEV42",

@@ -6,15 +6,22 @@ const useNotificationPermissionStatus = () => {
     useState<NotificationPermission>("default");
 
   useEffect(() => {
-    const handler = () => setPermission(Notification.permission);
-    handler();
-    Notification.requestPermission().then(handler);
+    const isSupported = () =>
+      'Notification' in window &&
+      'serviceWorker' in navigator &&
+      'PushManager' in window
+      if (isSupported()) {
 
-    navigator.permissions
-      .query({ name: "notifications" })
-      .then((notificationPerm) => {
-        notificationPerm.onchange = handler;
-      });
+        const handler = () => setPermission(Notification.permission);
+        handler();
+        Notification.requestPermission().then(handler);
+        
+        navigator.permissions
+        .query({ name: "notifications" })
+        .then((notificationPerm) => {
+          notificationPerm.onchange = handler;
+        });
+      }
   }, []);
 
   return permission;

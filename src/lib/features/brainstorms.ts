@@ -1,7 +1,10 @@
 import config from "@/config/config";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { getCookie } from "@/utils/storage";
-import { IGetBrainstormGroupsResponse } from "@/interface/brainstorms";
+import {
+  IGetBrainstormGroupsResponse,
+  IGroupMessagesResponse,
+} from "@/interface/brainstorms";
 
 export const brainstormsApi = createApi({
   reducerPath: "brainstorms",
@@ -93,6 +96,14 @@ export const brainstormsApi = createApi({
     getGroupMembers: build.query<unknown, string>({
       query: (id) => `/groups/${id}/members`,
     }),
+    getGroupMessages: build.query<
+      {
+        messages: IGroupMessagesResponse[];
+      },
+      string
+    >({
+      query: (roomId) => `/groups/messages/${roomId}`,
+    }),
   }),
 });
 
@@ -102,5 +113,6 @@ export const {
   useRequestToJoinGroupMutation,
   useLazyGetGroupsQuery,
   useGetGroupMembersQuery,
-  useRespondToRequestMutation
+  useRespondToRequestMutation,
+  useLazyGetGroupMessagesQuery,
 } = brainstormsApi;

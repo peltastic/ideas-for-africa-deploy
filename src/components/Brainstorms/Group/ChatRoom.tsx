@@ -11,6 +11,7 @@ import { RootState } from "@/lib/store";
 import { sendMessage } from "@/lib/sockets";
 import Button from "@/components/Button/Button";
 import BrainstormChatSkeleton from "@/components/Skeleton/BrainstormChatSkeleton";
+import { useLazyGetGroupMessagesQuery } from "@/lib/features/brainstorms";
 
 type Props = {
   setShowProps: (val: boolean) => void;
@@ -18,6 +19,8 @@ type Props = {
 };
 
 const ChatRoom = (props: Props) => {
+  const [getGroupMessages, { data, isFetching }] =
+    useLazyGetGroupMessagesQuery();
   const [showChat, setShowChat] = useState<boolean>(false);
   const router = useRouter();
   const profile = useSelector(
@@ -43,7 +46,7 @@ const ChatRoom = (props: Props) => {
     chat_socket.on(
       "chatMessage",
       (msgData: { username: string; text: string }) => {
-        console.log("aa");
+        console.log(msgData)
         updateMessageHandler(msgData.text, msgData.username);
       }
     );
@@ -53,6 +56,18 @@ const ChatRoom = (props: Props) => {
       setShowChat(true);
     });
   }, []);
+  useEffect(() => {
+    getGroupMessages(subId as string);
+  }, []);
+  useEffect(() => {
+    if (data && data.messages) {
+      const chatHistory = data.messages.map((el) => ({
+        username: el.username,
+       text: el.text
+      }));
+      setMessages(chatHistory)
+    }
+  }, [data]);
   const updateMessageHandler = (message: string, username?: string) => {
     // const currMessages = [...messgaes];
     // console.log(currMessages);
@@ -114,7 +129,7 @@ const ChatRoom = (props: Props) => {
       </div>
       {showChat ? (
         <div className="bg-gray3 no-scrollbar relative py-6 sm:px-4 rounded-md mt-8 min-h-[70vh]">
-          <div className="h-[100vh] mb-[10rem] overflow-y-auto no-scrollbar">
+          <div className="h-[80vh] mb-[10rem] overflow-y-auto no-scrollbar">
             {messgaes.length === 0 ? (
               <div className="text-center text-gray3 text-xs bg-gray1 w-fit py-2 rounded-md px-4 mx-auto">
                 Conversation is currently empty

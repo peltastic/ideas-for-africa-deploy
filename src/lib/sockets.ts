@@ -1,6 +1,5 @@
 import { io } from "socket.io-client";
 import config from "@/config/config"
-console.log(config.CHAT_SERVER)
 export const chat_socket = io(config.CHAT_SERVER as string);
 
 export function joinBrainstormRoom(username: string, roomID: string) {

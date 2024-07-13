@@ -11,14 +11,20 @@ const useFCMToken = () => {
 
   useEffect(() => {
     const retrieveToken = async () => {
+      const isSupported = () =>
+        "Notification" in window &&
+        "serviceWorker" in navigator &&
+        "PushManager" in window;
       if (typeof window !== "undefined" && "serviceWorker" in navigator) {
-        if (permission === "granted") {
-          const isFCMSupported = await isSupported();
-          if (!isFCMSupported) return;
-          const fcmToken = await getToken(messaging(), {
-            vapidKey: config.VAPID_KEY,
-          });
-          setFcmToken(fcmToken);
+        if (isSupported()) {
+          if (permission === "granted") {
+            const isFCMSupported = await isSupported();
+            if (!isFCMSupported) return;
+            const fcmToken = await getToken(messaging(), {
+              vapidKey: config.VAPID_KEY,
+            });
+            setFcmToken(fcmToken);
+          }
         }
       }
     };

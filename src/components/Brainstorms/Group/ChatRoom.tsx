@@ -128,7 +128,7 @@ const ChatRoom = (props: Props) => {
         </div>
       </div>
       {showChat ? (
-        <div className="bg-gray3 no-scrollbar relative py-6 sm:px-4 rounded-md mt-8 min-h-[70vh]">
+        <div className="bg-gray3 no-scrollbar relative py-6 px-1 sm:px-4 rounded-md mt-8 min-h-[70vh]">
           <div className="h-[80vh] mb-[10rem] overflow-y-auto no-scrollbar">
             {messgaes.length === 0 ? (
               <div className="text-center text-gray3 text-xs bg-gray1 w-fit py-2 rounded-md px-4 mx-auto">

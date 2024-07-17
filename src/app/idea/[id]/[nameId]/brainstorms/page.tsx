@@ -2,7 +2,7 @@
 import ProfileMenu from "@/components/ProfileMenu/ProfileMenu";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Logo from "/public/assets/logo.svg";
 import BrainStorms from "@/components/Brainstorms/BrainStorms";
 import { useGetGroupsQuery } from "@/lib/features/brainstorms";
@@ -16,16 +16,20 @@ import BrainstormGroups from "@/components/Skeleton/BrainstormGroups";
 import HoverCardComponent from "@/components/HoverCard/HoverCard";
 import { IoMdAdd } from "react-icons/io";
 import CreateBrainstormGroup from "@/components/Brainstorms/CreateBrainstormGroup";
+import SetRoute from "@/components/HOC/setRoute";
+import NotLoggedInModal from "@/components/ModalComponents/NotLoggedInModal";
+import { useSelector } from "react-redux";
+import { RootState } from "@/lib/store";
 
 type Props = {};
 
 const BrainstormsPage = (props: Props) => {
+  const authStatus = useSelector((state: RootState) => state.persistedState.auth.authStatus)
   const { id } = useParams();
   const { data, isFetching } = useGetGroupsQuery((id as string) ?? skipToken);
-
-  const [a, b] = useState([]);
   const [opened, { open, close }] = useDisclosure(false);
   const [createBrainstormOpened, funcs] = useDisclosure(false);
+  const [authOpened, authFuncs] = useDisclosure(false);
 
   useEffect(() => {
     if (data && data.groups.length === 0) {
@@ -35,6 +39,15 @@ const BrainstormsPage = (props: Props) => {
 
   return (
     <>
+      <ModalComponent
+        size="lg"
+        centered
+        opened={authOpened}
+        onClose={authFuncs.close}
+        
+      >
+        <NotLoggedInModal title="You need to be Logged In to create a brainstorm group" />
+      </ModalComponent>
       <ModalComponent
         size="md"
         withCloseButton
@@ -109,7 +122,12 @@ const BrainstormsPage = (props: Props) => {
             <div className="flex items-center">
               <HoverCardComponent text="Create group">
                 <Button
-                  clicked={funcs.open}
+                  clicked={ () => {
+                    if (authStatus === "LOGGED_OUT") {
+                      return authFuncs.open()
+                    }
+                     funcs.open()
+                    }}
                   classname="bg-gray3 text-xs sm:text-sm px-5 py-[0.75rem] xs:py-[0.7rem] mr-3 rounded-full flex items-center"
                 >
                   <IoMdAdd />
@@ -143,4 +161,4 @@ const BrainstormsPage = (props: Props) => {
   );
 };
 
-export default BrainstormsPage;
+export default SetRoute(BrainstormsPage);

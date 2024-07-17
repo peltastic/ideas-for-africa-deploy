@@ -6,13 +6,19 @@ import LikeImg from "/public/assets/like-img.svg";
 import { formatNameRoute, truncateStr } from "@/utils/helperfunctions";
 import { useRouter } from "next/navigation";
 import { AspectRatio } from "@mantine/core";
+import NoProfilePic from "/public/assets/no-profile.jpg";
+
 type Props = {
   modified?: boolean;
   title: string;
   banner?: string;
   description?: string;
   id?: string;
-  likes: string;
+  likes?: string;
+  ppicture?: string;
+  fname?: string;
+  lname?: string;
+  userId?: string;
 };
 
 const Idea = (props: Props) => {
@@ -28,7 +34,10 @@ const Idea = (props: Props) => {
         <div className="hidden sm:block">
           <AspectRatio ratio={1080 / 720} mx="auto">
             <Image
-              src={props.banner || IdeaImg}
+              src={
+                props.banner ||
+                "https://res.cloudinary.com/da9gqyswp/image/upload/v1717722025/xbvycbrxduhl5lvqewc5.jpg"
+              }
               width={100}
               height={100}
               alt="idea-img"
@@ -38,7 +47,7 @@ const Idea = (props: Props) => {
         </div>
         <div className="block sm:hidden w-full">
           <Image
-            src={props.banner || IdeaImg}
+            src={props.banner ||  "https://res.cloudinary.com/da9gqyswp/image/upload/v1717722025/xbvycbrxduhl5lvqewc5.jpg"}
             width={100}
             height={100}
             alt="idea-img"
@@ -46,13 +55,17 @@ const Idea = (props: Props) => {
           />
         </div>
       </div>
-      <div className="w-[95%] mx-auto sm:mx-0 mt-3 sm:mt-0">
-        <h1
-          onClick={() => router.push(`/idea/${props.id}`)}
-          className=" cursor-pointer font-semibold text-sm mb-1"
-        >
-          {props.title || "Affiliate Mastery: Pathway to Seven-Figure Success"}
-        </h1>
+      <div className={` sm:w-[85%] mx-auto sm:mx-0 mt-3 sm:mt-0`}>
+        <div className="flex items-center mb-2">
+          <h1
+            onClick={() => router.push(`/idea/${props.id}`)}
+            className=" cursor-pointer font-semibold text-sm "
+          >
+            {props.title ||
+              "Affiliate Mastery: Pathway to Seven-Figure Success"}
+          </h1>
+          {props.modified ? <p className="text-gray1 bg-gray3 ml-4 py-1 px-4 rounded-full text-xs ">Modified</p> : null }
+        </div>
         <p
           onClick={() => router.push(`/idea/${props.id}`)}
           className="text-xs mb-1 cursor-pointer"
@@ -63,13 +76,43 @@ const Idea = (props: Props) => {
             150
           )}
         </p>
-        <div className="flex items-center text-gray1 text-xs">
-          <Image src={ChatImg} alt="chat-img" className="mr-1" />{" "}
-          <p className="mr-2">0</p> •{" "}
-          <Image src={LikeImg} alt="chat-img" className="mx-2" />{" "}
-          <p className="mr-2">{props.likes}</p> •{" "}
-          <p className="ml-2">2 hours ago</p>
-        </div>
+        {props.modified ? (
+          <div className="flex items-center">
+            <div
+              className="mr-2 w-[1.5rem] rounded-full overflow-hidden"
+              onClick={() => {
+                if (!props.userId) {
+                  return;
+                }
+                router.push(`/profile/${props.userId}`);
+              }}
+            >
+              <Image
+                src={props.ppicture || NoProfilePic}
+                alt="avatar"
+                width={100}
+                height={100}
+              />
+            </div>
+            <div
+              onClick={() => router.push(`/profile/${props.ppicture}`)}
+              className="text-xs mr-auto "
+            >
+              <p className="font-medium mb-[0.2rem]">
+                {props.fname} {props.lname}
+              </p>
+              {/* <p className="leading-5 text-gray1">{props.data.pow}</p> */}
+            </div>
+          </div>
+        ) : (
+          <div className="flex items-center text-gray1 text-xs">
+            <Image src={ChatImg} alt="chat-img" className="mr-1" />{" "}
+            <p className="mr-2">0</p> •{" "}
+            <Image src={LikeImg} alt="chat-img" className="mx-2" />{" "}
+            <p className="mr-2">{props.likes}</p> •{" "}
+            <p className="ml-2">2 hours ago</p>
+          </div>
+        )}
       </div>
     </div>
   );

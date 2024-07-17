@@ -16,6 +16,7 @@ import { notify } from "@/utils/toast";
 import { useRouter } from "next/navigation";
 import { formatNameRoute } from "@/utils/helperfunctions";
 import Spinner from "../Spinner/Spinner";
+import { IoChevronBackSharp } from "react-icons/io5";
 
 type Props = {
   data: IGetSingleIdeaResponse;
@@ -132,7 +133,11 @@ const ModifyIdea = ({ data }: Props) => {
   };
 
   return (
-    <div className="bg-white pt-10 mx-auto w-full xs:w-[98%] min-h-[90vh] rounded-sm">
+    <div className="relative bg-white pt-10 mx-auto w-full xs:w-[98%] min-h-[90vh] rounded-sm">
+      <Button clicked={() => router.back()} classname="flex bg-gray8 py-1 px-2 mb-6 ml-6 rounded-lg left-8 items-center text-lg">
+        <IoChevronBackSharp />
+        <p className="text-sm">Back</p>
+      </Button>
       <div className="w-[95%] sm:w-[80%] lg:w-[60%] mx-auto">
         <h1 className="text-xl font-semibold">{data.idea.headline}</h1>
         <div className="flex flex-wrap items-center  mt-8">

@@ -51,6 +51,7 @@ const ShareIdea = (props: Props) => {
       router.push("/");
     }
   }, [isError, isSuccess]);
+  
   const createIdeaHandler = () => {
     let pitchsIsEmpty = true;
     for (const el of ideaPayload.pitchs) {

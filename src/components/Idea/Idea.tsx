@@ -5,16 +5,19 @@ import {
   useLazyGetSingleIdeaQuery,
   useLazyGetSingleModifiedIdeaQuery,
 } from "@/lib/features/ideas";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import IdeaPageSkeleton from "../Skeleton/IdeaPageSkeleton";
 import { getCookie } from "@/utils/storage";
 import VersionHistorySkeleton from "../Skeleton/VersionHistorySkeleton";
+import { IoChevronBackSharp } from "react-icons/io5";
+import Button from "../Button/Button";
 
 type Props = {
   modified?: boolean;
 };
 
 const Idea = (props: Props) => {
+  const router = useRouter();
   const userId = getCookie("id");
   const [openVH, setOpenVH] = useState<boolean>(false);
   const { id, mid } = useParams();
@@ -34,7 +37,7 @@ const Idea = (props: Props) => {
     setOpenVH(false);
   };
   return (
-    <div className="mx-auto max-w-[2000px] rounded-tr-xl relative overflow-hidden rounded-tl-xl bg-white flex px-4 xs:px-10 py-10">
+    <div className="mx-auto max-w-[2000px] rounded-tr-xl relative overflow-hidden rounded-tl-xl  bg-white flex px-4 xs:px-10 py-10">
       <div className="w-full des:w-[60%] mr-auto">
         {data && !props.modified ? (
           <IdeaGrid setOpenVH={setOpenVHHandler} data={data} />

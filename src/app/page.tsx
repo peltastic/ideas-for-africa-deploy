@@ -1,12 +1,14 @@
-"use client"
+"use client";
 import Footer from "@/components/Footer/Footer";
+import SetRoute from "@/components/HOC/setRoute";
 import HomepageHeader from "@/components/Header/HomepageHeader";
 import CauroselSection from "@/components/Homepage/CauroselSection";
 import InnovativeIdeas from "@/components/Homepage/InnovativeIdeas";
 import StayUpdated from "@/components/Homepage/StayUpdated";
 import Navbar from "@/components/Navbar/Navbar";
+import { useEffect } from "react";
 
-export default function Home() {
+function Home() {
   return (
     <div className="">
       <Navbar homepage />
@@ -23,3 +25,5 @@ export default function Home() {
     </div>
   );
 }
+
+export default SetRoute(Home);

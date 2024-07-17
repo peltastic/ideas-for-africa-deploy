@@ -10,6 +10,8 @@ import { ideasApi } from "./features/ideas";
 import { brainstormsApi } from "./features/brainstorms";
 import { commentsApi } from "./features/comments";
 import { notificationApi } from "./features/notifications";
+import routeReducer from "./reducers/route"
+import notisReducer from "./reducers/notis"
 
 const persistConfig = {
   key: "root",
@@ -24,6 +26,8 @@ export const store = configureStore({
   reducer: {
     persistedState: persistedReducer,
     fcm: fcmReducer,
+    route: routeReducer,
+    notis: notisReducer,
     [authApi.reducerPath]: authApi.reducer,
     [profileApi.reducerPath]: profileApi.reducer,
     [ideasApi.reducerPath]: ideasApi.reducer,

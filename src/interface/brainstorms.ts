@@ -12,6 +12,7 @@ export interface IGetBrainstormGroupsResponse {
     fname: string;
     lname: string;
     pow: string;
+    url?: string
   };
   title: string;
 }

@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import MenuComponent from "../Menu/Menu";
 import TestProfile from "/public/assets/dp.png";
 import Hamburger from "/public/assets/menu.svg";
@@ -18,10 +18,15 @@ import Link from "next/link";
 import { setAuthState } from "@/lib/reducers/auth";
 import { useRouter } from "next/navigation";
 import { notify } from "@/utils/toast";
+import { notis_socket } from "@/lib/sockets";
+import { setShowIndicator } from "@/lib/reducers/notis";
 
 type Props = {};
 
 const ProfileMenu = (props: Props) => {
+  const showNotisIndicator = useSelector(
+    (state: RootState) => state.notis.showIndicator
+  );
   const dispatch = useDispatch();
   const authState = useSelector(
     (state: RootState) => state.persistedState.auth.authStatus
@@ -54,6 +59,12 @@ const ProfileMenu = (props: Props) => {
     }
   }, [data]);
 
+  useEffect(() => {
+    notis_socket.on("newNotification", (msgData) => {
+      dispatch(setShowIndicator(true));
+    });
+  }, []);
+
   const router = useRouter();
 
   return (
@@ -61,7 +72,10 @@ const ProfileMenu = (props: Props) => {
       {authState === "LOGGED_IN" ? (
         <MenuComponent
           target={
-            <div className="flex items-center bg-gray3 rounded-full py-2 px-3 cursor-pointer">
+            <div className="relative flex items-center bg-gray3 rounded-full py-2 px-3 cursor-pointer">
+              {showNotisIndicator ? (
+                <div className="bg-red1 w-[6px] rounded-full h-[6px] absolute right-[4px] top-[5px]"></div>
+              ) : null}
               <Image src={TestProfile} alt="test" className="w-[1.7rem] mr-3" />
               <Image src={Hamburger} alt="test" />
             </div>
@@ -95,11 +109,12 @@ const ProfileMenu = (props: Props) => {
             </Link>
             <Link href={"/profile?tab=notifications"}>
               <div className="my-8 flex">
-                <Image
-                  src={NotificationImg}
-                  alt=""
-                  className="mr-4 w-[1.4rem]"
-                />
+                <div className="w-[1.4rem] mr-4 relative">
+                  {showNotisIndicator ? (
+                    <div className="bg-red1 w-[6px] rounded-full  h-[6px] absolute right-[-5px] top-[5px]"></div>
+                  ) : null}
+                  <Image src={NotificationImg} alt="" className="w-full" />
+                </div>
                 <p className="font-semibold">Notifications</p>
               </div>
             </Link>

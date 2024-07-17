@@ -7,7 +7,6 @@ import LikeImg from "/public/assets/like-img.svg";
 import Instagram from "/public/assets/instagram.svg";
 import Facebook from "/public/assets/facebook.svg";
 import Twitter from "/public/assets/twitter.svg";
-import Tabs from "@/Tabs/Tabs";
 import moment from "moment";
 import { IGetSingleIdeaResponse } from "@/interface/idea";
 import Budget from "./Tabs/Budget";
@@ -15,7 +14,6 @@ import Discussions from "./Tabs/Discussions";
 import Document from "./Tabs/Document";
 import Steps from "./Tabs/Steps";
 import {
-  formDataHandler,
   formatNameRoute,
   replacePTags,
 } from "@/utils/helperfunctions";

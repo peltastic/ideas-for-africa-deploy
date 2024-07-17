@@ -6,6 +6,7 @@ import { useLazyGetUserProfileQuery } from "@/lib/features/profile";
 import { getCookie } from "@/utils/storage";
 import React, { useEffect, useState } from "react";
 import ThreeDotLoader from "@/components/Loader/ThreeDotLoader";
+import WIthAuth from "@/components/HOC/ProtectRoute";
 
 type Props = {};
 
@@ -27,7 +28,7 @@ const ProfilePage = (props: Props) => {
       {data ? (
         <div className="px-4 xs:px-10 md:px-20 mx-auto max-w-[1700px]">
           <ProfileHeader
-           url={tempPfp || data.profile?.ppicture}
+            url={tempPfp || data.profile?.ppicture}
             email={data.email}
             fname={data.fname}
             lname={data.lname}
@@ -48,4 +49,4 @@ const ProfilePage = (props: Props) => {
   );
 };
 
-export default ProfilePage;
+export default WIthAuth(ProfilePage);

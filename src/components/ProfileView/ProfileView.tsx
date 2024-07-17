@@ -3,6 +3,8 @@ import Tabs from "@/Tabs/Tabs";
 import React, { useState } from "react";
 import Ideas from "../Ideas/Ideas";
 import { useRouter, useSearchParams } from "next/navigation";
+import UserModifiedIdeas from "./UserModifiedIdeas";
+import UserBrainstormGroups from "./UserBrainstormGroups";
 
 type Props = {
   id: string;
@@ -16,11 +18,14 @@ const ProfileView = (props: Props) => {
     "Ideas" | "Modified Ideas" | "Brainstorm" | string
   >("Ideas");
   let component = <Ideas hideFilter />;
-  switch (currentTab) {
+  switch (tab) {
     case "ideas":
       component = <Ideas hideFilter />;
       break;
-
+    case "modified ideas":
+      component = <UserModifiedIdeas />;
+    case "brainstorm":
+      component = <UserBrainstormGroups />
     default:
       break;
   }
@@ -28,7 +33,7 @@ const ProfileView = (props: Props) => {
     <div>
       <div className="my-8">
         <Tabs
-          profile
+        profile
           elements={["Ideas", "Modified Ideas", "Brainstorm"]}
           filterVal={tab || "ideas"}
           setVal={(el) =>

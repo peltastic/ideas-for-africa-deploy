@@ -1,14 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import ClockIcon from "/public/assets/clock-icon.svg";
 import Image from "next/image";
 import { formatNameRoute, truncateStr } from "@/utils/helperfunctions";
-import Avatar from "/public/assets/avatar.png";
-import LikeImg from "/public/assets/like.svg";
+import LikedImg from "/public/assets/like-img.svg";
+
+import UnlikedImg from "/public/assets/unlike.svg";
 import { IoShareSocialOutline } from "react-icons/io5";
 import moment from "moment";
 import { AspectRatio } from "@mantine/core";
 import NoProfilePic from "/public/assets/no-profile.jpg";
-import { IoIosLink } from "react-icons/io";
 
 import {
   FacebookShareButton,
@@ -29,8 +29,9 @@ import Button from "../Button/Button";
 import { notify } from "@/utils/toast";
 import { useSelector } from "react-redux";
 import { RootState } from "@/lib/store";
-import Link from "next/link";
 import NotLoggedInModal from "../ModalComponents/NotLoggedInModal";
+import { useLikeIdeaMutation } from "@/lib/features/ideas";
+import { getCookie } from "@/utils/storage";
 
 type Props = {
   // image: string;
@@ -50,6 +51,10 @@ type Props = {
 };
 
 const InnovativeIdeasCard = (props: Props) => {
+  const id = getCookie("id");
+  const [likeIdea, {}] = useLikeIdeaMutation();
+
+  const [liked, setLiked] = useState<boolean>(false);
   const authStatus = useSelector(
     (state: RootState) => state.persistedState.auth.authStatus
   );
@@ -62,6 +67,13 @@ const InnovativeIdeasCard = (props: Props) => {
   const router = useRouter();
   const [opened, { open, close }] = useDisclosure();
   const [authModalOpened, funcs] = useDisclosure();
+  const likeHandler = () => {
+    likeIdea({
+      ideaId: props.data.id,
+      userId: id,
+    });
+    setLiked(!liked);
+  };
   return (
     <>
       <ModalComponent size="md" centered opened={opened} onClose={close}>
@@ -170,9 +182,10 @@ const InnovativeIdeasCard = (props: Props) => {
               if (authStatus === "LOGGED_OUT") {
                 return funcs.open();
               }
+              likeHandler();
             }}
           >
-            <Image src={LikeImg} alt="like-img" />
+            <Image src={liked ? LikedImg : UnlikedImg} alt="like-img" />
           </div>
         </div>
       </div>

@@ -7,10 +7,13 @@ import React, { useEffect } from "react";
 import Notification from "./Notification";
 import { IoIosArrowDown } from "react-icons/io";
 import IdeasSkeleton from "../Skeleton/IdeasSkeleton";
+import { useDispatch } from "react-redux";
+import { setShowIndicator } from "@/lib/reducers/notis";
 
 type Props = {};
 
 const ProfileNotifications = (props: Props) => {
+  const dispatch = useDispatch();
   const id = getCookie("id");
   const [getUserNotification, { data, isFetching }] =
     useLazyGetUserNotificationQuery();
@@ -20,6 +23,10 @@ const ProfileNotifications = (props: Props) => {
 
   useEffect(() => {
     getUserNotification(id);
+  }, []);
+
+  useEffect(() => {
+    dispatch(setShowIndicator(false));
   }, []);
 
   return (

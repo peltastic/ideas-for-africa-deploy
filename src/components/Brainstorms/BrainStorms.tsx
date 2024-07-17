@@ -4,6 +4,9 @@ import NoGroupSvg from "/public/assets/no-groups.svg";
 import Image from "next/image";
 import Button from "../Button/Button";
 import { IGetBrainstormGroupsResponse } from "@/interface/brainstorms";
+import ModalComponent from "../Modal/Modal";
+import { useDisclosure } from "@mantine/hooks";
+import NotLoggedInModal from "../ModalComponents/NotLoggedInModal";
 
 type Props = {
   data: IGetBrainstormGroupsResponse;
@@ -11,8 +14,12 @@ type Props = {
 };
 
 const BrainStorms = (props: Props) => {
+  const [opened, { open, close }] = useDisclosure();
   return (
     <>
+      <ModalComponent size="lg" centered opened={opened} onClose={close}>
+        <NotLoggedInModal  title="You need to be Logged In to create a brainstorm group" />
+      </ModalComponent>
       {props.data.groups.length === 0 ? (
         <div className="w-[95%] xs:w-[80%] lg:w-[50%] mx-auto mt-10">
           <Image src={NoGroupSvg} alt="no-group" className="mx-auto" />
@@ -41,7 +48,6 @@ const BrainStorms = (props: Props) => {
               groups={el}
               ideaCreator={props.data.ideaCreator}
               title={props.data.title}
-             
             />
           ))}
         </div>

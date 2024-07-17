@@ -6,6 +6,7 @@ import React from 'react'
 import Logo from "/public/assets/logo.svg";
 import ProfileMenu from '@/components/ProfileMenu/ProfileMenu';
 import Idea from '@/components/Idea/Idea';
+import SetRoute from '@/components/HOC/setRoute';
 
 type Props = {}
 
@@ -27,4 +28,4 @@ const ModifiedIdeaPage = (props: Props) => {
   )
 }
 
-export default ModifiedIdeaPage
+export default SetRoute(ModifiedIdeaPage)

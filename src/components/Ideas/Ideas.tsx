@@ -46,7 +46,7 @@ const Ideas = (props: Props) => {
               <Idea
                 id={el._id}
                 banner={el.banner}
-                key={el.headline}
+                key={el._id}
                 description={el.summary}
                 title={el.headline}
                 likes={el.likes}

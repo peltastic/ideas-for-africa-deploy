@@ -1,4 +1,5 @@
 "use client";
+import SetRoute from "@/components/HOC/setRoute";
 import ThreeDotLoader from "@/components/Loader/ThreeDotLoader";
 import Navbar from "@/components/Navbar/Navbar";
 import ProfileHeader from "@/components/Profile/ProfileHeader";
@@ -49,4 +50,4 @@ const ProfileViewPage = (props: Props) => {
   );
 };
 
-export default ProfileViewPage;
+export default SetRoute(ProfileViewPage);

@@ -8,6 +8,7 @@ import { useLazyGetSingleIdeaQuery } from "@/lib/features/ideas";
 import { useParams } from "next/navigation";
 import ModifyIdea from "@/components/Idea/ModifyIdea";
 import ModifyIdeaSkeleton from "@/components/Skeleton/ModifyIdeaSkeleton";
+import WIthAuth from "@/components/HOC/ProtectRoute";
 
 type Props = {};
 
@@ -42,9 +43,9 @@ const ModifyIdeaPage = (props: Props) => {
             <ModifyIdeaSkeleton />
           </div>
         </div>
-      ) }
+      )}
     </div>
   );
 };
 
-export default ModifyIdeaPage;
+export default WIthAuth(ModifyIdeaPage);

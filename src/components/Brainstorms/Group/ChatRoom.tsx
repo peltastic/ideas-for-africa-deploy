@@ -38,7 +38,11 @@ const ChatRoom = (props: Props) => {
   );
   useEffect(() => {
     if (subId) {
-      joinBrainstormRoom(`${userProfile.fname} ${userProfile.lname}`, subId);
+      joinBrainstormRoom(
+        `${userProfile.fname} ${userProfile.lname}`,
+        subId,
+        userProfile.pfp
+      );
     }
   }, [subId]);
 
@@ -46,7 +50,7 @@ const ChatRoom = (props: Props) => {
     chat_socket.on(
       "chatMessage",
       (msgData: { username: string; text: string }) => {
-        console.log(msgData)
+        console.log(msgData);
         updateMessageHandler(msgData.text, msgData.username);
       }
     );
@@ -63,9 +67,9 @@ const ChatRoom = (props: Props) => {
     if (data && data.messages) {
       const chatHistory = data.messages.map((el) => ({
         username: el.username,
-       text: el.text
+        text: el.text,
       }));
-      setMessages(chatHistory)
+      setMessages(chatHistory);
     }
   }, [data]);
   const updateMessageHandler = (message: string, username?: string) => {

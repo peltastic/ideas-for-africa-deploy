@@ -25,11 +25,13 @@ import AuthError from "@/components/Error/AuthError";
 import useFCMToken from "@/hooks/useFcmToken";
 import { useSetFcmTokenMutation } from "@/lib/features/notifications";
 import { RootState } from "@/lib/store";
+import { enableNotis } from "@/lib/sockets";
 
 type Props = {};
 
 const LoginForm = (props: Props) => {
-  const fcmtoken = useSelector((state: RootState) => state.fcm.fcm)
+  const currLink = useSelector((state: RootState) => state.route.currentLink);
+  const fcmtoken = useSelector((state: RootState) => state.fcm.fcm);
   const [errorMessage, setErrorMessage] = useState<string>("");
   const dispatch = useDispatch();
   const [loginUser, { isLoading, isError, isSuccess, data, error }] =
@@ -63,11 +65,16 @@ const LoginForm = (props: Props) => {
       if (result.data && fcmtoken) {
         setFcm({
           userId: result.data?.user.id,
-          fcmtoken
+          fcmtoken,
         });
+        enableNotis(result.data.user.id);
       }
+
       setLoading(false);
-      router.push("/share-idea");
+      if (currLink) {
+        return router.push(currLink);
+      }
+      router.push("/");
     }
   }, [result.isSuccess, result.isError]);
   return (

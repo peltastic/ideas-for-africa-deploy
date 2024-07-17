@@ -8,6 +8,7 @@ import ProfileNotifications from "../ProfileNotifications/ProfileNotifications";
 import Archive from "../Archive/Archive";
 import ProfileSettings from "./ProfileSettings";
 import { useRouter, useSearchParams } from "next/navigation";
+import { IGetUserProfileResponse } from "@/interface/profile";
 
 type Props = {
   data: IGetUserProfileResponse;

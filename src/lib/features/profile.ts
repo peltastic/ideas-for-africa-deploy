@@ -1,4 +1,5 @@
 import config from "@/config/config";
+import { IGetUserModifiedIdeasResponse, IGetUserProfileResponse, IUpdateProfilePayload } from "@/interface/profile";
 import { getCookie } from "@/utils/storage";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
@@ -46,15 +47,25 @@ export const profileApi = createApi({
         };
       },
     }),
-    changePassword: build.mutation<unknown, {
-      userId: string;
-      oldPassword: string;
-      newPassword: string;}>({
-    query: (body) => ({ 
-      url: "/users/password",
-      body,
-      method: "POST"
-    })
+    changePassword: build.mutation<
+      unknown,
+      {
+        userId: string;
+        oldPassword: string;
+        newPassword: string;
+      }
+    >({
+      query: (body) => ({
+        url: "/users/password",
+        body,
+        method: "POST",
+      }),
+    }),
+    getUserModifiedIdeas: build.query<IGetUserModifiedIdeasResponse, string>({
+      query: (userId) => `/users/modifiedIdeas/user/${userId}`,
+    }),
+    getUserBrainstormGroups: build.query<unknown, string>({
+      query: (userId) => `/groups/user/${userId}`
     })
   }),
 });
@@ -63,5 +74,7 @@ export const {
   useUpdateProfileMutation,
   useLazyGetUserProfileQuery,
   useUploadProfilePictureMutation,
-  useChangePasswordMutation
+  useChangePasswordMutation,
+  useGetUserModifiedIdeasQuery,
+  useGetUserBrainstormGroupsQuery
 } = profileApi;

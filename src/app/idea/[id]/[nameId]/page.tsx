@@ -6,6 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 import ProfileMenu from "@/components/ProfileMenu/ProfileMenu";
 import Idea from "@/components/Idea/Idea";
+import SetRoute from "@/components/HOC/setRoute";
 
 type Props = {};
 
@@ -27,4 +28,4 @@ const IdeaPage = (props: Props) => {
   );
 };
 
-export default IdeaPage;
+export default SetRoute(IdeaPage);

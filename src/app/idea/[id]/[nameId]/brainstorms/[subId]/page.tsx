@@ -10,6 +10,7 @@ import { useDisclosure } from "@mantine/hooks";
 import ProfileMenu from "@/components/ProfileMenu/ProfileMenu";
 import ChatRoom from "@/components/Brainstorms/Group/ChatRoom";
 import RoomMembers from "@/components/Brainstorms/Group/RoomMembers";
+import WIthAuth from "@/components/HOC/ProtectRoute";
 
 type Props = {};
 
@@ -51,4 +52,4 @@ const BrainstormGroupPage = (props: Props) => {
   );
 };
 
-export default BrainstormGroupPage;
+export default WIthAuth(BrainstormGroupPage);

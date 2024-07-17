@@ -6,12 +6,16 @@ import { setFCM } from "@/lib/reducers/fcm";
 import { RootState } from "@/lib/store";
 import { useSetFcmTokenMutation } from "@/lib/features/notifications";
 import { getCookie } from "@/utils/storage";
+import { enableNotis } from "@/lib/sockets";
 
 type Props = {};
 
 const App = (props: Props) => {
   const id = getCookie("id");
   const dispatch = useDispatch();
+  const authStatus = useSelector(
+    (state: RootState) => state.persistedState.auth.authStatus
+  );
 
   const { messages, fcmToken } = useFCM();
   const [setFcm, fcmResult] = useSetFcmTokenMutation();
@@ -31,6 +35,11 @@ const App = (props: Props) => {
       });
     }
   }, [fcmToken]);
+  useEffect(() => {
+    if (authStatus === "LOGGED_IN" && id) {
+      enableNotis(id);
+    }
+  }, []);
 
   return null;
 };

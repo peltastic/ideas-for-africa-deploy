@@ -10,6 +10,7 @@ import ThreeDotLoader from "../Loader/ThreeDotLoader";
 import Button from "../Button/Button";
 import Spinner from "../Spinner/Spinner";
 import { notify } from "@/utils/toast";
+import { IGetUserProfileResponse } from "@/interface/profile";
 
 type Props = {
   data: IGetUserProfileResponse | null;

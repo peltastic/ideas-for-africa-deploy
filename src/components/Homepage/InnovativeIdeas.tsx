@@ -8,46 +8,103 @@ import {
   useGetIdeasQuery,
   useLazyGetIdeaBycategoryQuery,
   useLazyGetIdeasQuery,
+  useLazyGetTopLikedIdeasQuery,
+  useLazyGetTopViewedIdeasQuery,
 } from "@/lib/features/ideas";
 import { IGetIdeasResponse } from "@/interface/idea";
+import { getCookie } from "@/utils/storage";
 
 type Props = {};
 
 const InnovativeIdeas = (props: Props) => {
-  const [selectedFilter, setSelectedFilter] = useState<string>("All ideas");
+  const [dropDownValue, setDropDownValue] = useState<string>("");
+  const id = getCookie("id");
+  const [selectedFilter, setSelectedFilter] =
+    useState<string>("All Categories");
   const [ideasData, setIdeasData] = useState<IGetIdeasResponse[] | null>(null);
-  const { data, isFetching } = useGetIdeasQuery();
+  // const { data, isFetching } = useGetIdeasQuery();
   const [getIdeas, ideasRes] = useLazyGetIdeasQuery();
+  const [getTopLikedIdeas, topLiked] = useLazyGetTopLikedIdeasQuery();
+  const [getTopViewedIdeas, topViewes] = useLazyGetTopViewedIdeasQuery();
   const [filterIdeasbyCategory, result] = useLazyGetIdeaBycategoryQuery();
   const setSelectedFilterHandler = (el: string) => {
     setSelectedFilter(el);
-    if (el === "All ideas") {
+    if (el === "All Categories") {
       getIdeas();
+      setDropDownValue("");
     } else {
-      filterIdeasbyCategory(el);
+      if (dropDownValue === "1") {
+        getTopViewedIdeas({
+          id,
+          category: el,
+          limit: "30",
+        });
+      } else if (dropDownValue === "2") {
+        getTopLikedIdeas({
+          id,
+          category: el,
+          limit: "30",
+        });
+      } else {
+        filterIdeasbyCategory(el);
+      }
     }
   };
 
   useEffect(() => {
-    if (data) {
-      setIdeasData(data.ideas);
-    }
-  }, [data]);
-
+    getIdeas();
+  }, []);
   useEffect(() => {
-    if (ideasRes.data) {
+    if (ideasRes.data && ideasRes.isSuccess) {
       setIdeasData(ideasRes.data.ideas);
     }
-  }, [ideasRes]);
+  }, [ideasRes.data, ideasRes.isSuccess, ideasRes.isFetching]);
+
+  useEffect(() => {
+    if (topViewes.data && topViewes.isSuccess) {
+      setIdeasData(topViewes.data.ideas);
+    }
+  }, [topViewes.data, topViewes.isSuccess, topViewes.isFetching]);
+
+  useEffect(() => {
+    if (topLiked.data && topLiked.isSuccess) {
+      setIdeasData(topLiked.data.ideas);
+    }
+  }, [topLiked.data, topLiked.isSuccess, topLiked.isFetching]);
 
   useEffect(() => {
     if (result.isError) {
       setIdeasData(null);
     }
-    if (result.isSuccess) {
+    if (result.isSuccess && result.data) {
       setIdeasData(result.data.ideas);
     }
-  }, [result.isError, result.isSuccess, result.data]);
+  }, [result.isError, result.isSuccess, result.data, result.isFetching]);
+
+  const popularityFilterFuctions = (type: "views" | "likes", value: string) => {
+    if (type === "views") {
+      if (selectedFilter !== "All Categories") {
+        getTopViewedIdeas({
+          id,
+          limit: "30",
+          category: selectedFilter,
+        });
+      } else {
+        getTopViewedIdeas(id);
+      }
+    } else {
+      if (selectedFilter !== "All Categories") {
+        getTopLikedIdeas({
+          id,
+          limit: "30",
+          category: selectedFilter,
+        });
+      } else {
+        getTopLikedIdeas(id);
+      }
+    }
+    setDropDownValue(value);
+  };
 
   return (
     <section className=" mt-10 xxs:mt-28">
@@ -62,12 +119,17 @@ const InnovativeIdeas = (props: Props) => {
       </div>
       <div className="mr-12">
         <InnovativeIdeasFilters
+          dropdoownFunction={popularityFilterFuctions}
           setFilterVal={setSelectedFilterHandler}
           filterVal={selectedFilter}
+          dropdownVal={dropDownValue}
         />
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 mm:grid-cols-3 des:grid-cols-4 gap-6 sm:mr-10">
-        {isFetching || result.isFetching ? (
+      <div className="grid grid-co ls-1 sm:grid-cols-2 mm:grid-cols-3 des:grid-cols-4 gap-6 sm:mr-10">
+        {ideasRes.isFetching ||
+        result.isFetching ||
+        topLiked.isFetching ||
+        topViewes.isFetching ? (
           <>
             <InnovativeIdeasSkeleton />
             <InnovativeIdeasSkeleton />
@@ -84,13 +146,20 @@ const InnovativeIdeas = (props: Props) => {
                     createdAt: el.createdAt,
                     headline: el.headline,
                     summary: el.summary,
-                    banner:  el.thumb && el.thumb[0]?.path || el.banner,
+                    banner:
+                      (el.thumb && el.thumb[0]?.path) ||
+                      el.thumbPath ||
+                      el.banner,
                     fname: el.fname,
                     lname: el.lname,
-                    pow: el.pow,
+                    pow: el.pow || el.profile?.pow,
                     id: el._id,
                     userId: el.userId,
-                    ppicture: el.profile?.ppicture,
+                    ppicture: el.ppicture || el.profile?.ppicture,
+                    user: el.user,
+                    likes: el.likes,
+                    viewCount: el.viewCount,
+                    wordpm: el.wordpm
                   }}
                   // image={el.banner || el.thumb && el.thumb[0].path}
                   key={index}

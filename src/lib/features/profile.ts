@@ -64,7 +64,17 @@ export const profileApi = createApi({
     getUserModifiedIdeas: build.query<IGetUserModifiedIdeasResponse, string>({
       query: (userId) => `/users/modifiedIdeas/user/${userId}`,
     }),
-    getUserBrainstormGroups: build.query<unknown, string>({
+    getUserBrainstormGroups: build.query<{
+      groups: {
+        _id: string
+        ideaId: string
+        text: string
+        createdAt: string
+        ideaTitle: string
+        admin: string
+        banner: string
+      }[]
+    }, string>({
       query: (userId) => `/groups/user/${userId}`
     })
   }),

@@ -1,14 +1,15 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import SelectComponent from "../Select/Select";
 import Tabs from "@/Tabs/Tabs";
 import { idea_categories_list } from "@/utils/constants";
 import InnovativeIdeasTab from "@/Tabs/InnovativeIdeasTab";
-import FloatingTabs from "../FloatingTabs/FloatingTabs";
 
 type Props = {
   filterVal: string;
   setFilterVal: (el: string) => void;
+  dropdoownFunction: (type: "views" | "likes", value: string) => void;
+  dropdownVal: string;
 };
 
 const InnovativeIdeasFilters = (props: Props) => {
@@ -17,15 +18,26 @@ const InnovativeIdeasFilters = (props: Props) => {
       value: "1",
       label: "Most Viewed",
     },
+    {
+      value: "2",
+      label: "Most Liked",
+    },
   ];
-  const filterEl = ["All ideas", ...idea_categories_list.map((el) => el.value)];
+  const filterEl = [
+    "All Categories",
+    ...idea_categories_list.map((el) => el.value),
+  ];
   return (
     <div className="my-10 flex items-center">
       <div className=" mr-auto hidden des:block">
         <SelectComponent
-          size="lg"
+          value={props.dropdownVal}
+          size="md"
           placeholder="Most viewed"
           options={options}
+          changed={(val) => {
+            props.dropdoownFunction(val === "1" ? "views" : "likes", val);
+          }}
         />
       </div>
       <div className="items-center bg-gray3 px-1  py-1 rounded-full hidden lg:flex  ">
@@ -34,7 +46,7 @@ const InnovativeIdeasFilters = (props: Props) => {
             <p>{el}</p>
           </div>
         ))} */}
-   {/* <FloatingTabs /> */}
+        {/* <FloatingTabs /> */}
         <InnovativeIdeasTab
           elements={filterEl}
           filterVal={props.filterVal}

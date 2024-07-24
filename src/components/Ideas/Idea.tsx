@@ -19,6 +19,7 @@ type Props = {
   fname?: string;
   lname?: string;
   userId?: string;
+  ideaId?: string;
 };
 
 const Idea = (props: Props) => {
@@ -26,12 +27,19 @@ const Idea = (props: Props) => {
   return (
     <div className="sm:flex flex-wrap sm:flex-nowrap items-center my-10">
       <div
-        onClick={() =>
-          router.push(`/idea/${props.id}/${formatNameRoute(props.title)}`)
-        }
-        className=" cursor-pointer mx-auto sm:mx-0   overflow-hidden rounded-md sm:mr-4 flex items-center"
+        onClick={() => {
+          if (props.modified) {
+            return router.push(
+              `/idea/${props.ideaId}/${formatNameRoute(
+                props.title
+              )}/modified-idea/${props.id}`
+            );
+          }
+          router.push(`/idea/${props.id}/${formatNameRoute(props.title)}`);
+        }}
+        className=" w-[20%] cursor-pointer mx-auto sm:mx-0   overflow-hidden rounded-md sm:mr-4 flex items-center"
       >
-        <div className="hidden sm:block">
+        <div className="hidden sm:block w-full">
           <AspectRatio ratio={1080 / 720} mx="auto">
             <Image
               src={
@@ -47,7 +55,10 @@ const Idea = (props: Props) => {
         </div>
         <div className="block sm:hidden w-full">
           <Image
-            src={props.banner ||  "https://res.cloudinary.com/da9gqyswp/image/upload/v1717722025/xbvycbrxduhl5lvqewc5.jpg"}
+            src={
+              props.banner ||
+              "https://res.cloudinary.com/da9gqyswp/image/upload/v1717722025/xbvycbrxduhl5lvqewc5.jpg"
+            }
             width={100}
             height={100}
             alt="idea-img"
@@ -55,7 +66,7 @@ const Idea = (props: Props) => {
           />
         </div>
       </div>
-      <div className={` sm:w-[85%] mx-auto sm:mx-0 mt-3 sm:mt-0`}>
+      <div className={` sm:w-[80%] mx-auto sm:mx-0 mt-3 sm:mt-0`}>
         <div className="flex items-center mb-2">
           <h1
             onClick={() => router.push(`/idea/${props.id}`)}
@@ -64,22 +75,28 @@ const Idea = (props: Props) => {
             {props.title ||
               "Affiliate Mastery: Pathway to Seven-Figure Success"}
           </h1>
-          {props.modified ? <p className="text-gray1 bg-gray3 ml-4 py-1 px-4 rounded-full text-xs ">Modified</p> : null }
+          {props.modified ? (
+            <p className="text-gray1 bg-gray3 ml-4 py-1 px-4 rounded-full text-xs ">
+              Modified
+            </p>
+          ) : null}
         </div>
         <p
           onClick={() => router.push(`/idea/${props.id}`)}
           className="text-xs mb-1 cursor-pointer"
         >
-          {truncateStr(
-            props.description ||
-              "The ideal way to run a hydro plant involves maximizing efficiency by regulating water flow to match energy demand, while also considering environmental impacts to maintain ecological...",
-            150
-          )}
+          {
+            truncateStr(
+              props.description ||
+                "The ideal way to run a hydro plant involves maximizing efficiency by regulating water flow to match energy demand, while also considering environmental impacts to maintain ecological...",
+              150
+            ).text
+          }
         </p>
         {props.modified ? (
-          <div className="flex items-center">
+          <div className="flex items-center mt-5">
             <div
-              className="mr-2 w-[1.5rem] rounded-full overflow-hidden"
+              className="mr-2 w-[1.5rem]   rounded-full overflow-hidden"
               onClick={() => {
                 if (!props.userId) {
                   return;

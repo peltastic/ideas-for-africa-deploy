@@ -4,7 +4,7 @@ import Image from "next/image";
 import NoProfilePic from "/public/assets/no-profile.jpg";
 import AvatarGroup from "../AvatarGroup/AvatarGroup";
 import Button from "../Button/Button";
-import { replacePTags } from "@/utils/helperfunctions";
+import { replacePTags, truncateStr } from "@/utils/helperfunctions";
 import { getCookie } from "@/utils/storage";
 import { useRequestToJoinGroupMutation } from "@/lib/features/brainstorms";
 import Spinner from "../Spinner/Spinner";
@@ -21,6 +21,7 @@ type Props = {
     admin: string;
     adminFname: string;
     name: string;
+    text: string;
     ideadId: string;
     _id: string;
     status: "Not a member" | "requested";
@@ -35,7 +36,9 @@ type Props = {
 };
 
 const BrainstormGrid = (props: Props) => {
-  const authStatus = useSelector((state: RootState) => state.persistedState.auth.authStatus )
+  const authStatus = useSelector(
+    (state: RootState) => state.persistedState.auth.authStatus
+  );
   const [opened, { open, close }] = useDisclosure();
   const params = useParams<{ id: string; nameId: string }>();
   const router = useRouter();
@@ -67,7 +70,7 @@ const BrainstormGrid = (props: Props) => {
 
   const handleButtonAction = () => {
     if (authStatus === "LOGGED_OUT") {
-      return open()
+      return open();
     }
     if (props.groups.admin === id || userStatus === "Accepted") {
       return router.push(
@@ -87,7 +90,7 @@ const BrainstormGrid = (props: Props) => {
       <ModalComponent size="lg" centered opened={opened} onClose={close}>
         <NotLoggedInModal title="You need to be logged in to access or interact with a brainstorm group" />
       </ModalComponent>
-      <div className="hover:bg-[#c2c2c21d] transition-all cursor-pointer shadow-[0_0px_10px_rgba(0,0,0,0.1)] rounded-xl py-6 px-4">
+      <div className="h-[26rem] relative hover:bg-[#c2c2c21d] transition-all cursor-pointer shadow-[0_0px_10px_rgba(0,0,0,0.1)] rounded-xl py-6 px-4">
         <div
           className=""
           onClick={() => {
@@ -104,60 +107,62 @@ const BrainstormGrid = (props: Props) => {
           <h2 className="text-black1 font-semibold text-sm mt-4 mb-6">
             {props.groups.adminFname}&apos;s brainstorm group on {props.title}
           </h2>
-          <p
-            dangerouslySetInnerHTML={{
-              __html: `${replacePTags(props.groups.name)}`,
-            }}
-            className="text-gray1 text-sm h-[5rem] overflow-hidden"
-          ></p>
+          <p className="text-sm text-gray1">
+            {truncateStr(props.groups.text, 150).text}{" "}
+            {truncateStr(props.groups.text, 150).status ? " ..." : ""}
+          </p>
         </div>
-        <div className=" flex mt-8 items-center">
-          <div className="mr-3 w-[2.4rem]">
-            <Image
-              src={props.ideaCreator.url || NoProfilePic}
-              className="w-full"
-              alt="avatar"
-            />
-          </div>
-          <div className="text-xs mr-auto ">
-            <p className="font-bold mb-[0.02rem]">
-              {props.ideaCreator.fname} {props.ideaCreator.lname}
-            </p>
-            <p className="leading-5 text-gray1">{props.ideaCreator.pow}</p>
-          </div>
-        </div>
-        <div className="mt-6 flex flex-wrap lg:flex-nowrap  items-center">
-          <AvatarGroup avatars={[url, url, url, url]} />
-          <Button
-            disabled={userStatus === "requested"}
-            clicked={handleButtonAction}
-            classname="flex  ml-auto sm:ml-0 md:ml-auto  items-center text-xs des:text-sm rounded-full px-5 py-2 my-6 bg-primary disabled:bg-gray6 disabled:border-0 disabled:cursor-not-allowed text-white  border-primary border mt-6"
-          >
-            {isLoading ? (
-              <div className="py-1 flex justify-center w-[4rem]">
-                <Spinner />
-              </div>
-            ) : (
-              <p>
-                {props.groups.admin === id
-                  ? "Open group"
-                  : userStatus === "Not a member"
-                  ? "Request To Join"
-                  : userStatus === "requested"
-                  ? "Pending"
-                  : userStatus === "Accepted"
-                  ? "Open group"
-                  : ""}
+        <div className="absolute w-[92%] bottom-2">
+          <div className=" flex mt-8 items-center">
+            <div className="mr-3 w-[2.4rem] rounded-full overflow-hidden">
+              <Image
+                src={props.ideaCreator.url || NoProfilePic}
+                className="w-full"
+                alt="avatar"
+                width={100}
+                height={100}
+              />
+            </div>
+            <div className="text-xs mr-auto ">
+              <p className="font-bold mb-[0.02rem]">
+                {props.ideaCreator.fname} {props.ideaCreator.lname}
               </p>
-              // <p>
-              //   {requestSent
-              //     ? "Pending..."
-              //     : props.groups.admin === id
-              //     ? "Open group"
-              //     : "Request To Join"}
-              // </p>
-            )}
-          </Button>
+              <p className="leading-5 text-gray1">{props.ideaCreator.pow}</p>
+            </div>
+          </div>
+          <div className="mt-6 flex w-full flex-wrap lg:flex-nowrap  items-center">
+            <AvatarGroup avatars={[url, url, url, url]} />
+            <Button
+              disabled={userStatus === "requested"}
+              clicked={handleButtonAction}
+              classname="flex  ml-auto sm:ml-0 md:ml-auto  items-center text-xs des:text-sm rounded-full px-5 py-2 my-6 bg-primary disabled:bg-gray6 disabled:border-0 disabled:cursor-not-allowed text-white  border-primary border mt-6"
+            >
+              {isLoading ? (
+                <div className="py-1 flex justify-center w-[4rem]">
+                  <Spinner />
+                </div>
+              ) : (
+                <p>
+                  {props.groups.admin === id
+                    ? "Open group"
+                    : userStatus === "Not a member"
+                    ? "Request To Join"
+                    : userStatus === "requested"
+                    ? "Pending"
+                    : userStatus === "Accepted"
+                    ? "Open group"
+                    : ""}
+                </p>
+                // <p>
+                //   {requestSent
+                //     ? "Pending..."
+                //     : props.groups.admin === id
+                //     ? "Open group"
+                //     : "Request To Join"}
+                // </p>
+              )}
+            </Button>
+          </div>
         </div>
       </div>
     </>

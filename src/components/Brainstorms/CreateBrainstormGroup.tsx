@@ -3,7 +3,10 @@ import CancelSvg from "/public/assets/cancel2.svg";
 import Image from "next/image";
 import Editor from "../Editor/Editor";
 import Button from "../Button/Button";
-import { useCreateGroupMutation, useLazyGetGroupsQuery } from "@/lib/features/brainstorms";
+import {
+  useCreateGroupMutation,
+  useLazyGetGroupsQuery,
+} from "@/lib/features/brainstorms";
 import { useParams, useRouter } from "next/navigation";
 import { getCookie } from "@/utils/storage";
 import { notify } from "@/utils/toast";
@@ -16,16 +19,18 @@ type Props = {
 const CreateBrainstormGroup = (props: Props) => {
   const userId = getCookie("id");
   const { id } = useParams();
-  const [getGroups, result] = useLazyGetGroupsQuery()
+  const [getGroups, result] = useLazyGetGroupsQuery();
   const [createGroup, { isLoading, isSuccess, isError, error }] =
     useCreateGroupMutation();
 
   const [description, setDescription] = useState<string>("");
+  const [descriptionText, setDescriptionText] = useState<string>("");
   const createGroupHandler = () => {
     createGroup({
       ideaId: id as string,
       name: description,
       userId,
+      text: descriptionText,
     });
   };
 
@@ -36,8 +41,8 @@ const CreateBrainstormGroup = (props: Props) => {
     }
     if (isSuccess) {
       notify("Brainstorm group created successfully", "success");
-      props.close()
-      getGroups(id as string)
+      props.close();
+      getGroups(id as string);
     }
   }, [isError, isSuccess]);
 
@@ -54,19 +59,28 @@ const CreateBrainstormGroup = (props: Props) => {
       <p className="mb-2">Describe your spinoff idea</p>
       <Editor
         contentProps={description}
-        setIdea={(key, value) => setDescription(value as string)}
+        setIdea={(key, value) => {
+          if (key === "summary") {
+            setDescriptionText(value as string);
+          } else {
+            setDescription(value as string);
+
+          }
+          console.log(key, value);
+        }}
       />
       <Button
         clicked={createGroupHandler}
         disabled={description === "<p></p>" || isLoading}
         classname="mt-8 bg-primary disabled:bg-gray6 disabled:cursor-not-allowed py-3 px-8 text-sm text-center flex justify-center rounded-3xl w-full text-white "
       >
-        {isLoading ?
-         <div className="py-1">
-
-         <Spinner />
-         </div>
-          : "Continue"}
+        {isLoading ? (
+          <div className="py-1">
+            <Spinner />
+          </div>
+        ) : (
+          "Continue"
+        )}
       </Button>
     </div>
   );

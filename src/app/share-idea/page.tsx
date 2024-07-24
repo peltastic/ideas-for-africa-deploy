@@ -22,6 +22,7 @@ const ShareIdea = (props: Props) => {
     useCreateIdeaMutation();
   const [step, setStep] = useState<"basic" | "additional">("basic");
   const [bannerPreview, setBannerPreview] = useState<string>("");
+  const [currencyValue, setCurrencyValue] = useState<string>("$");
   const [ideaPayload, setIdeaPayload] = useState<ICreateIdeaPayload>({
     headline: "",
     summary: "",
@@ -51,7 +52,7 @@ const ShareIdea = (props: Props) => {
       router.push("/");
     }
   }, [isError, isSuccess]);
-  
+
   const createIdeaHandler = () => {
     let pitchsIsEmpty = true;
     for (const el of ideaPayload.pitchs) {
@@ -67,9 +68,10 @@ const ShareIdea = (props: Props) => {
       summary: ideaPayload.summary,
       body: ideaPayload.body,
       pitches: JSON.stringify(pitchsIsEmpty ? [] : ideaPayload.pitchs),
-      maxbud: `USD ${ideaPayload.maxbud}`,
-      minbud: `USD ${ideaPayload.minbud}`,
+      maxbud: `${currencyValue} ${ideaPayload.maxbud}`,
+      minbud: `${currencyValue} ${ideaPayload.minbud}`,
       userId: id,
+      files: ideaPayload.files,
     });
   };
   const setIdeaPayloadHandler = (key: string, value: string | File | null) => {
@@ -144,6 +146,11 @@ const ShareIdea = (props: Props) => {
   const setBannerPreviewHandler = (preview: string) => {
     setBannerPreview(preview);
   };
+
+  const setCurrencyValueHandler = (val: string) => {
+    setCurrencyValue(val);
+  };
+
   return (
     <div className="">
       <Navbar />
@@ -194,6 +201,8 @@ const ShareIdea = (props: Props) => {
                 idea={ideaPayload}
                 setIdea={setIdeaPayloadHandler}
                 deleteFileHandler={deleteDocumentHandler}
+                currValue={currencyValue}
+                setCurrValue={setCurrencyValueHandler}
               />
             )}
           </div>

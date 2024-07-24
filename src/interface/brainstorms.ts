@@ -7,6 +7,7 @@ export interface IGetBrainstormGroupsResponse {
     _id: string;
     status: "Not a member" | "requested";
     canJoin: boolean;
+    text: string
   }[];
   ideaCreator: {
     fname: string;
@@ -23,4 +24,14 @@ export interface IGroupMessagesResponse {
   username: string;
   text: string;
   timestamp: string;
+}
+
+export interface IGetGroupMembers {
+  _id: string
+  userId: string
+  profile: {
+    fname: string
+    lname: string
+    ppicture: string
+  }
 }

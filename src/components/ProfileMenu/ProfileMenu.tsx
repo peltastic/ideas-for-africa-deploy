@@ -20,6 +20,8 @@ import { useRouter } from "next/navigation";
 import { notify } from "@/utils/toast";
 import { notis_socket } from "@/lib/sockets";
 import { setShowIndicator } from "@/lib/reducers/notis";
+import NoProfilePic from "/public/assets/no-profile.jpg";
+import { AspectRatio } from "@mantine/core";
 
 type Props = {};
 
@@ -38,7 +40,7 @@ const ProfileMenu = (props: Props) => {
 
   const id = getCookie("id");
   useEffect(() => {
-    if (authState === "LOGGED_IN" && !profileInfo.email) {
+    if (authState === "LOGGED_IN") {
       getUserProfile({
         id,
       });
@@ -52,7 +54,7 @@ const ProfileMenu = (props: Props) => {
             email: data.email,
             fname: data.fname,
             lname: data.lname,
-            pfp: "",
+            pfp: data.profile?.ppicture || "",
           },
         })
       );
@@ -76,14 +78,34 @@ const ProfileMenu = (props: Props) => {
               {showNotisIndicator ? (
                 <div className="bg-red1 w-[6px] rounded-full h-[6px] absolute right-[4px] top-[5px]"></div>
               ) : null}
-              <Image src={TestProfile} alt="test" className="w-[1.7rem] mr-3" />
+              <div className="border rounded-full overflow-hidden mr-3">
+                <AspectRatio ratio={1800/1800} >
+                  <Image
+                    src={profileInfo.pfp || NoProfilePic}
+                    width={100}
+                    height={100}
+                    alt="test"
+                    className="w-[1.7rem] h-[1.7rem]"
+                  />
+                </AspectRatio>
+              </div>
               <Image src={Hamburger} alt="test" />
             </div>
           }
         >
           <div className="bg-white shadow-md rounded-xl py-4 px-9">
             <div className="flex items-center">
-              <Image src={TestProfile} alt="test" className="w-[2.2rem] mr-3" />
+              <div className="rounded-full mr-3 overflow-hidden">
+                <AspectRatio ratio={1800 / 1800}>
+                  <Image
+                    src={profileInfo.pfp || NoProfilePic}
+                    alt="test"
+                    width={100}
+                    height={100}
+                    className="w-[2.2rem] h-[2.2rem]"
+                  />
+                </AspectRatio>
+              </div>
               <div className="">
                 <p className="font-semibold text-black1">
                   {profileInfo.fname} {profileInfo.lname}
@@ -94,10 +116,13 @@ const ProfileMenu = (props: Props) => {
             <Link href={"/profile"}>
               <div className="my-8 flex">
                 <Image
-                  src={profileInfo.pfp || ProfileImg}
+                  src={ProfileImg}
                   alt=""
-                  className="mr-4 w-[1.4rem]"
+                  width={100}
+                  height={100}
+                  className="w-[1.4rem] mr-3"
                 />
+
                 <p className="font-semibold">Profile</p>
               </div>
             </Link>

@@ -1,7 +1,4 @@
 export interface IUpdateProfilePayload {
-  // phone?: string
-  // address?: string;
-  // state?: string;
   country?: string;
   title?: string;
   pow: string;
@@ -33,6 +30,7 @@ export interface IGetUserModifiedIdeasResponse {
     fname: string;
     lname: string;
     ppicture: string;
+    originalIdeaId: string
   }[];
 }
 

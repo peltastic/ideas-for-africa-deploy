@@ -21,21 +21,28 @@ const UserModifiedIdeas = (props: Props) => {
           <IdeasSkeleton />
           <IdeasSkeleton />
         </div>
-      ) : (
+      ) : ( 
         <div className="">
-          {data?.modifiedIdeas.map((el) => (
-            <Idea
-              id={el._id}
-              key={el._id}
-              description={el.summary}
-              title={el.headline}
-              modified
-              fname={el.fname}
-              lname={el.lname}
-              ppicture={el.ppicture}
-              userId={el.userId}
-            />
-          ))}
+          {data?.modifiedIdeas ? (
+            <>
+              {data?.modifiedIdeas.map((el) => (
+                <Idea
+                  id={el._id}
+                  key={el._id}
+                  description={el.summary}
+                  title={el.headline}
+                  modified
+                  fname={el.fname}
+                  lname={el.lname}
+                  ppicture={el.ppicture}
+                  userId={el.userId}
+                  ideaId={el.originalIdeaId}
+                />
+              ))}
+            </>
+          ) : (
+            <p>Yellooo</p>
+          )}
         </div>
       )}
     </div>

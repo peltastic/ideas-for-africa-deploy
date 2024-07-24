@@ -43,7 +43,6 @@ const Profile = ({ data, isFetching, tempPfp, setTempPfp }: Props) => {
         <ProfileSettings tempPfp={tempPfp || data.profile?.ppicture } setTempPfp={setTempPfp} />
       );
       break;
-
     default:
       break;
   }

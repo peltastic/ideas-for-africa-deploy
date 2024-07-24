@@ -2,33 +2,73 @@ import React from "react";
 
 import Image from "next/image";
 import Avatar from "/public/assets/avatar.png";
-import { StaticImport } from "next/dist/shared/lib/get-img-props";
+import NoProfilePic from "/public/assets/no-profile.jpg";
+import { AspectRatio } from "@mantine/core";
+import { formatNameRoute, truncateStr } from "@/utils/helperfunctions";
+import { useRouter } from "next/navigation";
 
 type Props = {
-  image: StaticImport;
+  headline: string;
+  summaary: string;
+  ppicture: string;
+  banner: string;
+  lname: string;
+  pow: string;
+  userId: string;
+  id: string;
 };
 
 const CarouselCard = (props: Props) => {
+  const router = useRouter();
   return (
-    <div className="relative">
-      <Image src={props.image} alt="image" className="w-full" />
-      <div className="absolute bottom-4 left-[50%] -translate-x-[47%] w-[95%] text-white">
-        <h2 className="text-sm des:text-base font-semibold mb-4">
-          Energy generation for recycling rubber
+    <div className=" relative h-[80%] overflow-hidden rounded-xl">
+      <div className="relative">
+        <div
+          onClick={() =>
+            router.push(`/idea/${props.id}/${formatNameRoute(props.headline)}`)
+          }
+          className=" cursor-pointer absolute top-0 left-0 bg-[#0505057b] w-full h-full"
+        ></div>
+        <AspectRatio ratio={900 / 1120}>
+          <Image
+            src={props.banner}
+            layout="intrinsic"
+            width={100}
+            height={500}
+            alt="image"
+            className="h-full w-full"
+            // objectFit="cover"
+          />
+        </AspectRatio>
+      </div>
+      <div
+        onClick={() =>
+          router.push(`/idea/${props.id}/${formatNameRoute(props.headline)}`)
+        }
+        className="cursor-pointer absolute top-[50%] left-[50%] -translate-x-[47%] w-[95%] text-white"
+      >
+        <h2 className=" text-sm sm:text-base  font-semibold mb-4">
+          {props.headline}
         </h2>
-        <h3 className=" text-xs des:text-base text-gray2 font-light mb-4">
-          Users can submit their startup, for getting feedbacks, beta
-          subscriptions, early adopters, traffic and users. In addition, they
-          can also..
+        <h3 className="text-xs sm:text-sm  text-gray2 font-light mb-4">
+          {truncateStr(props.summaary, 120).text} {truncateStr(props.summaary, 120).status ? <span className="font-semibold">read more...</span> : null} 
         </h3>
-        <div className="flex items-center">
-          <div className="mr-4">
-            <Image src={Avatar} alt="avatar" />
-          </div>
-          <div className="text-xs lg:text-sm ">
-            <p className="font-semibold">Demilade Odetara</p>
-            <p className="leading-5 text-gray2">CEO Pledre Solutions</p>
-          </div>
+      </div>
+      <div
+        onClick={() => router.push(`/profile/${props.userId}`)}
+        className="cursor-pointer z-[100] absolute bottom-4 flex items-center left-[50%] -translate-x-[47%] w-[95%] text-white"
+      >
+        <div className="mr-4 rounded-full overflow-hidden w-[2rem]">
+          <Image
+            src={props.ppicture || NoProfilePic}
+            width={100}
+            height={100}
+            alt="avatar"
+          />
+        </div>
+        <div className="text-xs lg:text-sm ">
+          <p className="font-semibold">{props.lname}</p>
+          <p className="leading-5 text-gray2">{props.pow}</p>
         </div>
       </div>
     </div>

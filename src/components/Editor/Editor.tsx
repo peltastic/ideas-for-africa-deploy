@@ -78,6 +78,9 @@ const Editor = ({ setIdea, contentProps, isModify }: Props) => {
     // editor?.commands.setColor("#ad2218")
     if (editor && hasEditorBeenRendered.current) {
       setIdea && setIdea("body", editor.getHTML());
+      setIdea && setIdea("summary", editor.getText({
+        blockSeparator: "\xa0"
+      }) )
       return () => {};
     }
     hasEditorBeenRendered.current = true;

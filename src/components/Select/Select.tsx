@@ -13,6 +13,8 @@ type Props = {
   size: "sm" | "lg" | "md" | "xs" | "xl";
   thinLabel?: boolean
   radius?: "sm" | "lg" | "md" | "xs" | "xl";
+  default?: string
+  searchable?: boolean
   
 };
 
@@ -27,9 +29,11 @@ const SelectComponent = (props: Props) => {
       className="font-semibold placeholder:text-black" 
       value={props.value || null}
       data={props.options}
+      defaultValue={props.default}
       rightSection={icon}
       placeholder={props.placeholder}
       onChange={props.changed}
+      searchable={props.searchable}
     />
   );
 };

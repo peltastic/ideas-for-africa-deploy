@@ -42,7 +42,7 @@ const Idea = (props: Props) => {
         {data && !props.modified ? (
           <IdeaGrid setOpenVH={setOpenVHHandler} data={data} />
         ) : result.data ? (
-          <IdeaGrid setOpenVH={setOpenVHHandler} data={result.data} />
+          <IdeaGrid setOpenVH={setOpenVHHandler} data={result.data} modified />
         ) : (
           <IdeaPageSkeleton />
         )}
@@ -54,6 +54,7 @@ const Idea = (props: Props) => {
       >
         {data ? (
           <ModifyIdeaGrid
+            mid={mid as string}
             modifiedIdea={props.modified || false}
             original={{
               fname: data.user.fname,

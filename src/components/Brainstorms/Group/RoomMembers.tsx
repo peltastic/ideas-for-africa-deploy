@@ -4,9 +4,11 @@ import { skipToken } from "@reduxjs/toolkit/query";
 import { useParams } from "next/navigation";
 import CancelSvg from "/public/assets/cancel2.svg";
 
+import NoProfilePic from "/public/assets/no-profile.jpg";
 import Avatar from "/public/assets/avatar.png";
 import React from "react";
 import Image from "next/image";
+import TailwindSpinner from "@/components/Spinner/TailwindSpinner";
 
 type Props = {
   setShowProps: (val: boolean) => void;
@@ -15,7 +17,7 @@ type Props = {
 
 const RoomMembers = (props: Props) => {
   const { subId } = useParams<{ subId: string }>();
-  const {} = useGetGroupMembersQuery(subId ?? skipToken);
+  const { data, isFetching } = useGetGroupMembersQuery(subId ?? skipToken);
   return (
     <div className="bg-white rounded-md py-6 px-4">
       <div className="flex mb-10 lg:hidden">
@@ -33,26 +35,31 @@ const RoomMembers = (props: Props) => {
           Invite
         </Button>
       </div>
-      <div className="">
-        <div className=" flex mt-8 items-center">
-          <div className="mr-3 w-[2.4rem]">
-            <Image src={Avatar} className="w-full" alt="avatar" />
-          </div>
-          <div className="text-sm mr-auto ">
-            <p className="font-semibold mb-[0.02rem]">Kunle Ademola</p>
-            <p className="leading-5 text-gray1">CEO Pledre Solutions</p>
-          </div>
+      {isFetching ? (
+        <div className="mt-5 w-full flex justify-center ">
+          <TailwindSpinner />
         </div>
-        <div className=" flex mt-8 items-center">
-          <div className="mr-3 w-[2.4rem]">
-            <Image src={Avatar} className="w-full" alt="avatar" />
-          </div>
-          <div className="text-sm mr-auto ">
-            <p className="font-semibold mb-[0.02rem]">Kunle Ademola</p>
-            <p className="leading-5 text-gray1">CEO Pledre Solutions</p>
-          </div>
+      ) : (
+        <div className="">
+          {data?.map((el) => (
+            <div className=" flex mt-8 items-center">
+              <div className="mr-3 rounded-full overflow-hidden w-[2.4rem]">
+                <Image
+                  src={el.profile.ppicture || NoProfilePic}
+                  width={100}
+                  height={100}
+                  className="w-full"
+                  alt="avatar"
+                />
+              </div>
+              <div className="text-sm mr-auto ">
+                <p className="font-semibold mb-[0.02rem]">{el.profile.fname} {el.profile.lname}</p>
+                {/* <p className="leading-5 text-gray1">CEO Pledre Solutions</p> */}
+              </div>
+            </div>
+          ))}
         </div>
-      </div>
+      )}
     </div>
   );
 };

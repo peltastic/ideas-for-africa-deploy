@@ -3,6 +3,7 @@ import {
   ICreateIdeaPayload,
   IGetIdeasResponse,
   IGetSingleIdeaResponse,
+  IGetTopLikedIdeas,
   IModifyIdeaPayload,
 } from "@/interface/idea";
 import { formDataHandler } from "@/utils/helperfunctions";
@@ -40,6 +41,9 @@ export const ideasApi = createApi({
       query: (body) => {
         const formData = new FormData();
         for (const key in body) {
+          if (key === "files") {
+            continue;
+          }
           if (body.hasOwnProperty(key)) {
             formData.append(key, body[key as keyof typeof body] as string);
           }
@@ -58,7 +62,9 @@ export const ideasApi = createApi({
       },
     }),
     modifyIdea: build.mutation<
-      unknown,
+      {
+        modiId: string;
+      },
       { body: IModifyIdeaPayload; ideaId: string }
     >({
       query: ({ body, ideaId }) => {
@@ -80,11 +86,14 @@ export const ideasApi = createApi({
     getIdeas: build.query<{ ideas: IGetIdeasResponse[] }, void>({
       query: () => "/users/ideas",
     }),
-    getSingleIdea: build.query<IGetSingleIdeaResponse, { id: string, userId?: string }>({
+    getSingleIdea: build.query<
+      IGetSingleIdeaResponse,
+      { id: string; userId?: string }
+    >({
       query: ({ id, userId }) => {
-        let query = ""
+        let query = "";
         if (userId) {
-          query = `?userId=${userId}`
+          query = `?userId=${userId}`;
         }
         return { url: `/users/ideas/${id}${query}` };
       },
@@ -124,6 +133,49 @@ export const ideasApi = createApi({
         },
       }),
     }),
+    getTopLikedIdeas: build.query<
+      {
+        ideas: IGetIdeasResponse[];
+      },
+      {
+        id?: string;
+        category?: string;
+        limit?: string;
+      }
+    >({
+      query: ({ id, category, limit }) => {
+        let query = "";
+        if (category) {
+          query = `&category=${category}`;
+        }
+        return {
+          url: `/users/liked/ideas/?limit=${limit || "10"}&userId=${
+            id ?? ""
+          }${query}`,
+        };
+      },
+    }),
+    getTopViewedIdeas: build.query<
+      { ideas: IGetIdeasResponse[] },
+      {
+        id?: string;
+        category?: string;
+        limit?: string;
+      }
+    >({
+      query: ({ id, category, limit }) => {
+        let query = "";
+        if (category) {
+          query = query + `&category=${category}`;
+        }
+
+        return {
+          url: `/users/viewed/ideas/?limit=${limit || "10"}&userId=${
+            id ?? ""
+          }${query}`,
+        };
+      },
+    }),
   }),
 });
 
@@ -138,4 +190,7 @@ export const {
   useLazyGetUserIdeasQuery,
   useLazyGetModifiedIdeasQuery,
   useLazyGetSingleModifiedIdeaQuery,
+  useLazyGetTopLikedIdeasQuery,
+  useLazyGetTopViewedIdeasQuery,
+  useGetTopLikedIdeasQuery,
 } = ideasApi;

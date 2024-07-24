@@ -2,33 +2,16 @@ import React, { useState } from "react";
 import ClockIcon from "/public/assets/clock-icon.svg";
 import Image from "next/image";
 import { formatNameRoute, truncateStr } from "@/utils/helperfunctions";
-import LikedImg from "/public/assets/like-img.svg";
-
 import UnlikedImg from "/public/assets/unlike.svg";
-import { IoShareSocialOutline } from "react-icons/io5";
 import moment from "moment";
 import { AspectRatio } from "@mantine/core";
 import NoProfilePic from "/public/assets/no-profile.jpg";
-
-import {
-  FacebookShareButton,
-  TwitterShareButton,
-  TwitterIcon,
-  FacebookIcon,
-  WhatsappShareButton,
-  WhatsappIcon,
-  LinkedinShareButton,
-  LinkedinIcon,
-} from "react-share";
 
 import InnovativeImg from "/public/assets/innovative7.png";
 import { useRouter } from "next/navigation";
 import ModalComponent from "../Modal/Modal";
 import { useDisclosure } from "@mantine/hooks";
-import Button from "../Button/Button";
-import { notify } from "@/utils/toast";
-import { useSelector } from "react-redux";
-import { RootState } from "@/lib/store";
+import { FaRegEye } from "react-icons/fa";
 import NotLoggedInModal from "../ModalComponents/NotLoggedInModal";
 import { useLikeIdeaMutation } from "@/lib/features/ideas";
 import { getCookie } from "@/utils/storage";
@@ -41,12 +24,19 @@ type Props = {
     createdAt: string;
     category: string;
     banner: string;
-    fname: string;
-    lname: string;
+    fname?: string;
+    lname?: string;
     pow?: string;
+    likes: string;
     id: string;
     userId: string;
     ppicture?: string;
+    user?: {
+      fname: string;
+      lname: string;
+    };
+    wordpm: number;
+    viewCount: number;
   };
 };
 
@@ -55,9 +45,7 @@ const InnovativeIdeasCard = (props: Props) => {
   const [likeIdea, {}] = useLikeIdeaMutation();
 
   const [liked, setLiked] = useState<boolean>(false);
-  const authStatus = useSelector(
-    (state: RootState) => state.persistedState.auth.authStatus
-  );
+
   const origin =
     typeof window !== "undefined" && window.location.origin
       ? window.location.origin
@@ -76,7 +64,7 @@ const InnovativeIdeasCard = (props: Props) => {
   };
   return (
     <>
-      <ModalComponent size="md" centered opened={opened} onClose={close}>
+      {/* <ModalComponent size="md" centered opened={opened} onClose={close}>
         <div className="">
           <h1 className="text-xl font-semibold">Share Idea</h1>
           <div className="flex items-center mt-5 gap-5">
@@ -100,13 +88,13 @@ const InnovativeIdeasCard = (props: Props) => {
             classname="bg-gray3 py-2 px-4 text-sm rounded-md"
             clicked={() => {
               navigator.clipboard.writeText(url);
-              notify("Copied", "success");
+              notify("Link copied to clipboard", "success");
             }}
           >
             Copy
           </Button>
         </div>
-      </ModalComponent>
+      </ModalComponent> */}
       <ModalComponent
         size="md"
         centered
@@ -140,52 +128,57 @@ const InnovativeIdeasCard = (props: Props) => {
           </div>
           <div className="flex py-3 text-xs text-gray4 items-center">
             <Image src={ClockIcon} alt="clock-icon" className="mr-2" />
-            <p className="mr-auto">10-15mins read</p>
-            <p>{moment(props.data.createdAt).startOf("day").fromNow()}</p>
+            <p className="mr-auto">
+              {Math.floor(props.data.wordpm / 60)}-
+              {Math.floor(props.data.wordpm / 60) + 1} mins read
+            </p>
+            <p>{moment(props.data.createdAt).fromNow()}</p>
           </div>
           <div className="w-full">
-            <h1 className="font-bold mt-2 text-black1">
+            <h1 className="font-bold mt-2 text-sm text-black1">
               {props.data.headline}
             </h1>
-            <h2 className="text-gray1 text-sm my-3">
-              {truncateStr(props.data.summary, 150)}
+            <h2 className="text-gray1 text-[0.8rem] my-3">
+              <>{truncateStr(props.data.summary, 150).text}</>
+              {truncateStr(props.data.summary, 150).status ? (
+                <span className="font-semibold"> read more...</span>
+              ) : null}
             </h2>
           </div>
         </div>
-        <div className="cursor-pointer bg-white sm:absolute w-[90%] bottom-4 flex mt-6 items-center">
+        <div className=" cursor-pointer bg-white sm:absolute w-[90%] bottom-4 flex mt-6 items-center">
           <div
-            className="mr-4 w-[2rem] rounded-full overflow-hidden"
+            className="mr-4 w-[2rem] h-[2rem] rounded-full overflow-hidden"
             onClick={() => router.push(`/profile/${props.data.userId}`)}
           >
-            <Image
-              src={props.data.ppicture || NoProfilePic}
-              alt="avatar"
-              width={100}
-              height={100}
-            />
+            <AspectRatio ratio={1800/1800}>
+              <Image
+                src={props.data.ppicture || NoProfilePic}
+                alt="avatar"
+                width={100}
+                height={100}
+                className="w-full h-full"
+              />
+            </AspectRatio>
           </div>
           <div
             onClick={() => router.push(`/profile/${props.data.userId}`)}
             className="text-xs mr-auto "
           >
             <p className="font-bold mb-[0.1rem]">
-              {props.data.fname} {props.data.lname}
+              {props.data.fname || props.data.user?.fname}{" "}
+              {props.data.lname || props.data.user?.lname}
             </p>
             <p className="leading-5 text-gray1">{props.data.pow}</p>
           </div>
-          <div className="" onClick={() => open()}>
-            <IoShareSocialOutline className="mr-3" />
+
+          <div className="flex items-center  mr-3">
+            <Image src={UnlikedImg} alt="like-img" className="w-[0.9rem]" />
+            <p className="ml-1 text-gray1 text-sm">{props.data.likes}</p>
           </div>
-          <div
-            className=""
-            onClick={() => {
-              if (authStatus === "LOGGED_OUT") {
-                return funcs.open();
-              }
-              likeHandler();
-            }}
-          >
-            <Image src={liked ? LikedImg : UnlikedImg} alt="like-img" />
+          <div className="flex   items-center text-gray1">
+            <FaRegEye className="" />
+            <p className="ml-1 text-sm">{props.data.viewCount}</p>
           </div>
         </div>
       </div>

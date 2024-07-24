@@ -3,6 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { getCookie } from "@/utils/storage";
 import {
   IGetBrainstormGroupsResponse,
+  IGetGroupMembers,
   IGroupMessagesResponse,
 } from "@/interface/brainstorms";
 
@@ -31,6 +32,7 @@ export const brainstormsApi = createApi({
         ideaId: string;
         name: string;
         userId: string;
+        text: string
       }
     >({
       query: (body) => ({
@@ -93,8 +95,8 @@ export const brainstormsApi = createApi({
         body,
       }),
     }),
-    getGroupMembers: build.query<unknown, string>({
-      query: (id) => `/groups/${id}/members`,
+    getGroupMembers: build.query<IGetGroupMembers[], string>({
+      query: (id) => `/groups/groups/${id}/members`,
     }),
     getGroupMessages: build.query<
       {

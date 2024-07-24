@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Input from "../Input/Input";
 import { IoMdAdd } from "react-icons/io";
 import SelectComponent from "../Select/Select";
 import Upload from "../Upload/Upload";
 import { ICreateIdeaPayload } from "@/interface/idea";
-import File from "./File";
 import { idea_categories_list } from "@/utils/constants";
 import { motion } from "framer-motion";
+import curr_list from "@/data/currencies.json";
 
 type Props = {
   setIdea: (key: string, value: string | File | null) => void;
@@ -16,6 +16,8 @@ type Props = {
   addDocHandler: (file: File | null) => void;
   deleteFileHandler: (index: number) => void;
   updateDocHandler: (file: File | null, index: number) => void;
+  currValue: string;
+  setCurrValue: (val: string) => void;
 };
 
 const AdditionalInformation = ({
@@ -26,7 +28,27 @@ const AdditionalInformation = ({
   addDocHandler,
   deleteFileHandler,
   updateDocHandler,
+  setCurrValue,
+  currValue,
 }: Props) => {
+  const [currencyOptions, setCurrencyOptions] = useState<
+    {
+      label: string;
+      value: string;
+    }[]
+  >([]);
+  useEffect(() => {
+    const formattedCurrData = curr_list.map((el) => {
+      return {
+        label: el.code,
+        value: el.symbol,
+      };
+    });
+    setCurrencyOptions(formattedCurrData);
+  }, []);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <motion.div
       initial={{
@@ -44,7 +66,7 @@ const AdditionalInformation = ({
       className="pb-[5rem]"
     >
       <h1 className="font-bold text-2xl xxs:text-3xl">
-        Share your existing idea
+        Additional Information
       </h1>
       <p className="text-xs xxs:text-sm mt-2 text-gray4">
         Turn your idea into a sensation. Share it now and let the buzz begin!
@@ -79,14 +101,28 @@ const AdditionalInformation = ({
       </div> */}
       <div
         onClick={addNewPitchHandler}
-        className="flex items-center justify-center border text-center py-2 text-sm rounded-full mt-8 border-gray8"
+        className="flex cursor-pointer items-center justify-center border text-center py-2 text-sm rounded-full mt-8 border-gray8"
       >
         <IoMdAdd className="mr-1 text-lg" />
         <p>Add more</p>
       </div>
       <h1 className="text-sm font-bold mt-8 mb-4">Price range</h1>
-      <div className="mt-6 grid gap-6 grid-cols-1 sm:grid-cols-2">
-        <div className="">
+      <div className="mt-6 flex items-center gap-6">
+        <div className="w-[20%]">
+          {currencyOptions.length > 0 ? (
+            <>
+              <label className="text-sm  mb-2 block">Currency</label>
+              <SelectComponent
+                value={currValue}
+                size="md"
+                options={currencyOptions}
+                searchable
+                changed={(val) => setCurrValue(val)}
+              />
+            </>
+          ) : null}
+        </div>
+        <div className="w-[38%]">
           <label className="text-sm  mb-2 block">Minimum Budget</label>
           <Input
             value={idea.minbud}
@@ -97,13 +133,14 @@ const AdditionalInformation = ({
             class="rounded-full w-full px-4 py-2 border border-gray8 placeholder:text-gray1 placeholder:text-sm outline-none"
           />
         </div>
-        <div className="">
+        <div className="w-[38%]">
           <label className="text-sm  mb-2 block">Maximum budget</label>
           <Input
             value={idea.maxbud}
             changed={(e) => {
               setIdea("maxbud", `${e.target.value}`);
             }}
+            type="number"
             placeholder=""
             class="rounded-full w-full px-4 py-2 border border-gray8 placeholder:text-gray1 placeholder:text-sm outline-none"
           />
@@ -130,11 +167,14 @@ const AdditionalInformation = ({
         <Upload
           uploadDoc={addDocHandler}
           files
-          accept="application/pdf"
+          accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint, application/pdf"
           setFile={setIdea}
+          idea={idea}
+          updateDocHandler={updateDocHandler}
+          deleteFileHandler={deleteFileHandler}
         />
       </div>
-      <div className="mt-8">
+      {/* <div className="mt-8">
         {idea
           ? idea.files?.map((el, index) => (
               <File
@@ -147,7 +187,7 @@ const AdditionalInformation = ({
               />
             ))
           : null}
-      </div>
+      </div> */}
     </motion.div>
   );
 };

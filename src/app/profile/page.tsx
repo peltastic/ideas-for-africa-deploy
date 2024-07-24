@@ -22,6 +22,7 @@ const ProfilePage = (props: Props) => {
   const setTempPfpHandler = (pfp: string) => {
     setTempPfp(pfp);
   };
+
   return (
     <div className="">
       <Navbar />

@@ -13,11 +13,6 @@ type Props = {};
 const ProfileViewPage = (props: Props) => {
   const { id } = useParams();
   const [getUserProfile, { data, isFetching }] = useLazyGetUserProfileQuery();
-  // const [edit, setEdit] = useState<boolean>()
-  // const setEditHandler = (param: boolean) {
-  //   setEdit(param)
-  // }
-
   useEffect(() => {
     if (id) {
       getUserProfile({
@@ -36,6 +31,7 @@ const ProfileViewPage = (props: Props) => {
               email={data.email}
               fname={data.fname}
               lname={data.lname}
+              readonly
             />
             <ProfileView id={id as string} />
           </>

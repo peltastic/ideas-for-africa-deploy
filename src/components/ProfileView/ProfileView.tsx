@@ -1,6 +1,6 @@
 "use client";
 import Tabs from "@/Tabs/Tabs";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Ideas from "../Ideas/Ideas";
 import { useRouter, useSearchParams } from "next/navigation";
 import UserModifiedIdeas from "./UserModifiedIdeas";
@@ -14,26 +14,27 @@ const ProfileView = (props: Props) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const tab = searchParams.get("tab");
-  const [currentTab, setCurrentTab] = useState<
-    "Ideas" | "Modified Ideas" | "Brainstorm" | string
-  >("Ideas");
   let component = <Ideas hideFilter />;
   switch (tab) {
     case "ideas":
       component = <Ideas hideFilter />;
       break;
+    case "brainstorm":
+      component = <UserBrainstormGroups />;
+      break;
     case "modified ideas":
       component = <UserModifiedIdeas />;
-    case "brainstorm":
-      component = <UserBrainstormGroups />
     default:
       break;
   }
+  useEffect(() => {
+    console.log(tab);
+  }, [tab]);
   return (
     <div>
       <div className="my-8">
         <Tabs
-        profile
+          profile
           elements={["Ideas", "Modified Ideas", "Brainstorm"]}
           filterVal={tab || "ideas"}
           setVal={(el) =>

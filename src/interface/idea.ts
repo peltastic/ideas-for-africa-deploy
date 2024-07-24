@@ -18,19 +18,35 @@ export interface IGetIdeasResponse {
   subcategory: string;
   summary: string;
   files: any;
-  likes: string
+  likes: string;
   createdAt: string;
   banner: string;
-  fname: string;
-  lname: string;
+  fname?: string;
+  lname?: string;
   userId: string;
   pow?: string;
   profile?: {
     ppicture: string;
+    pow: string;
   };
+  ppicture?: string;
+  thumbPath?: string;
   thumb?: {
     path: string;
   }[];
+  user?: {
+    fname: string;
+    lname: string;
+  };
+  wordpm: number
+  viewCount: number
+}
+
+export interface IIdeaDocumentData {
+  _id: string;
+  originalName: string;
+  path: string;
+  ideaId: string;
 }
 
 export interface IModifyIdeaPayload {
@@ -70,10 +86,28 @@ export interface IGetSingleIdeaResponse {
     fname: string;
     lname: string;
   };
+  wordpm: number
+  viewCounts: number
   profile: {
     pow: string;
     title: string;
     _id: string;
     ppicture: string;
   };
+
+  documents: IIdeaDocumentData[];
+}
+
+export interface IGetTopLikedIdeas {
+  _id: string;
+  ppicture: string;
+  summary: string;
+  headline: string;
+  thumbPath: string;
+  userId: string;
+  fname: string;
+  lname: string;
+  pow: string;
+  category: string;
+  createdAt: string;
 }

@@ -1,20 +1,24 @@
 import Image from "next/image";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import ModifyIdeaImg from "/public/assets/auto_fix.svg";
 import InfoImg from "/public/assets/info.svg";
 import Avatar1 from "/public/assets/version-pfp-1.jpg";
 import CancelSvg from "/public/assets/cancel2.svg";
 import TrendingIdeas from "./TrendingIdeas";
 import { useRouter } from "next/navigation";
-import { formatNameRoute } from "@/utils/helperfunctions";
+import { formatNameRoute, getRandomColor } from "@/utils/helperfunctions";
 import { useLazyGetModifiedIdeasQuery } from "@/lib/features/ideas";
 import ModalComponent from "../Modal/Modal";
 import { useDisclosure } from "@mantine/hooks";
 import NotLoggedInModal from "../ModalComponents/NotLoggedInModal";
 import { useSelector } from "react-redux";
+import { IoMdCheckmark } from "react-icons/io";
 import { RootState } from "@/lib/store";
 
+import LikedImg from "/public/assets/unlike.svg";
+
 type Props = {
+  mid: string;
   modifiedIdea?: boolean;
   closeVH: () => void;
   name: string;
@@ -26,8 +30,30 @@ type Props = {
   };
 };
 
+const modifyIdeasColorPallet = [
+  {
+    light: "#8d493a2f",
+    dark: "#8D493A",
+  },
+  {
+    light: "#7569b62e",
+    dark: "#7469B6",
+  },
+  {
+    light: "#0042253c",
+    dark: "#004225",
+  },
+  {
+    light: "#9a031f20",
+    dark: "#9A031E",
+  },
+  {
+    light: "#f7c46630",
+    dark: "#815607",
+  },
+];
 const ModifyIdeaGrid = (props: Props) => {
-  const authStatus = useSelector((state: RootState) => state.persistedState.auth.authStatus)
+  const [colors, setColors] = useState<string[]>([]);
   const [getModifiedIdeas, { isFetching, data }] =
     useLazyGetModifiedIdeasQuery();
   const router = useRouter();
@@ -35,6 +61,12 @@ const ModifyIdeaGrid = (props: Props) => {
     getModifiedIdeas(props.id);
   }, []);
   const [opened, { open, close }] = useDisclosure();
+  useEffect(() => {
+    if (data) {
+      const colors = data.modifiedIdeas?.map(() => `bg-[${getRandomColor()}]`);
+      setColors(colors);
+    }
+  }, [data]);
 
   return (
     <>
@@ -49,28 +81,8 @@ const ModifyIdeaGrid = (props: Props) => {
           <h1 className="text-black1 font-semibold text-lg my-6">
             Version History
           </h1>
-          {props.modifiedIdea ? null : (
-            <button
-              onClick={() => {
-                if (authStatus === "LOGGED_OUT") {
-                  return open()
-                }
-                router.push(
-                  `/idea/${props.id}/${formatNameRoute(props.name)}/modify`
-                );
-              }}
-              className="flex items-center text-sm rounded-full px-4 py-2  bg-primary text-white border-primary border"
-            >
-              <Image
-                src={ModifyIdeaImg}
-                className="mr-2"
-                alt="brainstorm svg"
-              />
-              <p>Modify idea</p>
-            </button>
-          )}
         </div>
-        <div className="bg-amber-bg text-amber-dark flex flex-wrap xs:flex-nowrap px-5 py-3 gap-3 items-center justify-center rounded-lg">
+        {/* <div className="bg-amber-bg text-amber-dark flex flex-wrap xs:flex-nowrap px-5 py-3 gap-3 items-center justify-center rounded-lg">
           <Image
             src={InfoImg}
             alt="info-img"
@@ -80,9 +92,16 @@ const ModifyIdeaGrid = (props: Props) => {
             Have a different perspective? Modify the original idea and share
             your thought process with fellow users.
           </p>
-        </div>
+        </div> */}
         <div className="xxs:border my-6 border-gray3 rounded-md p-2 xxs:p-4">
-          <div className="flex  py-4 px-4 rounded-md bg-gray3 items-center mb-4 ">
+          <div
+            onClick={() =>
+              router.push(`/idea/${props.id}/${formatNameRoute(props.name)}`)
+            }
+            className={`flex  py-4 px-4 rounded-md ${
+              props.mid ? "" : "bg-gray3"
+            } transition-all  items-center mb-4  cursor-pointer `}
+          >
             <div className="mr-4 ">
               <Image src={Avatar1} alt="avatar" className="w-[3rem]" />
             </div>
@@ -98,92 +117,58 @@ const ModifyIdeaGrid = (props: Props) => {
             </div>
             <p className="text-primary text-sm font-medium">Original</p>
           </div>
-          {data &&
-            data.modifiedIdeas?.map((el) => (
-              <div
-                onClick={() =>
-                  router.push(
-                    `/idea/${props.id}/${formatNameRoute(
-                      props.name
-                    )}/modified-idea/${el._id}`
-                  )
-                }
-                key={el._id}
-                className="flex cursor-pointer py-4 px-4 rounded-md items-center mb-4 "
-              >
-                <div className="mr-4 ">
-                  <Image src={Avatar1} alt="avatar" className="w-[3rem]" />
-                </div>
-                <div className="w-full mt-3 sm:mt-0 sm:w-auto mr-auto">
-                  <div className="text-black1 text-xs mr-auto ">
-                    <p className="text-base font-medium mb-[0..5rem]">
-                      {el.fname} {el.lname}
-                    </p>
-                    <p className="text-gray1 leading-5 text-[0.9rem]">
-                      {el.pow}
-                    </p>
+          <div className="">
+            {data &&
+              colors?.length > 0 &&
+              data.modifiedIdeas?.map((el, index) => (
+                <div
+                  onClick={() =>
+                    router.push(
+                      `/idea/${props.id}/${formatNameRoute(
+                        props.name
+                      )}/modified-idea/${el._id}`
+                    )
+                  }
+                  key={el._id}
+                  style={{
+                    background:
+                      props.mid === el._id
+                        ? "#EFF1F6"
+                        : modifyIdeasColorPallet[
+                            index % modifyIdeasColorPallet.length
+                          ].light,
+                    color:
+                      props.mid === el._id
+                        ? "#000"
+                        : modifyIdeasColorPallet[
+                            index % modifyIdeasColorPallet.length
+                          ].dark,
+                  }}
+                  className={` 
+            } transition-all  flex cursor-pointer py-4 px-4 rounded-md items-center mb-4 `}
+                >
+                  <div className="mr-4 ">
+                    <Image src={Avatar1} alt="avatar" className="w-[3rem]" />
                   </div>
+                  <div className="w-full mt-3 sm:mt-0 sm:w-auto mr-auto">
+                    <div className=" text-xs mr-auto ">
+                      <p className="text-base font-medium mb-[0..5rem]">
+                        {el.fname} {el.lname}
+                      </p>
+                      <p className=" leading-5 text-[0.9rem]">{el.pow}</p>
+                    </div>
+                  </div>
+                  {props.mid === el._id ? (
+                    <IoMdCheckmark className="text-xl mr-1" />
+                  ) : null}
+                  <div className="flex items-center">
+                    <Image src={LikedImg} className="mr-1" alt="liked-img" />
+                    <p>{el.likes}</p>
+                  </div>
+                  {/* <p className="text-primary text-sm font-medium">Original</p> */}
                 </div>
-                {/* <p className="text-primary text-sm font-medium">Original</p> */}
-              </div>
-            ))}
-          {/* <div className="flex  py-4 px-4 rounded-md  items-center mb-4 ">
-          <div className="mr-4 ">
-          <Image src={Avatar2} alt="avatar" className="w-[3rem]" />
+              ))}
           </div>
-          <div className="w-full mt-2 sm:mt-0 sm:w-auto mr-auto">
-          <div className="text-black1 text-xs mr-auto ">
-          <p className="text-base font-medium mb-[0..5rem]">
-          Demilade Odetara
-          </p>
-          <p className="text-gray1 leading-5 text-[0.9rem]">
-          C.E.O Pledre Solutions
-          </p>
-          </div>
-          </div>
-          <div className="flex items-center">
-          <Image src={LikeImg} alt="avatar" className="w-[1.2rem] mr-1" />
-          <p className="text-gray1">10</p>
-          </div>
-          </div>
-          <div className="flex  py-4 px-4 rounded-md  items-center mb-4 ">
-          <div className="mr-4 ">
-          <Image src={Avatar2} alt="avatar" className="w-[3rem]" />
-          </div>
-          <div className="w-full mt-2 sm:mt-0 sm:w-auto mr-auto">
-          <div className="text-black1 text-xs mr-auto ">
-          <p className="text-base font-medium mb-[0..5rem]">
-          Demilade Odetara
-          </p>
-          <p className="text-gray1 leading-5 text-[0.9rem]">
-          C.E.O Pledre Solutions
-          </p>
-          </div>
-          </div>
-          <div className="flex items-center">
-          <Image src={LikeImg} alt="avatar" className="w-[1.2rem] mr-1" />
-          <p className="text-gray1">10</p>
-          </div>
-          </div>
-          <div className="flex  py-4 px-4 rounded-md  items-center mb-4 ">
-          <div className="mr-4 ">
-          <Image src={Avatar2} alt="avatar" className="w-[3rem]" />
-          </div>
-          <div className="w-full mt-2 sm:mt-0 sm:w-auto mr-auto">
-          <div className="text-black1 text-xs mr-auto ">
-          <p className="text-base font-medium mb-[0..5rem]">
-          Demilade Odetara
-          </p>
-          <p className="text-gray1 leading-5 text-[0.9rem]">
-          C.E.O Pledre Solutions
-          </p>
-          </div>
-        </div> */}
-          {/* <div className="flex items-center">
-            <Image src={LikeImg} alt="avatar" className="w-[1.2rem] mr-1" />
-            <p className="text-gray1">10</p>
-            </div>
-          </div> */}
         </div>
         <div className="hidden des:block">
           <TrendingIdeas />

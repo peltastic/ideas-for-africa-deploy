@@ -52,7 +52,7 @@ const BasicInformation = ({
             class="rounded-lg w-full px-4 py-2 border border-gray8 placeholder:text-gray1 placeholder:text-sm outline-none"
           />
         </div>
-        <div className="">
+        {/* <div className="">
           <label className="text-sm font-bold mt-8 mb-4 block">Summary</label>
           <Input
             value={idea.summary}
@@ -62,7 +62,7 @@ const BasicInformation = ({
             placeholder="A brief summary of what your ideas entails"
             class="rounded-lg w-full px-4 py-2 border border-gray8 placeholder:text-gray1 placeholder:text-sm outline-none"
           />
-        </div>
+        </div> */}
         <div className="">
           <label className="text-sm font-bold mt-8 mb-4 block">Body</label>
           <Editor contentProps={idea.body} setIdea={setIdea} />
@@ -70,6 +70,7 @@ const BasicInformation = ({
         <div className="mb-[5rem]">
           <label className="text-sm font-bold mt-8 mb-4 block">Image</label>
           <Upload
+
             preview={preview}
             setBannerPreview={setBannerPreview}
             basic

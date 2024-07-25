@@ -1,13 +1,16 @@
 "use client";
 import { Carousel } from "@mantine/carousel";
-import React from "react";
+import React, { useEffect } from "react";
 import CarouselCard from "../Cards/CarouselCard";
 import TopLikedImage from "/public/assets/top-liked.jpg";
 import { IoIosArrowBack } from "react-icons/io";
 import { IoIosArrowForward } from "react-icons/io";
 import classes from "@/app/styles/carousel.module.css";
 import { getCookie } from "@/utils/storage";
-import { useGetTopLikedIdeasQuery } from "@/lib/features/ideas";
+import {
+  useGetTopLikedIdeasQuery,
+  useLazyGetTopLikedIdeasQuery,
+} from "@/lib/features/ideas";
 import InnovativeIdeasSkeleton from "../Skeleton/InnovativeIdeasSkeleton";
 import Image from "next/image";
 import { AspectRatio } from "@mantine/core";
@@ -17,9 +20,13 @@ type Props = {};
 
 const CauroselSection = (props: Props) => {
   const id = getCookie("id");
-  const { data, isFetching } = useGetTopLikedIdeasQuery(id ?? null, {
-    refetchOnMountOrArgChange: true,
-  });
+  const [getTopLiked, { data, isFetching }] = useLazyGetTopLikedIdeasQuery();
+  useEffect(() => {
+    getTopLiked({});
+  }, []);
+  // const { data, isFetching } = useGetTopLikedIdeasQuery({} ?? null, {
+  //   refetchOnMountOrArgChange: true,
+  // });
   return (
     <>
       {isFetching && !data ? (

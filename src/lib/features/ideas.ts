@@ -143,15 +143,14 @@ export const ideasApi = createApi({
         limit?: string;
       }
     >({
-      query: ({ id, category, limit }) => {
+      query: ({ category, limit }) => {
+        console.log(limit)
         let query = "";
         if (category) {
           query = `&category=${category}`;
         }
         return {
-          url: `/users/liked/ideas/?limit=${limit || "10"}&userId=${
-            id ?? ""
-          }${query}`,
+          url: `/users/liked/ideas/?limit=${limit || "10"}${query}`,
         };
       },
     }),
@@ -163,15 +162,14 @@ export const ideasApi = createApi({
         limit?: string;
       }
     >({
-      query: ({ id, category, limit }) => {
+      query: ({ category, limit }) => {
         let query = "";
         if (category) {
           query = query + `&category=${category}`;
         }
 
         return {
-          url: `/users/viewed/ideas/?limit=${limit || "10"}&userId=${
-            id ?? ""
+          url: `/users/viewed/ideas/?limit=${limit || "10"}
           }${query}`,
         };
       },

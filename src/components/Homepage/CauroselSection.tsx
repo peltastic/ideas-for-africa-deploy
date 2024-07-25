@@ -133,11 +133,11 @@ const CauroselSection = (props: Props) => {
               data?.ideas.map((el, index) => (
                 <Carousel.Slide key={el._id}>
                   <CarouselCard
-                    banner={el.thumbPath}
+                    banner={el.thumbPath as string}
                     headline={el.headline}
-                    lname={el.lname}
-                    pow={el.pow}
-                    ppicture={el.ppicture}
+                    lname={el.lname as string}
+                    pow={el.pow as string}
+                    ppicture={el.ppicture as string }
                     summaary={el.summary}
                     userId={el.userId}
                     id={el._id}

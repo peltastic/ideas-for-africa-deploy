@@ -11,7 +11,11 @@ import { RootState } from "@/lib/store";
 import { sendMessage } from "@/lib/sockets";
 import Button from "@/components/Button/Button";
 import BrainstormChatSkeleton from "@/components/Skeleton/BrainstormChatSkeleton";
-import { useLazyGetGroupMessagesQuery } from "@/lib/features/brainstorms";
+import {
+  useLazyGetGroupInfoQuery,
+  useLazyGetGroupMessagesQuery,
+} from "@/lib/features/brainstorms";
+import { getCookie } from "@/utils/storage";
 
 type Props = {
   setShowProps: (val: boolean) => void;
@@ -19,8 +23,11 @@ type Props = {
 };
 
 const ChatRoom = (props: Props) => {
+  const id = getCookie("id");
+  const params = useParams();
   const [getGroupMessages, { data, isFetching }] =
     useLazyGetGroupMessagesQuery();
+  const [getGrouInfo, result] = useLazyGetGroupInfoQuery();
   const [showChat, setShowChat] = useState<boolean>(false);
   const router = useRouter();
   const profile = useSelector(
@@ -36,6 +43,16 @@ const ChatRoom = (props: Props) => {
   const userProfile = useSelector(
     (state: RootState) => state.persistedState.profile.profile
   );
+
+  useEffect(() => {
+    if (params.id) {
+      getGrouInfo({
+        groupId: params.id as string,
+        userId: id,
+      });
+    }
+  }, [params.id]);
+
   useEffect(() => {
     if (subId) {
       joinBrainstormRoom(

@@ -35,3 +35,7 @@ export interface IGetGroupMembers {
     ppicture: string
   }
 }
+
+export interface IGetGroupInfo {
+  title: string
+}

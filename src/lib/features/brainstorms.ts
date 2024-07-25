@@ -106,6 +106,9 @@ export const brainstormsApi = createApi({
     >({
       query: (roomId) => `/groups/messages/${roomId}`,
     }),
+    getGroupInfo: build.query<{}, {groupId: string, userId?: string} >({
+      query: ({groupId, userId}) => `/users/groups/idea/${groupId}?userId=${userId}`
+    })
   }),
 });
 
@@ -117,4 +120,5 @@ export const {
   useGetGroupMembersQuery,
   useRespondToRequestMutation,
   useLazyGetGroupMessagesQuery,
+  useLazyGetGroupInfoQuery
 } = brainstormsApi;

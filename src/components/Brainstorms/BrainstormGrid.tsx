@@ -6,7 +6,10 @@ import AvatarGroup from "../AvatarGroup/AvatarGroup";
 import Button from "../Button/Button";
 import { replacePTags, truncateStr } from "@/utils/helperfunctions";
 import { getCookie } from "@/utils/storage";
-import { useRequestToJoinGroupMutation } from "@/lib/features/brainstorms";
+import {
+  useGetGroupMembersQuery,
+  useRequestToJoinGroupMutation,
+} from "@/lib/features/brainstorms";
 import Spinner from "../Spinner/Spinner";
 import { notify } from "@/utils/toast";
 import { useParams, useRouter } from "next/navigation";
@@ -45,11 +48,12 @@ const BrainstormGrid = (props: Props) => {
   // const getAdminFcm = useReturnFcmTokenQuery(props.groups.admin);
   const [requestToJoin, { isLoading, isSuccess, isError, error }] =
     useRequestToJoinGroupMutation();
+  const result = useGetGroupMembersQuery(props.groups._id);
   const [userStatus, setUserStatus] = useState<
     "Not a member" | "requested" | "Accepted"
   >(props.groups.status);
   const id = getCookie("id");
-  const [adminFcm, setAdminFcm] = useState<string>("");
+  const [pfps, setPfps] = useState<string[] | null>(null);
 
   useEffect(() => {
     if (isError) {
@@ -61,6 +65,13 @@ const BrainstormGrid = (props: Props) => {
       setUserStatus("requested");
     }
   }, [isSuccess, isError]);
+
+  useEffect(() => {
+    if (result.data) {
+      const finalData = result.data.map((el) => el.profile.ppicture || "");
+      setPfps(finalData);
+    }
+  }, [result.data]);
 
   // useEffect(() => {
   //   if (getAdminFcm.data) {
@@ -131,7 +142,8 @@ const BrainstormGrid = (props: Props) => {
             </div>
           </div>
           <div className="mt-6 flex w-full flex-wrap lg:flex-nowrap  items-center">
-            <AvatarGroup avatars={[url, url, url, url]} />
+            {pfps && pfps[0] ? <AvatarGroup avatars={pfps} /> : null}
+            {/* <AvatarGroup avatars={[url, url, url, url]} /> */}
             <Button
               disabled={userStatus === "requested"}
               clicked={handleButtonAction}

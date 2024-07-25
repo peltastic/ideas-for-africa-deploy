@@ -18,6 +18,7 @@ type Props = {
 const RoomMembers = (props: Props) => {
   const { subId } = useParams<{ subId: string }>();
   const { data, isFetching } = useGetGroupMembersQuery(subId ?? skipToken);
+  // console.log(data.)
   return (
     <div className="bg-white rounded-md py-6 px-4">
       <div className="flex mb-10 lg:hidden">

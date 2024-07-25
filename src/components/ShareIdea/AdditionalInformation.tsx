@@ -107,8 +107,8 @@ const AdditionalInformation = ({
         <p>Add more</p>
       </div>
       <h1 className="text-sm font-bold mt-8 mb-4">Price range</h1>
-      <div className="mt-6 flex items-center gap-6">
-        <div className="w-[20%]">
+      <div className="mt-6 flex flex-wrap sm:flex-nowrap items-center gap-6">
+        <div className="w-full sm:w-[20%]">
           {currencyOptions.length > 0 ? (
             <>
               <label className="text-sm  mb-2 block">Currency</label>
@@ -122,7 +122,7 @@ const AdditionalInformation = ({
             </>
           ) : null}
         </div>
-        <div className="w-[38%]">
+        <div className="w-full sm:w-[38%]">
           <label className="text-sm  mb-2 block">Minimum Budget</label>
           <Input
             value={idea.minbud}
@@ -133,7 +133,7 @@ const AdditionalInformation = ({
             class="rounded-full w-full px-4 py-2 border border-gray8 placeholder:text-gray1 placeholder:text-sm outline-none"
           />
         </div>
-        <div className="w-[38%]">
+        <div className="w-full sm:w-[38%]">
           <label className="text-sm  mb-2 block">Maximum budget</label>
           <Input
             value={idea.maxbud}

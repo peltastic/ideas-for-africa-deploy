@@ -126,7 +126,7 @@ const Upload = (props: Props) => {
               props.setFile(key, value);
             }}
           >
-            <div className="w-[85%] rounded-bl-lg rounded-br-lg  justify-center mx-auto xs:w-auto px-4 py-4   font-semibold items-center flex border-l border-r border-b border-gray8">
+            <div className="w-full rounded-bl-lg rounded-br-lg  justify-center mx-auto xs:w-auto px-4 py-4   font-semibold items-center flex border-l border-r border-b border-gray8">
               <Image
                 src={PhotoLibraryImg}
                 alt="photo-library"

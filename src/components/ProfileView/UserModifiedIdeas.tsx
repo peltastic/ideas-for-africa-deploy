@@ -41,7 +41,7 @@ const UserModifiedIdeas = (props: Props) => {
               ))}
             </>
           ) : (
-            <p>Yellooo</p>
+            <p>No Modified Ideas</p>
           )}
         </div>
       )}

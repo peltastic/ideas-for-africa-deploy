@@ -212,8 +212,8 @@ const ModifyIdea = (props: Props) => {
           />
         </div>
         <h1 className="text-sm font-bold mt-8 mb-4">Price range</h1>
-        <div className="mt-6 flex items-center gap-6">
-          <div className="w-[20%]">
+        <div className="mt-6 flex flex-wrap sm:flex-nowrap items-center gap-6">
+          <div className="w-[100%] sm:w-[20%]">
             {currencyOptions.length > 0 ? (
               <>
                 <label className="text-sm  mb-2 block">Currency</label>
@@ -228,7 +228,7 @@ const ModifyIdea = (props: Props) => {
               </>
             ) : null}
           </div>
-          <div className="w-[38%]">
+          <div className="w-[100%] sm:w-[38%]">
             <label className="text-sm  mb-2 block">Minimum Budget</label>
             <Input
               value={modifiedData.minbud}
@@ -239,7 +239,7 @@ const ModifyIdea = (props: Props) => {
               class="rounded-lg w-full px-4 py-2 border border-gray8 placeholder:text-gray1 placeholder:text-sm outline-none"
             />
           </div>
-          <div className="w-[38%]">
+          <div className="w-[100%] sm:w-[38%]">
             <label className="text-sm  mb-2 block">Maximum budget</label>
             <Input
               value={modifiedData.maxbud}
@@ -274,20 +274,7 @@ const ModifyIdea = (props: Props) => {
           <IoMdAdd className="mr-1 text-lg" />
           <p>Add more</p>
         </div>
-        {/* <h2 className="font-bold text-sm mt-8">Category</h2>
-        <p className="text-sm mt-1 text-gray4">
-          Select a relevant history your idea belongs to
-        </p>
-        <div className="mt-6">
-          <SelectComponent
-            value={modifiedData.category}
-            changed={(val) => setModifiedDataHandler("category", val)}
-            options={idea_categories_list}
-            placeholder="Select an option"
-            size="md"
-            radius="sm"
-          />
-        </div> */}
+    
         <div className="mb-8 bg-amber-bg text-sm mt-8 text-amber-dark flex flex-wrap xs:flex-nowrap px-5 py-3 gap-3 items-center justify-center rounded-lg">
           <Image
             src={InfoImg}

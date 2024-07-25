@@ -37,7 +37,7 @@ const Idea = (props: Props) => {
           }
           router.push(`/idea/${props.id}/${formatNameRoute(props.title)}`);
         }}
-        className=" w-[20%] cursor-pointer mx-auto sm:mx-0   overflow-hidden rounded-md sm:mr-4 flex items-center"
+        className="w-[95%] xxs:w-[90%] sm:w-[30%] md:w-[20%] cursor-pointer mx-auto sm:mx-0   overflow-hidden rounded-md sm:mr-4 flex items-center"
       >
         <div className="hidden sm:block w-full">
           <AspectRatio ratio={1080 / 720} mx="auto">
@@ -66,7 +66,7 @@ const Idea = (props: Props) => {
           />
         </div>
       </div>
-      <div className={` sm:w-[80%] mx-auto sm:mx-0 mt-3 sm:mt-0`}>
+      <div className={` w-[95%] xxs:w-[90%] sm:w-[70%] md::w-[80%] mx-auto sm:mx-0 mt-3 sm:mt-0`}>
         <div className="flex items-center mb-2">
           <h1
             onClick={() => router.push(`/idea/${props.id}`)}

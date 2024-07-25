@@ -92,11 +92,11 @@ const CauroselSection = (props: Props) => {
           height={500}
           slideSize={{
             base: "100%",
-            sm: "40%",
-            md: "27.333333%",
+            sm: "60%",
+            md: "40%",
             xl: "27.333%",
             lg: "27.333%",
-            xs: "60%",
+            xs: "80%",
           }}
           slideGap={{ base: "sm", sm: "md" }}
           classNames={{
@@ -114,19 +114,32 @@ const CauroselSection = (props: Props) => {
         >
           <>
             <Carousel.Slide>
-              <div className="h-[80%] rounded-xl overflow-hidden relative">
+              <div className="h-[85%] rounded-xl overflow-hidden relative">
                 <div className="absolute top-0 left-0 bg-[#050505c2] w-full h-full"></div>
                 <div className="hover:scale-110 transition-all cursor-pointer duration-1000  text-white w-[80%] absolute left-[50%] -translate-x-[50%] top-[50%] -translate-y-1/2 ">
-                  <h1 className="text-4xl font-semibold ">Top Liked Ideas</h1>
+                  <h1 className="text-3xl xs:text-4xl font-semibold text-center ">
+                    Top Liked Ideas
+                  </h1>
                   <FaArrowRightLong className="text-4xl mt-4 mx-auto" />
                 </div>
-                <AspectRatio ratio={900 / 1120}>
-                  <Image
-                    src={TopLikedImage}
-                    alt="top-liked-img"
-                    className="h-full"
-                  />
-                </AspectRatio>
+                <div className="hidden rb:block">
+                  <AspectRatio ratio={900 / 1120}>
+                    <Image
+                      src={TopLikedImage}
+                      alt="top-liked-img"
+                      className="h-full"
+                    />
+                  </AspectRatio>
+                </div>
+                <div className="block rb:hidden">
+                  <AspectRatio ratio={800 / 1120}>
+                    <Image
+                      src={TopLikedImage}
+                      alt="top-liked-img"
+                      className="h-full"
+                    />
+                  </AspectRatio>
+                </div>
               </div>
             </Carousel.Slide>
             {data &&
@@ -137,7 +150,7 @@ const CauroselSection = (props: Props) => {
                     headline={el.headline}
                     lname={el.lname as string}
                     pow={el.pow as string}
-                    ppicture={el.ppicture as string }
+                    ppicture={el.ppicture as string}
                     summaary={el.summary}
                     userId={el.userId}
                     id={el._id}

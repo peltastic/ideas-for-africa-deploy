@@ -35,7 +35,7 @@ const TrendingIdeas = (props: Props) => {
       ) : (
         <>
           {data?.ideas.map((el) => (
-            <div onClick={ () => {
+            <div key={el._id} onClick={ () => {
               router.push(`/idea/${el._id}/${formatNameRoute(el.headline)}`)
             }} className="border-gray3 cursor-pointer hover:bg-gray3 transition-all border py-4 px-4 rounded-lg my-4">
               <div className="flex items-center">

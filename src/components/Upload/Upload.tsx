@@ -79,7 +79,7 @@ const Upload = (props: Props) => {
           <>
             {props.idea?.files && props.idea.files?.length > 0 ? (
               props.idea.files?.map((el, index) => (
-                <div className="px-10">
+                <div className="px-10" key={el.name}>
                   <File
                     key={el.name}
                     updateDocHandler={props.updateDocHandler || (() => {})}

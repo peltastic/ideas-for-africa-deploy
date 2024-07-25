@@ -42,7 +42,7 @@ const RoomMembers = (props: Props) => {
       ) : (
         <div className="">
           {data?.map((el) => (
-            <div className=" flex mt-8 items-center">
+            <div key={el._id} className=" flex mt-8 items-center">
               <div className="mr-3 rounded-full overflow-hidden w-[2.4rem]">
                 <Image
                   src={el.profile.ppicture || NoProfilePic}

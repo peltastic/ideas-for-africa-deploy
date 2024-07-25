@@ -74,10 +74,10 @@ const UserBrainstormGroups = (props: Props) => {
                     // onClick={() => router.push(`/idea/${props.id}`)}
                     className=" cursor-pointer font-semibold text-sm "
                   >
-                    {el.admin.split(" ")[0]}'s' brainstorm group on "
+                    {el.admin.split(" ")[0]}&apos; brainstorm group on &lsquo;
                     {el.ideaTitle ||
-                      "Affiliate Mastery: Pathway to Seven-Figure Success"}
-                    "
+                      "No text"}
+                    &rsquo;
                   </h1>
                 </div>
                 <p
@@ -87,7 +87,7 @@ const UserBrainstormGroups = (props: Props) => {
                   {
                     truncateStr(
                       el.text ||
-                        "The ideal way to run a hydro plant involves maximizing efficiency by regulating water flow to match energy demand, while also considering environmental impacts to maintain ecological...",
+                        "No text",
                       150
                     ).text
                   }{" "}

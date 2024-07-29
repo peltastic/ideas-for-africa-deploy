@@ -103,7 +103,7 @@ const InnovativeIdeasCard = (props: Props) => {
       >
         <NotLoggedInModal />
       </ModalComponent>
-      <div className=" bg-white relative sm:h-[30rem] py-4 mb-6 px-4 shadow-[0_0px_10px_rgba(0,0,0,0.1)] w-full rounded-xl">
+      <div className=" sm:bg-white relative h-[24rem] xxs:h-[22rem] xs:h-[30rem] py-4 mb-6 px-[0.3rem] xs:px-4 sm:shadow-[0_0px_10px_rgba(0,0,0,0.1)] w-full rounded-xl">
         <div
           onClick={() =>
             router.push(
@@ -122,63 +122,80 @@ const InnovativeIdeasCard = (props: Props) => {
                 className="mx-auto  "
               />
             </AspectRatio>
-            <p className="bg-white absolute left-4 bottom-4 py-1 px-2 rounded-full text-[.7rem] font-semibold text-black">
+            <p className="bg-white text-[0.5rem] xs:text-xs absolute left-4 bottom-4 py-1 px-2 rounded-full font-semibold text-black">
               {props.data.category}
             </p>
           </div>
-          <div className="flex py-3 text-xs text-gray4 items-center">
-            <Image src={ClockIcon} alt="clock-icon" className="mr-2" />
-            <p className="mr-auto">
-              {Math.floor(props.data.wordpm / 60)}-
-              {Math.floor(props.data.wordpm / 60) + 1} mins read
-            </p>
-            <p>{moment(props.data.createdAt).fromNow()}</p>
+          <div className="flex flex-wrap xxs:flex-nowrap py-3 text-[0.7rem] xs:text-xs text-gray4 items-center">
+            <div className="flex items-center w-full mr-auto xxs:w-auto">
+              <Image src={ClockIcon} alt="clock-icon" className="mr-2" />
+              <p className="">
+                {Math.floor(props.data.wordpm / 60)}-
+                {Math.floor(props.data.wordpm / 60) + 1} mins read
+              </p>
+            </div>
+            <p className="mt-1">{moment(props.data.createdAt).fromNow()}</p>
           </div>
           <div className="w-full">
-            <h1 className="font-bold mt-2 text-sm text-black1">
+            <h1 className="font-bold mt-2 text-xs xs:text-sm text-black1">
               {props.data.headline}
             </h1>
-            <h2 className="text-gray1 text-[0.8rem] my-3">
+            <h2 className="text-gray1 hidden xs:block text-[0.5rem] xs:text-[0.8rem] my-3">
               <>{truncateStr(props.data.summary, 150).text}</>
               {truncateStr(props.data.summary, 150).status ? (
                 <span className="font-semibold"> read more...</span>
               ) : null}
             </h2>
+            <h2 className="text-gray1 block xs:hidden text-[0.7rem] xs:text-[0.8rem] my-3">
+              <>{truncateStr(props.data.summary, 60).text}</>
+              {truncateStr(props.data.summary, 60).status ? (
+                <span className="font-semibold">..read more...</span>
+              ) : null}
+            </h2>
           </div>
         </div>
-        <div className=" cursor-pointer bg-white sm:absolute w-[90%] bottom-4 flex mt-6 items-center">
-          <div
-            className="mr-4 w-[2rem] h-[2rem] rounded-full overflow-hidden"
-            onClick={() => router.push(`/profile/${props.data.userId}`)}
-          >
-            <AspectRatio ratio={1800/1800}>
+        <div className=" cursor-pointer sm:bg-white absolute w-[90%] bottom-4 flex   flex-wrap-reverse md:flex-nowrap  mt-6 items-center">
+          <div className="flex items-center w-full md:w-auto md:mr-auto">
+            <div
+              className="mr-4 w-[1.5rem] xs:w-[2rem] h-[1.5rem] xs:h-[2rem] rounded-full overflow-hidden"
+              onClick={() => router.push(`/profile/${props.data.userId}`)}
+            >
+              <AspectRatio ratio={1800 / 1800}>
+                <Image
+                  src={props.data.ppicture || NoProfilePic}
+                  alt="avatar"
+                  width={100}
+                  height={100}
+                  className="w-full h-full"
+                />
+              </AspectRatio>
+            </div>
+            <div
+              onClick={() => router.push(`/profile/${props.data.userId}`)}
+              className="text-[0.55rem] xs:text-xs "
+            >
+              <p className="font-bold mb-[0.01rem] xs:mb-[0.1rem]">
+                {props.data.fname || props.data.user?.fname}{" "}
+                {props.data.lname || props.data.user?.lname}
+              </p>
+              <p className="xs:leading-5 hidden xs:block text-gray1">{props.data.pow}</p>
+            </div>
+          </div>
+          <div className="flex items-center mb-2 md:mb-0">
+            <div className="flex  items-center  mr-3">
               <Image
-                src={props.data.ppicture || NoProfilePic}
-                alt="avatar"
-                width={100}
-                height={100}
-                className="w-full h-full"
+                src={UnlikedImg}
+                alt="like-img"
+                className="w-[0.7rem] xs:w-[0.9rem]"
               />
-            </AspectRatio>
-          </div>
-          <div
-            onClick={() => router.push(`/profile/${props.data.userId}`)}
-            className="text-xs mr-auto "
-          >
-            <p className="font-bold mb-[0.1rem]">
-              {props.data.fname || props.data.user?.fname}{" "}
-              {props.data.lname || props.data.user?.lname}
-            </p>
-            <p className="leading-5 text-gray1">{props.data.pow}</p>
-          </div>
-
-          <div className="flex items-center  mr-3">
-            <Image src={UnlikedImg} alt="like-img" className="w-[0.9rem]" />
-            <p className="ml-1 text-gray1 text-sm">{props.data.likes}</p>
-          </div>
-          <div className="flex   items-center text-gray1">
-            <FaRegEye className="" />
-            <p className="ml-1 text-sm">{props.data.viewCount}</p>
+              <p className="ml-1 text-gray1 text-xs xs:text-sm">
+                {props.data.likes}
+              </p>
+            </div>
+            <div className="flex items-center text-gray1">
+              <FaRegEye className="text-xs xs:text-base" />
+              <p className="ml-1 text-xs xs:text-sm">{props.data.viewCount}</p>
+            </div>
           </div>
         </div>
       </div>

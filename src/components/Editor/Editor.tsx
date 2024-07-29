@@ -2,8 +2,8 @@ import React, { useEffect, useRef } from "react";
 import {
   RichTextEditor,
   Link,
-  useRichTextEditorContext,
 } from "@mantine/tiptap";
+import { Extension } from "@tiptap/core";
 import { useEditor } from "@tiptap/react";
 import Highlight from "@tiptap/extension-highlight";
 import StarterKit from "@tiptap/starter-kit";
@@ -13,12 +13,41 @@ import Superscript from "@tiptap/extension-superscript";
 import SubScript from "@tiptap/extension-subscript";
 import { Color } from "@tiptap/extension-color";
 import TextStyle from "@tiptap/extension-text-style";
+import { keymap } from 'prosemirror-keymap';
 
 type Props = {
   setIdea: (key: string, value: string | File) => void;
   contentProps: string;
   isModify?: boolean;
 };
+// const CustomDeleteExtension = Extension.create({
+//   name: 'customDelete',
+  
+
+//   addKeyboardShortcuts() {
+//     return {
+//       'Delete': () => this.editor.commands.customDelete(),
+//     };
+//   },
+
+//   addCommands() {
+//     return {
+//       customDelete: () => ({ commands, state, dispatch }: any) => {
+//         const { from, to, empty } = state.selection;
+
+//         if (empty) return false;
+
+//         if (dispatch) {
+//           const tr = state.tr;
+//           tr.addMark(from, to, state.schema.marks.strike.create());
+//           dispatch(tr);
+//         }
+
+//         return true;
+//       },
+//     };
+//   },
+// });
 // const content =
 // '<h2 style="text-align: center;">Welcome to Mantine rich text editor</h2><p><code>RichTextEditor</code> component focuses on usability and is designed to be as simple as possible to bring a familiar editing experience to regular users. <code>RichTextEditor</code> is based on <a href="https://tiptap.dev/" rel="noopener noreferrer" target="_blank">Tiptap.dev</a> and supports all of its features:</p><ul><li>General text formatting: <strong>bold</strong>, <em>italic</em>, <u>underline</u>, <s>strike-through</s> </li><li>Headings (h1-h6)</li><li>Sub and super scripts (<sup>&lt;sup /&gt;</sup> and <sub>&lt;sub /&gt;</sub> tags)</li><li>Ordered and bullet lists</li><li>Text align&nbsp;</li><li>And all <a href="https://tiptap.dev/extensions" target="_blank" rel="noopener noreferrer">other extensions</a></li></ul>';
 const Editor = ({ setIdea, contentProps, isModify }: Props) => {
@@ -68,6 +97,7 @@ const Editor = ({ setIdea, contentProps, isModify }: Props) => {
       Highlight,
       Color,
       TextStyle,
+      // CustomDeleteExtension,
       TextAlign.configure({ types: ["heading", "paragraph"] }),
     ],
     content: content,

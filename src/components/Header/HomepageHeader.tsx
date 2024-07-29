@@ -17,7 +17,7 @@ const HomepageHeader = (props: Props) => {
     (state: RootState) => state.persistedState.auth.authStatus
   );
   return (
-    <header className="text-center w-[90%] sm:w-[95%] md:w-[70%] mx-auto mt-2 pt-14">
+    <header className="text-center w-[90%] sm:w-[95%] md:w-[70%] mx-auto mt-2 pt-[9rem]">
       <div className=" hidden sm:block text-[2.5rem] sm:text-[3.5rem] md:text-[4rem] leading-[1.07] font-bold md:font-semibold ">
         <h1 className="relative w-fit mx-auto text-black1">
           <motion.span

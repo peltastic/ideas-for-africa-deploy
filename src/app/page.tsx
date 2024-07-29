@@ -14,8 +14,8 @@ function Home() {
       <Navbar homepage />
       <div className="mx-auto bg-primary-bg max-w-[1500px]">
         <HomepageHeader />
-        <div className="ml-4 mr-4 xs:mr-10 sm:mr-0 xs:ml-10 mt-20">
-          <CauroselSection />
+        <div className="ml-4 mr-4   sm:ml-10 mt-[10rem]">
+          {/* <CauroselSection /> */}
           <InnovativeIdeas />
         </div>
         <StayUpdated />

@@ -125,7 +125,7 @@ const InnovativeIdeas = (props: Props) => {
           dropdownVal={dropDownValue}
         />
       </div>
-      <div className="grid grid-co ls-1 sm:grid-cols-2 mm:grid-cols-3 des:grid-cols-4 gap-6 sm:mr-10">
+      <div className="grid grid-cols-2 mm:grid-cols-3 des:grid-cols-4 xs:gap-6 sm:mr-10">
         {ideasRes.isFetching ||
         result.isFetching ||
         topLiked.isFetching ||

@@ -103,7 +103,7 @@ const InnovativeIdeasCard = (props: Props) => {
       >
         <NotLoggedInModal />
       </ModalComponent>
-      <div className=" sm:bg-white relative h-[24rem] xxs:h-[22rem] xs:h-[30rem] py-4 mb-6 px-[0.3rem] xs:px-4 sm:shadow-[0_0px_10px_rgba(0,0,0,0.1)] w-full rounded-xl">
+      <div className=" hover:bg-[#e3e3e32a] transition-all sm:bg-white relative h-[23rem] xs:h-[30rem] py-4 mb-6 px-[0.3rem] sm:px-4 sm:shadow-[0_0px_10px_rgba(0,0,0,0.1)] w-full rounded-xl">
         <div
           onClick={() =>
             router.push(
@@ -126,18 +126,30 @@ const InnovativeIdeasCard = (props: Props) => {
               {props.data.category}
             </p>
           </div>
-          <div className="flex flex-wrap xxs:flex-nowrap py-3 text-[0.7rem] xs:text-xs text-gray4 items-center">
-            <div className="flex items-center w-full mr-auto xxs:w-auto">
+          <div className="flex flex-wrap sm:flex-nowrap py-3 text-[0.7rem] xs:text-xs text-gray4 items-center">
+            <div className="flex items-center w-full mr-auto sm:w-auto">
               <Image src={ClockIcon} alt="clock-icon" className="mr-2" />
-              <p className="">
+              <p className="mr-auto">
                 {Math.floor(props.data.wordpm / 60)}-
                 {Math.floor(props.data.wordpm / 60) + 1} mins read
               </p>
+              <div className="flex sm:hidden  items-center">
+                <Image
+                  src={UnlikedImg}
+                  alt="like-img"
+                  className="w-[0.7rem] xs:w-[0.9rem]"
+                />
+                <p className="ml-1 text-gray1 text-xs xs:text-sm">
+                  {props.data.likes}
+                </p>
+              </div>
             </div>
-            <p className="mt-1">{moment(props.data.createdAt).fromNow()}</p>
+            <p className="mt-1 sm:mt-0 sm:w-auto w-full">
+              {moment(props.data.createdAt).fromNow()}
+            </p>
           </div>
           <div className="w-full">
-            <h1 className="font-bold mt-2 text-xs xs:text-sm text-black1">
+            <h1 className="font-bold mt-2 text-[0.65rem] xs:text-sm text-black1">
               {props.data.headline}
             </h1>
             <h2 className="text-gray1 hidden xs:block text-[0.5rem] xs:text-[0.8rem] my-3">
@@ -154,7 +166,7 @@ const InnovativeIdeasCard = (props: Props) => {
             </h2>
           </div>
         </div>
-        <div className=" cursor-pointer sm:bg-white absolute w-[90%] bottom-4 flex   flex-wrap-reverse md:flex-nowrap  mt-6 items-center">
+        <div className=" cursor-pointer  absolute w-[90%] bottom-4 flex   flex-wrap-reverse md:flex-nowrap  mt-6 items-center">
           <div className="flex items-center w-full md:w-auto md:mr-auto">
             <div
               className="mr-4 w-[1.5rem] xs:w-[2rem] h-[1.5rem] xs:h-[2rem] rounded-full overflow-hidden"
@@ -178,10 +190,12 @@ const InnovativeIdeasCard = (props: Props) => {
                 {props.data.fname || props.data.user?.fname}{" "}
                 {props.data.lname || props.data.user?.lname}
               </p>
-              <p className="xs:leading-5 hidden xs:block text-gray1">{props.data.pow}</p>
+              <p className="xs:leading-5 hidden xs:block text-gray1">
+                {props.data.pow}
+              </p>
             </div>
           </div>
-          <div className="flex items-center mb-2 md:mb-0">
+          <div className="hidden sm:flex items-center mb-2 md:mb-0">
             <div className="flex  items-center  mr-3">
               <Image
                 src={UnlikedImg}

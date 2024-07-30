@@ -9,7 +9,7 @@ const InnovativeIdeasTab = (props: Props) => {
   return (
     <div
       className={
-        "items-center bg-gray3 px-1  py-1 rounded-full hidden lg:flex w-fit  "
+        "items-center bg-gray3 px-1  py-1 rounded-full hidden des:flex w-fit  "
       }
     >
       {props.elements.map((el, index) => (

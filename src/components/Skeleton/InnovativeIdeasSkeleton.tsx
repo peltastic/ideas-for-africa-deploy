@@ -5,7 +5,7 @@ type Props = {};
 const InnovativeIdeasSkeleton = (props: Props) => {
   return (
     <div className=" py-4 px-4">
-      <div className="bg-gray2 rounded-xl h-[10rem] animate-pulse "></div>
+      <div className="bg-gray2 rounded-xl h-[6rem] xxs:h-[7rem] xs:h-[10rem] animate-pulse "></div>
       <div className="flex mt-4">
         <div className="bg-gray2 h-[1.2rem] w-[60%] mr-auto animate-pulse "></div>
         <div className="bg-gray2 h-[1.2rem] w-[20%] animate-pulse "></div>

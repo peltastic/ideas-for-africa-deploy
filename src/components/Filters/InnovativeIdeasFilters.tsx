@@ -28,8 +28,8 @@ const InnovativeIdeasFilters = (props: Props) => {
     ...idea_categories_list.map((el) => el.value),
   ];
   return (
-    <div className="my-10 flex items-center">
-      <div className=" mr-auto hidden des:block">
+    <div className="my-10 gap-6 des:gap-0 flex items-center">
+      <div className="des:mr-auto block w-[50%] sm:w-auto">
         <SelectComponent
           value={props.dropdownVal}
           size="md"
@@ -40,13 +40,23 @@ const InnovativeIdeasFilters = (props: Props) => {
           }}
         />
       </div>
-      <div className="items-center bg-gray3 px-1  py-1 rounded-full hidden lg:flex  ">
-        {/* {filterEl.map((el) => (
-          <div onClick={() => props.setFilterVal(el)}  key={el} className={`transition-all ${props.filterVal === el ? " text-black1 bg-white rounded-full" : "text-gray1"} cursor-pointer text-sm  font-medium py-3 px-4`}>
-            <p>{el}</p>
-          </div>
-        ))} */}
-        {/* <FloatingTabs /> */}
+      <div className=" mr-auto block des:hidden w-[50%] sm:w-auto">
+        <SelectComponent
+          value={props.filterVal}
+          size="md"
+          placeholder="Categories"
+          options={filterEl.map((el) => {
+            return {
+              value: el,
+              label: el,
+            };
+          })}
+          changed={(val) => {
+            props.setFilterVal(val);
+          }}
+        />
+      </div>
+      <div className="items-center bg-gray3 px-1  py-1 rounded-full hidden des:flex ">
         <InnovativeIdeasTab
           elements={filterEl}
           filterVal={props.filterVal}

@@ -117,7 +117,7 @@ const InnovativeIdeas = (props: Props) => {
           inspiration
         </h2>
       </div>
-      <div className="mr-12">
+      <div className="sm:mr-12">
         <InnovativeIdeasFilters
           dropdoownFunction={popularityFilterFuctions}
           setFilterVal={setSelectedFilterHandler}
@@ -159,7 +159,7 @@ const InnovativeIdeas = (props: Props) => {
                     user: el.user,
                     likes: el.likes,
                     viewCount: el.viewCount,
-                    wordpm: el.wordpm
+                    wordpm: el.wordpm,
                   }}
                   // image={el.banner || el.thumb && el.thumb[0].path}
                   key={index}

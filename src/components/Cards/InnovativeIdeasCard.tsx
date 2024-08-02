@@ -126,7 +126,7 @@ const InnovativeIdeasCard = (props: Props) => {
               {props.data.category}
             </p>
           </div>
-          <div className="flex flex-wrap sm:flex-nowrap py-3 text-[0.7rem] xs:text-xs text-gray4 items-center">
+          <div className="flex flex-wrap sm:flex-nowrap py-3 text-[0.65rem] xs:text-xs text-gray4 items-center">
             <div className="flex items-center w-full mr-auto sm:w-auto">
               <Image src={ClockIcon} alt="clock-icon" className="mr-2" />
               <p className="mr-auto">

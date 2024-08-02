@@ -18,12 +18,15 @@ import Spinner from "../Spinner/Spinner";
 import { IoChevronBackSharp } from "react-icons/io5";
 import curr_list from "@/data/currencies.json";
 import SelectComponent from "../Select/Select";
+import Upload from "../Upload/Upload";
+import { AspectRatio } from "@mantine/core";
 
 type Props = {
   data: IGetSingleIdeaResponse;
 };
 
 const ModifyIdea = (props: Props) => {
+  const [files, setFiles] = useState<File[] | null>(null);
   const [currencyValue, setCurrencyValue] = useState<string>(
     props.data.idea.minbud?.split(" ")[0] || "$"
   );
@@ -150,6 +153,7 @@ const ModifyIdea = (props: Props) => {
         pitches: JSON.stringify(pitchsIsEmpty ? [] : modifiedData.pitches),
         summary: modifiedData.summary,
         userId: id,
+        files
       },
       ideaId: props.data.idea._id,
     });
@@ -167,13 +171,16 @@ const ModifyIdea = (props: Props) => {
       <div className="w-[95%] sm:w-[80%] lg:w-[60%] mx-auto">
         <h1 className="text-xl font-semibold">{props.data.idea.headline}</h1>
         <div className="flex flex-wrap items-center  mt-8">
-          <div className="rounded-full overflow-hidden mr-4 w-[2.4rem]">
+          <div className="rounded-full overflow-hidden mr-4 h-[2.4rem] w-[2.4rem]">
+            <AspectRatio ratio={1800/1800}>
+
             <Image
               width={50}
               height={50}
               src={props.data.profile?.ppicture || NoProfilePic}
               alt="avatar"
-            />
+              />
+              </AspectRatio>
           </div>
           <div className="w-full mt-3 sm:mt-0 sm:w-auto">
             <div className="text-black1 text-xs mr-auto ">
@@ -200,8 +207,8 @@ const ModifyIdea = (props: Props) => {
             class="rounded-lg w-full px-4 py-2 border border-gray8 placeholder:text-gray1 placeholder:text-sm outline-none"
           />
         </div> */}
-        <div className="">
-          <label className="text-sm font-bold mt-8 mb-4 block">Summary</label>
+        {/* <div className=""> */}
+          {/* <label className="text-sm font-bold mt-8 mb-4 block">Summary</label>
           <Input
             value={modifiedData.summary}
             changed={(e) => {
@@ -210,7 +217,7 @@ const ModifyIdea = (props: Props) => {
             placeholder="A brief summary of what your ideas entails"
             class="rounded-lg w-full px-4 py-2 border border-gray8 placeholder:text-gray1 placeholder:text-sm outline-none"
           />
-        </div>
+        </div> */}
         <h1 className="text-sm font-bold mt-8 mb-4">Price range</h1>
         <div className="mt-6 flex flex-wrap sm:flex-nowrap items-center gap-6">
           <div className="w-[100%] sm:w-[20%]">
@@ -274,7 +281,7 @@ const ModifyIdea = (props: Props) => {
           <IoMdAdd className="mr-1 text-lg" />
           <p>Add more</p>
         </div>
-    
+
         <div className="mb-8 bg-amber-bg text-sm mt-8 text-amber-dark flex flex-wrap xs:flex-nowrap px-5 py-3 gap-3 items-center justify-center rounded-lg">
           <Image
             src={InfoImg}
@@ -302,6 +309,41 @@ const ModifyIdea = (props: Props) => {
             width={100}
             height={100}
             className="w-full"
+          />
+        </div>
+        <h2 className="font-bold text-sm mt-8">Document</h2>
+      <p className="text-sm mt-1 text-gray4">
+        Please provide the necessary documents to support your modified idea.
+      </p>
+        <div className="mt-4">
+          <Upload
+            uploadDoc={(file) => {
+              if (!file) return;
+              let fileList;
+              if (!files) {
+                fileList = [file];
+              } else {
+                fileList = [...files];
+                fileList.push(file);
+              }
+              setFiles(fileList)
+            }}
+            files
+            accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint, application/pdf"
+           
+            idea={files}
+            updateDocHandler={(file, index) => {
+              if(!files || !file) return
+              const fileList = [...files]
+              fileList.splice(index, 1, file)
+              setFiles(fileList)
+            }}
+            deleteFileHandler={(index) => {
+              if(!files) return 
+              const fileList = [...files]
+              fileList.splice(index, 1)
+              setFiles(fileList)
+            }}
           />
         </div>
       </div>

@@ -13,7 +13,7 @@ const Discussions = (props: Props) => {
   const [getIdeaComments, { data, isFetching }] = useLazyGetIdeaCommentsQuery();
 
   useEffect(() => {
-    getIdeaComments(props.ideaId);
+    getIdeaComments(props.ideaId); 
   }, []);
 
   const profileInfo = useSelector(
@@ -44,6 +44,7 @@ const Discussions = (props: Props) => {
                 key={el.content + el.replies + index}
                 content={el.content}
                 replies={el.replies}
+                createdAt={el.createdAt}
               />
             ))}
           </div>

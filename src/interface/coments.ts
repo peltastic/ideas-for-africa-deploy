@@ -4,6 +4,7 @@ export interface IGetIdeaCommentResponse {
     fname: string;
     lname: string;
   };
+  createdAt: string
   replies: {
     _id: string;
     commentId: string;

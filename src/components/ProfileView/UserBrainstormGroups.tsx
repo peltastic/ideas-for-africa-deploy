@@ -8,6 +8,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { truncateStr } from "@/utils/helperfunctions";
 import moment from "moment";
+import NoBrainstorms from "/public/assets/social-ideas-animate.svg"
 
 type Props = {};
 
@@ -23,9 +24,9 @@ const UserBrainstormGroups = (props: Props) => {
     }
   );
   return (
-    <div className="w-full lg:w-[80%] des:w-[70%]">
+    <div className="">
       {isFetching ? (
-        <div className="">
+        <div className="w-full lg:w-[80%] des:w-[70%]">
           <div className="">
             <IdeasSkeleton />
             <IdeasSkeleton />
@@ -33,8 +34,8 @@ const UserBrainstormGroups = (props: Props) => {
             <IdeasSkeleton />
           </div>
         </div>
-      ) : (
-        <div className="">
+      ) : data?.groups ? (
+        <div className="w-full lg:w-[80%] des:w-[70%]">
           {data?.groups?.map((el) => (
             <div
               className="sm:flex flex-wrap sm:flex-nowrap items-center my-10"
@@ -68,15 +69,16 @@ const UserBrainstormGroups = (props: Props) => {
                   />
                 </div>
               </div>
-              <div className={` w-[95%] xxs:w-[90%] sm:w-[70%] md:w-[80%] mx-auto sm:mx-0 mt-3 sm:mt-0`}>
+              <div
+                className={` w-[95%] xxs:w-[90%] sm:w-[70%] md:w-[80%] mx-auto sm:mx-0 mt-3 sm:mt-0`}
+              >
                 <div className="flex items-center mb-2">
                   <h1
                     // onClick={() => router.push(`/idea/${props.id}`)}
                     className=" cursor-pointer font-semibold text-sm "
                   >
                     {el.admin.split(" ")[0]}&apos; brainstorm group on &lsquo;
-                    {el.ideaTitle ||
-                      "No text"}
+                    {el.ideaTitle || "No text"}
                     &rsquo;
                   </h1>
                 </div>
@@ -84,13 +86,7 @@ const UserBrainstormGroups = (props: Props) => {
                   // onClick={() => router.push(`/idea/${props.id}`)}
                   className="text-sm mb-1 cursor-pointer"
                 >
-                  {
-                    truncateStr(
-                      el.text ||
-                        "No text",
-                      150
-                    ).text
-                  }{" "}
+                  {truncateStr(el.text || "No text", 150).text}{" "}
                   {truncateStr(el.text, 150).status ? " ..." : ""}
                 </p>
 
@@ -98,6 +94,11 @@ const UserBrainstormGroups = (props: Props) => {
               </div>
             </div>
           ))}
+        </div>
+      ) : (
+        <div className="">
+          <Image src={NoBrainstorms} alt="no-brainstorms" className="w-[20rem] mx-auto" />
+          <p className="text-center">No Brainstorm groups</p>
         </div>
       )}
     </div>

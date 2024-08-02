@@ -4,6 +4,8 @@ import { useParams } from "next/navigation";
 import React from "react";
 import IdeasSkeleton from "../Skeleton/IdeasSkeleton";
 import Idea from "../Ideas/Idea";
+import Image from "next/image";
+import NoIdea from "/public/assets/no-idea.svg";
 
 type Props = {};
 
@@ -13,9 +15,9 @@ const UserModifiedIdeas = (props: Props) => {
     refetchOnMountOrArgChange: true,
   });
   return (
-    <div className="w-full lg:w-[80%] des:w-[70%]">
+    <div className="">
       {isFetching ? (
-        <div className="">
+        <div className="w-full lg:w-[80%] des:w-[70%]">
           <IdeasSkeleton />
           <IdeasSkeleton />
           <IdeasSkeleton />
@@ -24,7 +26,7 @@ const UserModifiedIdeas = (props: Props) => {
       ) : ( 
         <div className="">
           {data?.modifiedIdeas ? (
-            <>
+            <div className="w-full lg:w-[80%] des:w-[70%]">
               {data?.modifiedIdeas.map((el) => (
                 <Idea
                   id={el._id}
@@ -39,9 +41,12 @@ const UserModifiedIdeas = (props: Props) => {
                   ideaId={el.originalIdeaId}
                 />
               ))}
-            </>
+            </div>
           ) : (
-            <p>No Modified Ideas</p>
+            <div className="">
+              <Image src={NoIdea} alt="no-idea image" className="w-[20rem] mx-auto" />
+              <p className="text-center">No Modified Ideas</p>
+            </div>
           )}
         </div>
       )}

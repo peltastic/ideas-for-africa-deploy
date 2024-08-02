@@ -169,7 +169,7 @@ const AdditionalInformation = ({
           files
           accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint, application/pdf"
           setFile={setIdea}
-          idea={idea}
+          idea={idea.files}
           updateDocHandler={updateDocHandler}
           deleteFileHandler={deleteFileHandler}
         />

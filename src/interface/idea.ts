@@ -58,6 +58,7 @@ export interface IModifyIdeaPayload {
   maxbud: string;
   category: string;
   userId: string;
+  files?: File[] | null
 }
 
 export interface IGetSingleIdeaResponse {

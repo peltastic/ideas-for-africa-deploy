@@ -18,6 +18,7 @@ import ModalComponent from "../Modal/Modal";
 import NotLoggedInModal from "../ModalComponents/NotLoggedInModal";
 import { useSelector } from "react-redux";
 import { RootState } from "@/lib/store";
+import { AspectRatio } from "@mantine/core";
 
 type Props = {
   groups: {
@@ -125,14 +126,17 @@ const BrainstormGrid = (props: Props) => {
         </div>
         <div className="absolute w-[92%] bottom-2">
           <div className=" flex mt-8 items-center">
-            <div className="mr-3 w-[2.4rem] rounded-full overflow-hidden">
+            <div className="mr-3 w-[2.4rem] h-[2.4rem] rounded-full overflow-hidden">
+              <AspectRatio ratio={1800/1800}>
+
               <Image
                 src={props.ideaCreator.url || NoProfilePic}
                 className="w-full"
                 alt="avatar"
-                width={100}
                 height={100}
-              />
+                width={100}
+                />
+                </AspectRatio>
             </div>
             <div className="text-xs mr-auto ">
               <p className="font-bold mb-[0.02rem]">

@@ -71,8 +71,16 @@ export const ideasApi = createApi({
         const formData = new FormData();
 
         for (const key in body) {
+          if (key === "files") {
+            continue;
+          }
           if (body.hasOwnProperty(key)) {
             formData.append(key, body[key as keyof typeof body] as string);
+          }
+        }
+        if (body.files && body.files.length > 0) {
+          for (const el of body.files) {
+            formData.append("files", el)
           }
         }
 

@@ -26,7 +26,9 @@ type Props = {};
 const BrainstormsPage = (props: Props) => {
   const authStatus = useSelector((state: RootState) => state.persistedState.auth.authStatus)
   const { id } = useParams();
-  const { data, isFetching } = useGetGroupsQuery((id as string) ?? skipToken);
+  const { data, isFetching } = useGetGroupsQuery((id as string) ?? skipToken, {
+    refetchOnMountOrArgChange: true
+  });
   const [opened, { open, close }] = useDisclosure(false);
   const [createBrainstormOpened, funcs] = useDisclosure(false);
   const [authOpened, authFuncs] = useDisclosure(false);

@@ -61,13 +61,13 @@ const IdeaGrid = ({ data, setOpenVH, modified }: Props) => {
   );
   const [opened, { open, close }] = useDisclosure();
   const [shareOpened, share] = useDisclosure();
-  const el = ["Body", "Steps", "Budget", "Documents", "Discussions"];
+  const el = ["Body", "Steps", "Budget", "Documents", "Comments"];
   const id = getCookie("id");
   const [likesCount, setLikesCount] = useState<number>(data.likes);
   const [liked, setLiked] = useState<boolean>(data.userHasLiked);
   const [likeIdea, {}] = useLikeIdeaMutation();
   const [curentTab, setCurrentTab] = useState<
-    "Body" | "Steps" | "Budget" | "Documents" | "Discussions" | string
+    "Body" | "Steps" | "Budget" | "Documents" | "Comments" | string
   >("Body");
   const body = (
     <div
@@ -87,7 +87,7 @@ const IdeaGrid = ({ data, setOpenVH, modified }: Props) => {
         <Budget minbud={data.idea.minbud} maxbud={data.idea.maxbud} />
       );
       break;
-    case "Discussions":
+    case "Comments":
       component = <Discussions ideaId={data.idea._id} />;
       break;
     case "Documents":

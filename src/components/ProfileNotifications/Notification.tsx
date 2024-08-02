@@ -6,6 +6,7 @@ import { useRespondToRequestMutation } from "@/lib/features/brainstorms";
 import { getCookie } from "@/utils/storage";
 import Spinner from "../Spinner/Spinner";
 import { notify } from "@/utils/toast";
+import moment from "moment";
 
 type Props = {
   data: IGetProfileNotificationResponse;
@@ -36,7 +37,7 @@ const Notification = (props: Props) => {
             <h3 className="font-semibold text-sm mb-1">
               {props.data.action.username}
             </h3>
-            <p className="text-gray1 text-xs">{props.data.title} • 1h ago</p>
+            <p className="text-gray1 text-xs">{props.data.title} • {moment(props.data.time).fromNow()} </p>
           </div>
         </div>
         <div className="bg-gray3 flex items-center justify-center  h-[1.7rem] w-[1.7rem] rounded-full">

@@ -30,7 +30,7 @@ export default function RootLayout({
       <body className="">
         <ToastContainer />
         <Providers>
-          <App /> 
+          {/* <App />  */}
           <MantineProvider
             theme={{
               headings: { fontFamily: "Poppins, sans-serif" },

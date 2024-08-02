@@ -16,6 +16,7 @@ import {
   useLazyGetGroupMessagesQuery,
 } from "@/lib/features/brainstorms";
 import { getCookie } from "@/utils/storage";
+import moment from "moment";
 
 type Props = {
   setShowProps: (val: boolean) => void;
@@ -38,6 +39,9 @@ const ChatRoom = (props: Props) => {
     {
       username: string;
       text: string;
+      photourl?: string;
+      timestamp?: string;
+      _id: string;
     }[]
   >([]);
   const userProfile = useSelector(
@@ -66,9 +70,9 @@ const ChatRoom = (props: Props) => {
   useEffect(() => {
     chat_socket.on(
       "chatMessage",
-      (msgData: { username: string; text: string }) => {
-        console.log(msgData);
-        updateMessageHandler(msgData.text, msgData.username);
+      (msgData: { username: string; text: string; photourl?: string }) => {
+        console.log(msgData.text)
+        updateMessageHandler(msgData.text, msgData.username, msgData.photourl);
       }
     );
   }, []);
@@ -85,24 +89,25 @@ const ChatRoom = (props: Props) => {
       const chatHistory = data.messages.map((el) => ({
         username: el.username,
         text: el.text,
+        photourl: el.photourl,
+        timestamp: moment(el.timestamp).format('h:mm a'),
+        _id: el._id,
       }));
       setMessages(chatHistory);
     }
   }, [data]);
-  const updateMessageHandler = (message: string, username?: string) => {
-    // const currMessages = [...messgaes];
-    // console.log(currMessages);
-    // currMessages.push({
-    //   text: message,
-    //   username: username || `${profile.fname} ${profile.lname}`,
-    // });
-    // console.log(currMessages);
-    // setMessages(currMessages);
+  const updateMessageHandler = (
+    message: string,
+    username?: string,
+    photourl?: string
+  ) => {
     setMessages((prev) => [
       ...prev,
       {
         text: message,
-
+        photourl: photourl,
+        timestamp: moment(new Date().getTime()).format('h:mm a'),
+        _id: Math.floor(Math.random() * 100000).toString(),
         username: username || `${profile.fname} ${profile.lname}`,
       },
     ]);
@@ -163,6 +168,9 @@ const ChatRoom = (props: Props) => {
                     key={index + el.username}
                     message={el.text}
                     username={el.username}
+                    photourl={el.photourl}
+                    timestamp={el.timestamp}
+                    lastMessage={messgaes[messgaes.length - 1]._id === el._id}
                   />
                 ))}
               </div>

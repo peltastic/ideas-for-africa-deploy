@@ -8,14 +8,14 @@ import { ICreateIdeaPayload } from "@/interface/idea";
 import File from "../ShareIdea/File";
 
 type Props = {
-  setFile: (key: string, value: string | File | null) => void;
+  setFile?: (key: string, value: string | File | null) => void;
   accept: string;
   files?: boolean;
   uploadDoc?: (file: File | null) => void;
   basic?: boolean;
   preview?: string;
   setBannerPreview?: (preview: string) => void;
-  idea?: ICreateIdeaPayload;
+  idea?: File[] | null;
   deleteFileHandler?: (index: number) => void;
   updateDocHandler?: (file: File | null, index: number) => void;
 };
@@ -39,12 +39,12 @@ const Upload = (props: Props) => {
               accept={props.accept}
               setFile={(key, value) => {
                 if (props.files && props.uploadDoc) {
-                  props.uploadDoc(value);
+                  return props.uploadDoc(value);
                 } else if (typeof value === "object") {
                   const url = URL.createObjectURL(value as File);
                   props.setBannerPreview && props.setBannerPreview(url);
                 }
-                props.setFile(key, value);
+                props.setFile && props.setFile(key, value);
               }}
             >
               <div className=" w-full mm:w-auto  justify-center bg-white px-2  xxs:px-4 py-2  text-black1 items-center flex border border-gray8 rounded-full ">
@@ -77,8 +77,8 @@ const Upload = (props: Props) => {
           }  border-gray8`}
         >
           <>
-            {props.idea?.files && props.idea.files?.length > 0 ? (
-              props.idea.files?.map((el, index) => (
+            {props.idea && props.idea?.length > 0 ? (
+              props.idea?.map((el, index) => (
                 <div className="px-10" key={el.name}>
                   <File
                     key={el.name}
@@ -123,7 +123,7 @@ const Upload = (props: Props) => {
                 const url = URL.createObjectURL(value as File);
                 props.setBannerPreview && props.setBannerPreview(url);
               }
-              props.setFile(key, value);
+              props.setFile && props.setFile(key, value);
             }}
           >
             <div className="w-full rounded-bl-lg rounded-br-lg  justify-center mx-auto xs:w-auto px-4 py-4   font-semibold items-center flex border-l border-r border-b border-gray8">

@@ -28,7 +28,7 @@ const InnovativeIdeasFilters = (props: Props) => {
     ...idea_categories_list.map((el) => el.value),
   ];
   return (
-    <div className="my-10 gap-6 des:gap-0 flex items-center">
+    <div className="my-10 gap-[0.3rem] sm:gap-6 des:gap-0 flex items-center">
       <div className="des:mr-auto block w-[50%] sm:w-auto">
         <SelectComponent
           value={props.dropdownVal}

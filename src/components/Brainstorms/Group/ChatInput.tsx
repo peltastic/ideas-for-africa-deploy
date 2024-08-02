@@ -9,14 +9,8 @@ type Props = {
 const ChatInput = (props: Props) => {
   const [message, setMessage] = useState<string>("");
 
-  // const sendMessageHandler = () => {
-  //   // console.log(props.groupId)
-  //   // console.log(props.groupId, message)
-  //   sendMessage(props.groupId, message)
-  // }
-
   return (
-    <div className="bg-white rounded-lg p-6 w-full">
+    <div className="bg-white flex gap-3 rounded-lg p-6 w-full">
       <textarea
         value={message}
         onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -25,23 +19,15 @@ const ChatInput = (props: Props) => {
         className="placeholder:text-[#888F95] w-full resize-none outline-none"
         placeholder="Share your thoughts"
       ></textarea>
-      <div className="flex">
+      <div className="">
         <Button
           clicked={() => {
             props.sendMessageFunc(message);
             setMessage("");
           }}
-          // clicked={createCommentHandler}
-          // disabled={!comment}
           classname="bg-primary ml-auto flex items-center justify-center  disabled:bg-gray6  text-white w-[6rem] py-2 rounded-full text-sm font-medium"
         >
-          {/* {isLoading ? (
-              <div className="py-1">
-                <Spinner />
-              </div>
-            ) : ( */}
           Reply
-          {/* )} */}
         </Button>
       </div>
     </div>

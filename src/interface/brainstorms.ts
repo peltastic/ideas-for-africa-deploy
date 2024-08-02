@@ -24,6 +24,7 @@ export interface IGroupMessagesResponse {
   username: string;
   text: string;
   timestamp: string;
+  photourl?: string
 }
 
 export interface IGetGroupMembers {

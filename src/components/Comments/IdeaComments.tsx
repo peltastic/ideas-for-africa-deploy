@@ -1,4 +1,5 @@
 import React from "react";
+import moment from "moment";
 
 type Props = {
   replies?: {
@@ -16,6 +17,7 @@ type Props = {
   content: string;
   fname?: string;
   lname?: string;
+  createdAt: string
 };
 
 const IdeaComments = (props: Props) => {
@@ -30,7 +32,7 @@ const IdeaComments = (props: Props) => {
       <div className="w-[80%]">
         <p className="font-semibold mb-2">{props.fname ? `${props.fname} ${props.lname}` : "Monica Brown" }</p>
         <p className="text-sm mb-2">{props.content}</p>
-        <p className="text-xs text-gray1">3 days ago</p>
+        <p className="text-xs text-gray1">{moment(props.createdAt).fromNow()}</p>
         <div className="w-full">
           {props.replies ? (
             <>
@@ -40,6 +42,7 @@ const IdeaComments = (props: Props) => {
                   key={el._id}
                   lname={el.user.lname}
                   content={el.content}
+                  createdAt={el.createdAt}
                 />
               ))}
             </>

@@ -9,6 +9,7 @@ import Avatar from "/public/assets/avatar.png";
 import React from "react";
 import Image from "next/image";
 import TailwindSpinner from "@/components/Spinner/TailwindSpinner";
+import { AspectRatio } from "@mantine/core";
 
 type Props = {
   setShowProps: (val: boolean) => void;
@@ -26,7 +27,7 @@ const RoomMembers = (props: Props) => {
           <Image
             src={CancelSvg}
             alt="cancel"
-            className="ml-auto mr-5 w-[1.2rem] "
+            className="ml-auto mr-5 w-[1.2rem] h-[1.2rem] "
           />
         </div>
       </div>
@@ -44,14 +45,16 @@ const RoomMembers = (props: Props) => {
         <div className="">
           {data?.map((el) => (
             <div key={el._id} className=" flex mt-8 items-center">
-              <div className="mr-3 rounded-full overflow-hidden w-[2.4rem]">
+              <div className="mr-3 rounded-full overflow-hidden w-[2.4rem] h-[2.4rem]">
+                <AspectRatio ratio={1800/1800}>
                 <Image
                   src={el.profile.ppicture || NoProfilePic}
                   width={100}
                   height={100}
                   className="w-full"
                   alt="avatar"
-                />
+                  />
+                  </AspectRatio>
               </div>
               <div className="text-sm mr-auto ">
                 <p className="font-semibold mb-[0.02rem]">{el.profile.fname} {el.profile.lname}</p>

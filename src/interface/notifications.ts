@@ -11,6 +11,8 @@ export interface IGetProfileNotificationResponse {
     indicatorId: string;
     username: string;
     typeId: string;
+    ideaheadline: string
+    IdeaId: string
     _id: string;
   };
 }

@@ -6,10 +6,12 @@ import { useLazySearchBrainstormsQuery } from "@/lib/features/brainstorms";
 import SearchedBrainstorms from "./SearchedBrainstorms";
 import IdeaPageSkeleton from "../Skeleton/IdeaPageSkeleton";
 import IdeasSkeleton from "../Skeleton/IdeasSkeleton";
+import { getCookie } from "@/utils/storage";
 
 type Props = {};
 
 const BrainstormFeed = (props: Props) => {
+  const id = getCookie("id")
   const options = [
     {
       value: "admin",
@@ -27,6 +29,7 @@ const BrainstormFeed = (props: Props) => {
     searchIdea({
       searchValue,
       type: value,
+      userId: id
     });
   }, []);
   return (
@@ -53,6 +56,7 @@ const BrainstormFeed = (props: Props) => {
               searchIdea({
                 searchValue: e.target.value,
                 type: value,
+                userId: id
               });
             }}
             value={searchValue}

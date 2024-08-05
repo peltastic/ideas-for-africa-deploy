@@ -17,6 +17,7 @@ import {
 } from "@/lib/features/brainstorms";
 import { getCookie } from "@/utils/storage";
 import moment from "moment";
+import { replacePTags } from "@/utils/helperfunctions";
 
 type Props = {
   setShowProps: (val: boolean) => void;
@@ -25,7 +26,7 @@ type Props = {
 
 const ChatRoom = (props: Props) => {
   const id = getCookie("id");
-  const params = useParams();
+  // const params = useParams();
   const [getGroupMessages, { data, isFetching }] =
     useLazyGetGroupMessagesQuery();
   const [getGrouInfo, result] = useLazyGetGroupInfoQuery();
@@ -49,13 +50,12 @@ const ChatRoom = (props: Props) => {
   );
 
   useEffect(() => {
-    if (params.id) {
+    if (subId) {
       getGrouInfo({
-        groupId: params.id as string,
-        userId: id,
+        groupId: subId,
       });
     }
-  }, [params.id]);
+  }, [subId]);
 
   useEffect(() => {
     if (subId) {
@@ -71,7 +71,7 @@ const ChatRoom = (props: Props) => {
     chat_socket.on(
       "chatMessage",
       (msgData: { username: string; text: string; photourl?: string }) => {
-        console.log(msgData.text)
+        console.log(msgData.text);
         updateMessageHandler(msgData.text, msgData.username, msgData.photourl);
       }
     );
@@ -90,7 +90,7 @@ const ChatRoom = (props: Props) => {
         username: el.username,
         text: el.text,
         photourl: el.photourl,
-        timestamp: moment(el.timestamp).format('h:mm a'),
+        timestamp: moment(el.timestamp).format("h:mm a"),
         _id: el._id,
       }));
       setMessages(chatHistory);
@@ -106,7 +106,7 @@ const ChatRoom = (props: Props) => {
       {
         text: message,
         photourl: photourl,
-        timestamp: moment(new Date().getTime()).format('h:mm a'),
+        timestamp: moment(new Date().getTime()).format("h:mm a"),
         _id: Math.floor(Math.random() * 100000).toString(),
         username: username || `${profile.fname} ${profile.lname}`,
       },
@@ -136,11 +136,12 @@ const ChatRoom = (props: Props) => {
           rubber
         </h1>
 
-        <p className="text-sm my-10 text-gray1">
-          The ideal way to run a hydro plant involves maximizing efficiency by
-          regulating water flow to match energy demand, while also considering
-          environmental impacts to maintain ecological balance.
-        </p>
+        {result.data?.group.name ? <div
+          className="mt-7"
+          dangerouslySetInnerHTML={{
+            __html: `${replacePTags(result.data?.group.name || "")}`,
+          }}
+        ></div> : null}
         <div className=" flex mt-8 items-center">
           <div className="mr-3 w-[2.4rem]">
             <Image src={Avatar} className="w-full" alt="avatar" />

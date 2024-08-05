@@ -9,6 +9,7 @@ import { notify } from "@/utils/toast";
 import moment from "moment";
 import MenuComponent from "../Menu/Menu";
 import Link from "next/link";
+import { formatNameRoute } from "@/utils/helperfunctions";
 
 type Props = {
   data: IGetProfileNotificationResponse;
@@ -34,6 +35,7 @@ const Notification = (props: Props) => {
       setDeclineLoading(false);
     }
   }, [isError, isSuccess]);
+  console.log(props.data.action.ideaheadline, props.data.action.IdeaId)
 
   return (
     <div className="my-10">
@@ -51,7 +53,8 @@ const Notification = (props: Props) => {
             </p>
           </div>
         </div>
-        {props.data.type && (props.data.type === "Response" || props.data.type === "Request") ? (
+        {props.data.type &&
+        (props.data.type === "Response" || props.data.type === "Request") ? (
           <div className="bg-gray3 flex items-center  justify-center  h-[1.7rem] w-[1.7rem] rounded-full">
             <MenuComponent
               target={
@@ -62,7 +65,11 @@ const Notification = (props: Props) => {
             >
               <div className="bg-white shadow-md py-3 px-4 text-sm">
                 <div className="">
-                  <Link href={`/`}>View Group</Link>
+                  <Link
+                    href={`/idea/${props.data.action.IdeaId}/${formatNameRoute(props.data.action.ideaheadline || "")}/brainstorms/${props.data.action.groupId}`}
+                  >
+                    Open Group
+                  </Link>
                 </div>
               </div>
             </MenuComponent>

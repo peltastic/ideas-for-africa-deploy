@@ -106,24 +106,35 @@ export const brainstormsApi = createApi({
     >({
       query: (roomId) => `/groups/messages/${roomId}`,
     }),
-    getGroupInfo: build.query<{}, { groupId: string; userId?: string }>({
-      query: ({ groupId, userId }) =>
-        `/users/groups/idea/${groupId}?userId=${userId}`,
+    getGroupInfo: build.query<
+      {
+        group: {
+          name: string;
+        };
+      },
+      { groupId: string; userId?: string }
+    >({
+      query: ({ groupId, userId }) => `/groups/groups/${groupId}`,
     }),
     searchBrainstorms: build.query<
       IGetSearchBrainstormGroups,
       {
         type: "idea" | "admin";
         searchValue: string;
+        userId?: string;
       }
     >({
-      query: ({ type, searchValue }) => {
+      query: ({ type, searchValue, userId }) => {
         let query;
         if (type === "admin") {
           query = `/search/groups-by-admin?search=${searchValue || "a"}`;
         } else {
           query = `/search/groups-by-idea?search=${searchValue || "a"}`;
         }
+        if (userId) {
+          query += `&userId=${userId}`;
+        }
+
         return {
           url: query,
         };
@@ -141,5 +152,5 @@ export const {
   useRespondToRequestMutation,
   useLazyGetGroupMessagesQuery,
   useLazyGetGroupInfoQuery,
-  useLazySearchBrainstormsQuery
+  useLazySearchBrainstormsQuery,
 } = brainstormsApi;

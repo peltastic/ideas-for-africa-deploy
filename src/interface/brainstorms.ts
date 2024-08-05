@@ -56,5 +56,6 @@ export interface IGetSearchBrainstormGroups {
     adminPpicture: string | "Not available"
     ideaHeadline: string;
     thumbnailPath: string;
+    userMembershipStatus: "Not a member" | "accepted" | "requested"
   }[];
 }

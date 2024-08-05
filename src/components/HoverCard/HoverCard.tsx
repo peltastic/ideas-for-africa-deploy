@@ -10,7 +10,7 @@ type Props = {
 
 const HoverCardComponent = (props: Props) => {
   return (
-    <Group justify="center">
+    <Group justify="right">
       <HoverCard width={props.fit ? "fit" : 280}  shadow="md">
         <HoverCard.Target>{props.children}</HoverCard.Target>
         <HoverCard.Dropdown>

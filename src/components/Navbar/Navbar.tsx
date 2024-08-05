@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useEffect } from "react";
 import Image from "next/image";
 import Logo from "/public/assets/logo.svg";
@@ -12,7 +12,7 @@ type Props = {
 };
 
 const Navbar = (props: Props) => {
- const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const token = getCookie("token");
   useEffect(() => {
     if (!token) {
@@ -27,11 +27,17 @@ const Navbar = (props: Props) => {
       } mx-auto rounded-full py-3 xs:py-5 px-6 xs:px-8 `}
     >
       <div className="flex items-center ">
-        <div className="cursor-pointer mr-auto">
+     
+        <div className="cursor-pointer mr-auto ">
           <Link href={"/"}>
             <Image src={Logo} alt="logo" />
           </Link>
         </div>
+        {props.homepage ? (
+          <Link className="mr-8 hover:scale-105 transition-all text-primary border-b-2 border-primary" href={"/brainstorms"}>
+            <p className="">Brainstorms</p>
+          </Link>
+        ) : null}
         <ProfileMenu />
       </div>
     </nav>

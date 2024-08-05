@@ -20,7 +20,7 @@ const ProfileNotifications = (props: Props) => {
   // const {data} = useGetUserNotificationQuery(id, {
   //   ref
   // })
-
+ 
   useEffect(() => {
     getUserNotification(id);
   }, []);

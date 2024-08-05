@@ -51,7 +51,7 @@ const BrainstormGrid = (props: Props) => {
     useRequestToJoinGroupMutation();
   const result = useGetGroupMembersQuery(props.groups._id);
   const [userStatus, setUserStatus] = useState<
-    "Not a member" | "requested" | "Accepted"
+    "Not a member" | "requested" | "Accepted" | "Declined"
   >(props.groups.status);
   const id = getCookie("id");
   const [pfps, setPfps] = useState<string[] | null>(null);
@@ -161,7 +161,7 @@ const BrainstormGrid = (props: Props) => {
                 <p>
                   {props.groups.admin === id
                     ? "Open group"
-                    : userStatus === "Not a member"
+                    : userStatus === "Not a member" || userStatus === "Declined"
                     ? "Request To Join"
                     : userStatus === "requested"
                     ? "Pending"

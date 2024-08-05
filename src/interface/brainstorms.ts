@@ -7,13 +7,13 @@ export interface IGetBrainstormGroupsResponse {
     _id: string;
     status: "Not a member" | "requested";
     canJoin: boolean;
-    text: string
+    text: string;
   }[];
   ideaCreator: {
     fname: string;
     lname: string;
     pow: string;
-    url?: string
+    url?: string;
   };
   title: string;
 }
@@ -24,19 +24,37 @@ export interface IGroupMessagesResponse {
   username: string;
   text: string;
   timestamp: string;
-  photourl?: string
+  photourl?: string;
 }
 
 export interface IGetGroupMembers {
-  _id: string
-  userId: string
+  _id: string;
+  userId: string;
   profile: {
-    fname: string
-    lname: string
-    ppicture: string
-  }
+    fname: string;
+    lname: string;
+    ppicture: string;
+  };
 }
 
 export interface IGetGroupInfo {
-  title: string
+  title: string;
+}
+
+export interface IGetSearchBrainstormGroups {
+  groups: {
+    _id: string;
+    ideaId: string;
+    name: string;
+    admin: string;
+    text: string;
+    createdAt: string;
+    adminName: {
+      fname: string;
+      lname: string;
+    };
+    adminPpicture: string | "Not available"
+    ideaHeadline: string;
+    thumbnailPath: string;
+  }[];
 }

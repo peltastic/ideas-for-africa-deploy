@@ -3,7 +3,7 @@ export interface IGetProfileNotificationResponse {
   title: string;
   time: string;
   body: string;
-  type?: "Request" | "Comment"
+  type?: "Request" | "Comment" | "Response"
   action: {
     userId: string;
     memberId: string

@@ -2,8 +2,8 @@ import config from "@/config/config";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { getCookie } from "@/utils/storage";
 import {
-  IGetBrainstormGroupsResponse,
   IGetGroupMembers,
+  IGetSearchBrainstormGroups,
   IGroupMessagesResponse,
 } from "@/interface/brainstorms";
 
@@ -20,7 +20,7 @@ export const brainstormsApi = createApi({
     },
   }),
   endpoints: (build) => ({
-    getGroups: build.query<IGetBrainstormGroupsResponse, string>({
+    getGroups: build.query<IGetSearchBrainstormGroups, string>({
       query: (id) => {
         const userId = getCookie("id");
         return { url: `/users/groups/idea/${id}?userId=${userId}` };
@@ -32,7 +32,7 @@ export const brainstormsApi = createApi({
         ideaId: string;
         name: string;
         userId: string;
-        text: string
+        text: string;
       }
     >({
       query: (body) => ({
@@ -72,7 +72,7 @@ export const brainstormsApi = createApi({
       unknown,
       {
         memberId: string;
-        status: "accepted" | "rejected";
+        status: "accepted" | "declined";
         userId: string;
       }
     >({
@@ -106,9 +106,29 @@ export const brainstormsApi = createApi({
     >({
       query: (roomId) => `/groups/messages/${roomId}`,
     }),
-    getGroupInfo: build.query<{}, {groupId: string, userId?: string} >({
-      query: ({groupId, userId}) => `/users/groups/idea/${groupId}?userId=${userId}`
-    })
+    getGroupInfo: build.query<{}, { groupId: string; userId?: string }>({
+      query: ({ groupId, userId }) =>
+        `/users/groups/idea/${groupId}?userId=${userId}`,
+    }),
+    searchBrainstorms: build.query<
+      IGetSearchBrainstormGroups,
+      {
+        type: "idea" | "admin";
+        searchValue: string;
+      }
+    >({
+      query: ({ type, searchValue }) => {
+        let query;
+        if (type === "admin") {
+          query = `/search/groups-by-admin?search=${searchValue || "a"}`;
+        } else {
+          query = `/search/groups-by-idea?search=${searchValue || "a"}`;
+        }
+        return {
+          url: query,
+        };
+      },
+    }),
   }),
 });
 
@@ -120,5 +140,6 @@ export const {
   useGetGroupMembersQuery,
   useRespondToRequestMutation,
   useLazyGetGroupMessagesQuery,
-  useLazyGetGroupInfoQuery
+  useLazyGetGroupInfoQuery,
+  useLazySearchBrainstormsQuery
 } = brainstormsApi;

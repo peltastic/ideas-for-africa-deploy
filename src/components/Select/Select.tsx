@@ -11,22 +11,23 @@ type Props = {
   value?: any;
   label?: string;
   size: "sm" | "lg" | "md" | "xs" | "xl";
-  thinLabel?: boolean
+  thinLabel?: boolean;
   radius?: "sm" | "lg" | "md" | "xs" | "xl";
-  default?: string
-  searchable?: boolean
-  
+  default?: string;
+  searchable?: boolean;
+  variant?: "default" | "unstyled" | "filled";
 };
 
 const SelectComponent = (props: Props) => {
   const icon = <IoIosArrowDown className="font-semibold text-black" />;
   return (
     <Select
+      variant={props.variant || "default"}
       label={props.label}
       radius={props.radius || "xl"}
       size={props.size}
-      classNames={{label: props.thinLabel ? classes.label2 : classes.label}}
-      className="font-semibold placeholder:text-black" 
+      classNames={{ label: props.thinLabel ? classes.label2 : classes.label }}
+      className="font-semibold outline-none  placeholder:text-black"
       value={props.value || null}
       data={props.options}
       defaultValue={props.default}

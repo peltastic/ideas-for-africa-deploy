@@ -41,6 +41,8 @@ import { notify } from "@/utils/toast";
 import { useRouter } from "next/navigation";
 import HoverCardComponent from "../HoverCard/HoverCard";
 import { AspectRatio } from "@mantine/core";
+import ToolTip from "../ToolTip/ToolTip";
+import ToolTipComponent from "../ToolTip/ToolTip";
 
 type Props = {
   data: IGetSingleIdeaResponse;
@@ -66,6 +68,7 @@ const IdeaGrid = ({ data, setOpenVH, modified }: Props) => {
   const [likesCount, setLikesCount] = useState<number>(data.likes);
   const [liked, setLiked] = useState<boolean>(data.userHasLiked);
   const [likeIdea, {}] = useLikeIdeaMutation();
+  const [clicked, setClicked] = useState<boolean>(false);
   const [curentTab, setCurrentTab] = useState<
     "Body" | "Steps" | "Budget" | "Documents" | "Comments" | string
   >("Body");
@@ -162,43 +165,63 @@ const IdeaGrid = ({ data, setOpenVH, modified }: Props) => {
           </h1>
         </div>
         {modified ? null : (
-          <div className="flex items-center my-6">
-            <HoverCardComponent
-              fit
-              textSize="xs"
-              text="Create Brainstorm Groups"
+          <div className="flex items-center my-6 gap-4">
+            {/* <HoverCardComponent
+                fit
+                textSize="xs"
+                text="Create Brainstorm Groups"
+              > */}
+            <Link
+              href={`/idea/${data.idea._id}/${formatNameRoute(
+                data.idea.headline
+              )}/brainstorms`}
             >
-              <Link
-                href={`/idea/${data.idea._id}/${formatNameRoute(
-                  data.idea.headline
-                )}/brainstorms`}
+              <button className="flex items-center justify-center text-xs w-auto sm:w-[10rem] rounded-md sm:rounded-full px-4 py-2 sm:py-3  bg-primary text-white  border-primary border">
+                <Image
+                  src={BrainstormSvg}
+                  className="mr-2"
+                  alt="brainstorm svg"
+                />
+                <p>Brainstorm idea</p>
+              </button>
+            </Link>
+            {/* </HoverCardComponent> */}
+            <div className="hidden lg:block">
+              <ToolTipComponent
+                label="Have a different perspective? Modify the original idea and share
+              your thought process with fellow users."
               >
-                <button className="hidden sm:flex items-center text-xs rounded-full px-4 py-2  bg-primary text-white md:mr-8 border-primary border">
+                <button
+                  onClick={() => {
+                    if (authStatus === "LOGGED_OUT") {
+                      return open();
+                    }
+                    router.push(
+                      `/idea/${data.idea._id}/${formatNameRoute(
+                        data.idea.headline
+                      )}/modify`
+                    );
+                  }}
+                  className="flex items-center text-xs rounded-full px-4 py-3 w-[10rem] justify-center bg-primary text-white border-primary border"
+                >
                   <Image
-                    src={BrainstormSvg}
+                    src={ModifyIdeaImg}
                     className="mr-2"
                     alt="brainstorm svg"
                   />
-                  <p>Brainstorm idea</p>
+                  <p>Modify idea</p>
                 </button>
-              </Link>
-            </HoverCardComponent>
-            <HoverCardComponent
-              text="Have a different perspective? Modify the original idea and share
-            your thought process with fellow users."
-            >
+              </ToolTipComponent>
+            </div>
+            <div className="block lg:hidden">
               <button
                 onClick={() => {
                   if (authStatus === "LOGGED_OUT") {
                     return open();
                   }
-                  router.push(
-                    `/idea/${data.idea._id}/${formatNameRoute(
-                      data.idea.headline
-                    )}/modify`
-                  );
+                  setClicked(true)
                 }}
-                className="flex items-center text-xs rounded-full px-4 py-2  bg-primary text-white border-primary border"
+                className="flex items-center text-xs rounded-md sm:rounded-full px-4 py-2 sm:py-3 w-[10rem] justify-center bg-primary text-white border-primary border"
               >
                 <Image
                   src={ModifyIdeaImg}
@@ -207,12 +230,15 @@ const IdeaGrid = ({ data, setOpenVH, modified }: Props) => {
                 />
                 <p>Modify idea</p>
               </button>
-            </HoverCardComponent>
+            </div>
           </div>
         )}
         <div className="flex flex-wrap items-center  mt-8">
-          <div onClick={() => router.push(`/profile/${data.user._id}`)} className="cursor-pointer rounded-full overflow-hidden mr-4 w-[3rem] h-[3rem]">
-            <AspectRatio ratio={1800/1800}>
+          <div
+            onClick={() => router.push(`/profile/${data.user._id}`)}
+            className="cursor-pointer rounded-full overflow-hidden mr-4 w-[3rem] h-[3rem]"
+          >
+            <AspectRatio ratio={1800 / 1800}>
               <Image
                 width={50}
                 height={50}
@@ -242,11 +268,14 @@ const IdeaGrid = ({ data, setOpenVH, modified }: Props) => {
         <div className="my-8 relative">
           <div className="block des:hidden">
             <IdeaOptionsMobile
+              setClicked={(val) => setClicked(val)}
+              clicked={clicked}
               id={data.idea._id}
               headline={formatNameRoute(data.idea.headline)}
               setOpenVH={setOpenVH}
             />
           </div>
+
           <Image
             src={data.thumbs[0]?.path || TestImg}
             width={300}

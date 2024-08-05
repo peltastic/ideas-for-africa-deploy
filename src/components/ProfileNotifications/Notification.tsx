@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { SlOptions } from "react-icons/sl";
 import Button from "../Button/Button";
 import { IGetProfileNotificationResponse } from "@/interface/notifications";
@@ -7,6 +7,8 @@ import { getCookie } from "@/utils/storage";
 import Spinner from "../Spinner/Spinner";
 import { notify } from "@/utils/toast";
 import moment from "moment";
+import MenuComponent from "../Menu/Menu";
+import Link from "next/link";
 
 type Props = {
   data: IGetProfileNotificationResponse;
@@ -17,12 +19,19 @@ const Notification = (props: Props) => {
   const [respondToRequest, { data, isLoading, isError, isSuccess, error }] =
     useRespondToRequestMutation();
 
+  const [acceptLoading, setAcceptLoading] = useState<boolean>(false);
+  const [declineLoading, setDeclineLoading] = useState<boolean>(false);
+
   useEffect(() => {
     if (isError) {
       notify((error as any)?.data?.message || "Something went wrong");
+      setAcceptLoading(false);
+      setDeclineLoading(false);
     }
     if (isSuccess) {
       notify("Successful", "success");
+      setAcceptLoading(false);
+      setDeclineLoading(false);
     }
   }, [isError, isSuccess]);
 
@@ -37,12 +46,28 @@ const Notification = (props: Props) => {
             <h3 className="font-semibold text-sm mb-1">
               {props.data.action.username}
             </h3>
-            <p className="text-gray1 text-xs">{props.data.title} • {moment(props.data.time).fromNow()} </p>
+            <p className="text-gray1 text-xs">
+              {props.data.title} • {moment(props.data.time).fromNow()}{" "}
+            </p>
           </div>
         </div>
-        <div className="bg-gray3 flex items-center justify-center  h-[1.7rem] w-[1.7rem] rounded-full">
-          <SlOptions className="text-xs" />
-        </div>
+        {props.data.type && (props.data.type === "Response" || props.data.type === "Request") ? (
+          <div className="bg-gray3 flex items-center  justify-center  h-[1.7rem] w-[1.7rem] rounded-full">
+            <MenuComponent
+              target={
+                <div>
+                  <SlOptions className="text-xs cursor-pointer" />
+                </div>
+              }
+            >
+              <div className="bg-white shadow-md py-3 px-4 text-sm">
+                <div className="">
+                  <Link href={`/`}>View Group</Link>
+                </div>
+              </div>
+            </MenuComponent>
+          </div>
+        ) : null}
       </div>
       <div className="text-sm mt-4">
         <p>{props.data.body}</p>
@@ -50,25 +75,43 @@ const Notification = (props: Props) => {
       {props.data.type === "Request" ? (
         <div className="flex items-center mt-6">
           <Button
-            clicked={() =>
+            clicked={() => {
+              setAcceptLoading(true);
               respondToRequest({
                 memberId: props.data.action.memberId,
                 status: "accepted",
                 userId: id,
-              })
-            }
+              });
+            }}
             classname="text-sm w-[8rem] mr-6 py-2 flex justify-center rounded-full bg-gray3"
           >
-            {isLoading ? (
+            {acceptLoading ? (
               <div className="py-1">
-                <Spinner />
+                <Spinner dark />
               </div>
             ) : (
               <p>Accept</p>
             )}
           </Button>
-          <Button classname="text-red1 w-[8rem] text-sm py-2 rounded-full  border border-gray3">
-            <p>Decline</p>
+          <Button
+            clicked={() => {
+              setDeclineLoading(true);
+              respondToRequest({
+                memberId: props.data.action.memberId,
+                status: "declined",
+                userId: id,
+              });
+            }}
+            classname="text-red1 w-[8rem] text-sm py-2 flex justify-center rounded-full  border border-gray3"
+          >
+            {" "}
+            {declineLoading ? (
+              <div className="py-1">
+                <Spinner dark />
+              </div>
+            ) : (
+              <p>Decline</p>
+            )}
           </Button>
         </div>
       ) : null}

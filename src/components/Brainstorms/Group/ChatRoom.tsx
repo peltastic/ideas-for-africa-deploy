@@ -155,7 +155,7 @@ const ChatRoom = (props: Props) => {
           <div className="text-sm mr-auto ">
             <p className="font-semibold mb-[0.02rem]">{result.data?.fname} {result.data?.lname}</p>
             <p className="leading-5 text-gray1">
-              CEO Pledre Solutions • Created Feb 23, 2024
+              {result.data?.pow} • Created Feb 23, 2024
             </p>
           </div>
         </div>

@@ -115,6 +115,7 @@ export const brainstormsApi = createApi({
         fname: string
         lname: string
         profilepic: string
+        pow: string
         ideaheadline: string
       },
       { groupId: string; userId?: string }

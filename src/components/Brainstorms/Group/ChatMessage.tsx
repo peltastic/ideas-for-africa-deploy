@@ -70,7 +70,7 @@ const ChatMessage = ({
               isUser ? "bg-primary text-white" : "bg-white text-black3"
             }  mt-2 py-3 px-3  text-sm rounded-md`}
           >
-            {message.split("\n").map((str, index) => <p>{str}</p>)}
+            {message.split("\n").map((str, index) => <p key={str + index}>{str}</p>)}
           </div>
         </div>
       </div>

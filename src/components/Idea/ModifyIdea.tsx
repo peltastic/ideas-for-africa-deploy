@@ -282,7 +282,7 @@ const ModifyIdea = (props: Props) => {
           <p>Add more</p>
         </div>
 
-        <div className="mb-8 bg-amber-bg text-sm mt-8 text-amber-dark flex flex-wrap xs:flex-nowrap px-5 py-3 gap-3 items-center justify-center rounded-lg">
+        {/* <div className="mb-8 bg-amber-bg text-sm mt-8 text-amber-dark flex flex-wrap xs:flex-nowrap px-5 py-3 gap-3 items-center justify-center rounded-lg">
           <Image
             src={InfoImg}
             alt="info-img"
@@ -294,8 +294,9 @@ const ModifyIdea = (props: Props) => {
             &lsquo;strikethrough&rsquo; selected characters, and your new text
             will appear in red print.
           </p>
-        </div>
+        </div> */}
         <div className="mt-6">
+        <h1 className="text-xl mb-5">Body</h1>
           <Editor
             isModify
             contentProps={modifiedIdea}

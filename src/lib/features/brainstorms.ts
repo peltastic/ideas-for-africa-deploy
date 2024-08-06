@@ -111,6 +111,10 @@ export const brainstormsApi = createApi({
         group: {
           name: string;
         };
+        fname: string
+        lname: string
+        profilepic: string
+        ideaheadline: string
       },
       { groupId: string; userId?: string }
     >({
@@ -127,9 +131,9 @@ export const brainstormsApi = createApi({
       query: ({ type, searchValue, userId }) => {
         let query;
         if (type === "admin") {
-          query = `/search/groups-by-admin?search=${searchValue || "a"}`;
+          query = `/search/groups-by-admin?search=${searchValue || ""}`;
         } else {
-          query = `/search/groups-by-idea?search=${searchValue || "a"}`;
+          query = `/search/groups-by-idea?search=${searchValue || ""}`;
         }
         if (userId) {
           query += `&userId=${userId}`;

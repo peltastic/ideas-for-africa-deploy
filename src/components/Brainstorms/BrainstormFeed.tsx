@@ -81,7 +81,7 @@ const BrainstormFeed = (props: Props) => {
         ) : (
           <>
             {data?.groups.map((el) => (
-              <SearchedBrainstorms data={el} />
+              <SearchedBrainstorms data={el} key={el._id} />
             ))}
           </>
         )}

@@ -18,6 +18,8 @@ import {
 import { getCookie } from "@/utils/storage";
 import moment from "moment";
 import { replacePTags } from "@/utils/helperfunctions";
+import NoProfilePic from "/public/assets/no-profile.jpg";
+import { AspectRatio } from "@mantine/core";
 
 type Props = {
   setShowProps: (val: boolean) => void;
@@ -71,7 +73,6 @@ const ChatRoom = (props: Props) => {
     chat_socket.on(
       "chatMessage",
       (msgData: { username: string; text: string; photourl?: string }) => {
-        console.log(msgData.text);
         updateMessageHandler(msgData.text, msgData.username, msgData.photourl);
       }
     );
@@ -130,30 +131,35 @@ const ChatRoom = (props: Props) => {
           Members
         </Button>
       </div>
-      <div className="px-3 sm:px-0">
+      {result.data ? <div className="px-3 sm:px-0">
         <h1 className="text-xl font-bold mt-3">
-          Kunle&apos;s brainstorm group on Energy generation for recycling in
+          {result.data?.fname}&apos;s brainstorm group on {result.data?.ideaheadline}
           rubber
         </h1>
 
-        {result.data?.group.name ? <div
-          className="mt-7"
-          dangerouslySetInnerHTML={{
-            __html: `${replacePTags(result.data?.group.name || "")}`,
-          }}
-        ></div> : null}
+        {result.data?.group.name ? (
+          <div
+            className="mt-7"
+            dangerouslySetInnerHTML={{
+              __html: `${replacePTags(result.data?.group.name || "")}`,
+            }}
+          ></div>
+        ) : null}
         <div className=" flex mt-8 items-center">
-          <div className="mr-3 w-[2.4rem]">
-            <Image src={Avatar} className="w-full" alt="avatar" />
+          <div className="mr-3 w-[2.4rem] h-[2.4rem] overflow-hidden rounded-full">
+            <AspectRatio ratio={1800/1800}>
+
+            <Image src={result.data?.profilepic || NoProfilePic } width={100} height={100} className="w-full h-full" alt="avatar" />
+            </AspectRatio>
           </div>
           <div className="text-sm mr-auto ">
-            <p className="font-semibold mb-[0.02rem]">Kunle Ademola</p>
+            <p className="font-semibold mb-[0.02rem]">{result.data?.fname} {result.data?.lname}</p>
             <p className="leading-5 text-gray1">
               CEO Pledre Solutions • Created Feb 23, 2024
             </p>
           </div>
         </div>
-      </div>
+      </div>: null}
       {showChat ? (
         <div className="bg-gray3 no-scrollbar relative py-6 px-1 sm:px-4 rounded-md mt-8 min-h-[70vh]">
           <div className="h-[80vh] mb-[10rem] overflow-y-auto no-scrollbar">

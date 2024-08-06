@@ -91,7 +91,7 @@ const SearchedBrainstorms = (props: Props) => {
         </div>
         <div className="sm:w-[70%] flex flex-col  ">
           <p className="font-semibold text-sm mb-auto">
-            {props.data.adminName.fname}'s brainstorm groups on{" "}
+            {props.data.adminName.fname}&apos;s brainstorm groups on{" "}
             {props.data.ideaHeadline}
           </p>
           <div className="mt-8 sm:mt-0 flex items-center">

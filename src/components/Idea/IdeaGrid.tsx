@@ -165,7 +165,7 @@ const IdeaGrid = ({ data, setOpenVH, modified }: Props) => {
           </h1>
         </div>
         {modified ? null : (
-          <div className="flex items-center my-6 gap-4">
+          <div className="flex items-center flex-wrap xxs:flex-nowrap my-6 gap-4">
             {/* <HoverCardComponent
                 fit
                 textSize="xs"
@@ -176,7 +176,7 @@ const IdeaGrid = ({ data, setOpenVH, modified }: Props) => {
                 data.idea.headline
               )}/brainstorms`}
             >
-              <button className="flex items-center justify-center text-xs w-auto sm:w-[10rem] rounded-md sm:rounded-full px-4 py-2 sm:py-3  bg-primary text-white  border-primary border">
+              <button className="flex items-center justify-center text-xs w-[15rem] xs:w-auto sm:w-[10rem] rounded-md sm:rounded-full px-4 py-2 sm:py-3  bg-primary text-white  border-primary border">
                 <Image
                   src={BrainstormSvg}
                   className="mr-2"
@@ -221,7 +221,7 @@ const IdeaGrid = ({ data, setOpenVH, modified }: Props) => {
                   }
                   setClicked(true)
                 }}
-                className="flex items-center text-xs rounded-md sm:rounded-full px-4 py-2 sm:py-3 w-[10rem] justify-center bg-primary text-white border-primary border"
+                className="flex items-center text-xs rounded-md sm:rounded-full px-4 py-2 sm:py-3 w-[15rem] xs:w-[10rem] justify-center bg-primary text-white border-primary border"
               >
                 <Image
                   src={ModifyIdeaImg}

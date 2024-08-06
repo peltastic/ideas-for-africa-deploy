@@ -79,7 +79,7 @@ const ProfileMenu = (props: Props) => {
                 <div className="bg-red1 w-[6px] rounded-full h-[6px] absolute right-[4px] top-[5px]"></div>
               ) : null}
               <div className="border rounded-full overflow-hidden mr-3">
-                <AspectRatio ratio={1800/1800} >
+                <AspectRatio ratio={1800 / 1800}>
                   <Image
                     src={profileInfo.pfp || NoProfilePic}
                     width={100}
@@ -143,9 +143,9 @@ const ProfileMenu = (props: Props) => {
                 <p className="font-semibold">Notifications</p>
               </div>
             </Link>
-            <div className="my-8 flex">
+            <div className="my-8 flex sm:hidden">
               <Image src={ArchiveImg} alt="" className="mr-4 w-[1.4rem]" />
-              <p className="font-semibold">Archive</p>
+              <p className="font-semibold">Brainstorms</p>
             </div>
             <div
               className="mt-8 flex cursor-pointer"
@@ -173,20 +173,45 @@ const ProfileMenu = (props: Props) => {
           </div>
         </MenuComponent>
       ) : (
-        <div className="flex text-sm">
-          <Link
-            className="border border-primary text-primary xxs:mr-4 rounded-full py-2 px-5"
-            href={"/auth/login"}
-          >
-            Log in
-          </Link>
-          <Link
-            className="hidden xxs:block border border-primary bg-primary text-white rounded-full py-2 px-5"
-            href={"/auth/register"}
-          >
-            Sign up
-          </Link>
-        </div>
+        <>
+          <div className="block sm:hidden bg-gray3 py-2 px-3 rounded-xl">
+            <MenuComponent
+              target={
+                <div>
+                  <Image src={Hamburger} alt="test" />
+                </div>
+              }
+            >
+              <ul className="text-sm ">
+                <li className=" hover:bg-gray3 px-4 py-2">
+                  <Link href={"/auth/login"}>Login</Link>
+                </li>
+                <li className=" hover:bg-gray3 px-4 py-2">
+                  <Link href={"/auth/register"}>Sign Up</Link>
+                </li>
+                <li className=" hover:bg-gray3 px-4 py-2">
+                  <Link href={"/brainstorms"}>
+                  Brainstorms
+                  </Link>
+                  </li>
+              </ul>
+            </MenuComponent>
+          </div>
+          <div className="hidden sm:flex text-sm">
+            <Link
+              className="border border-primary text-primary xxs:mr-4 rounded-full py-2 px-5"
+              href={"/auth/login"}
+            >
+              Log in
+            </Link>
+            <Link
+              className="hidden xxs:block border border-primary bg-primary text-white rounded-full py-2 px-5"
+              href={"/auth/register"}
+            >
+              Sign up
+            </Link>
+          </div>
+        </>
       )}
     </div>
   );

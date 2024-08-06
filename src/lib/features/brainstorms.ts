@@ -2,6 +2,7 @@ import config from "@/config/config";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { getCookie } from "@/utils/storage";
 import {
+  IGetBrainstormGroupsResponse,
   IGetGroupMembers,
   IGetSearchBrainstormGroups,
   IGroupMessagesResponse,
@@ -20,7 +21,7 @@ export const brainstormsApi = createApi({
     },
   }),
   endpoints: (build) => ({
-    getGroups: build.query<IGetSearchBrainstormGroups, string>({
+    getGroups: build.query<IGetBrainstormGroupsResponse, string>({
       query: (id) => {
         const userId = getCookie("id");
         return { url: `/users/groups/idea/${id}?userId=${userId}` };

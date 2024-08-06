@@ -19,6 +19,7 @@ const StayUpdated = (props: Props) => {
     useSubscribeEmailNotificationMutation();
 
   useEffect(() => {
+    console.log(data, error)
     if (isError) {
       notify((error as any)?.data?.message || "Something went wrong", "error");
     }

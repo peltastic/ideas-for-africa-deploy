@@ -47,7 +47,11 @@ export const notificationApi = createApi({
       query: (id) => `/users/notifications/unread/${id}`,
     }),
     subscribeEmailNotification: build.mutation<unknown, string>({
-      query: (email) => ({ url: "/subscribe", method: "POST" }),
+      query: (email) => ({
+        url: "/subscribe",
+        method: "POST",
+        body: { email },
+      }),
     }),
   }),
 });

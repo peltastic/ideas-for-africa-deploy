@@ -5,13 +5,14 @@ import storage from "redux-persist/lib/storage";
 import persistReducer from "redux-persist/lib/persistReducer";
 import authReducer from "./reducers/auth";
 import profileReducer from "./reducers/profile";
-import fcmReducer from "./reducers/fcm"
+import fcmReducer from "./reducers/fcm";
 import { ideasApi } from "./features/ideas";
 import { brainstormsApi } from "./features/brainstorms";
 import { commentsApi } from "./features/comments";
 import { notificationApi } from "./features/notifications";
-import routeReducer from "./reducers/route"
-import notisReducer from "./reducers/notis"
+import { subscribeApi } from "./features/subscribe";
+import routeReducer from "./reducers/route";
+import notisReducer from "./reducers/notis";
 
 const persistConfig = {
   key: "root",
@@ -33,7 +34,8 @@ export const store = configureStore({
     [ideasApi.reducerPath]: ideasApi.reducer,
     [brainstormsApi.reducerPath]: brainstormsApi.reducer,
     [commentsApi.reducerPath]: commentsApi.reducer,
-    [notificationApi.reducerPath]: notificationApi.reducer
+    [notificationApi.reducerPath]: notificationApi.reducer,
+    [subscribeApi.reducerPath]: subscribeApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
@@ -44,7 +46,8 @@ export const store = configureStore({
       ideasApi.middleware,
       brainstormsApi.middleware,
       commentsApi.middleware,
-      notificationApi.middleware
+      notificationApi.middleware,
+      subscribeApi.middleware,
     ]),
 });
 

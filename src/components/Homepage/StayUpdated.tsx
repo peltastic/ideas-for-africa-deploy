@@ -4,12 +4,13 @@ import Button from "../Button/Button";
 import Image from "next/image";
 import * as StayUpdatedLottie from "@/data/stay-updated.json";
 import LottiePlayer from "../Lottie/LottiePlayer";
-import { useSubscribeEmailNotificationMutation } from "@/lib/features/notifications";
+// import { useSubscribeEmailNotificationMutation } from "@/lib/features/notifications";
 import { Form, Formik } from "formik";
 import { subscribeSchema } from "@/utils/validation";
 import Field from "../Input/Field";
 import Spinner from "../Spinner/Spinner";
 import { notify } from "@/utils/toast";
+import { useSubscribeEmailNotificationMutation } from "@/lib/features/subscribe";
 
 type Props = {};
 

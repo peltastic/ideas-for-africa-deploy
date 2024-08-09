@@ -10,8 +10,9 @@ import FileButtonComponent from "../FileButton/FileButton";
 import { useUploadProfilePictureMutation } from "@/lib/features/profile";
 import Spinner from "../Spinner/Spinner";
 import { getCookie } from "@/utils/storage";
-import { notify } from "@/utils/toast";
 import { AspectRatio } from "@mantine/core";
+import { notifications } from "@mantine/notifications";
+import { errorColor, successColor } from "@/utils/constants";
 
 type Props = {
   fname: string;
@@ -32,12 +33,22 @@ const ProfileHeader = (props: Props) => {
 
   useEffect(() => {
     if (isError) {
-      notify((error as any)?.data?.message || "Something went wrong", "error");
+      notifications.show({
+        title: "Upload unsuccessful",
+        message: (error as any)?.data?.message || "Something went wrong",
+        autoClose: 3000,
+        color: errorColor,
+      });
       setPreview("");
       return () => {};
     }
     if (isSuccess) {
-      notify("Profile picture updated successfully", "success");
+      notifications.show({
+        title: "Success!",
+        message: "Profile uploaded successfully!",
+        autoClose: 3000,
+        color: successColor,
+      });
     }
   }, [isError, isSuccess]);
 

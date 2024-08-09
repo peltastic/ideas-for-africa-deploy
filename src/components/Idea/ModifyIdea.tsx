@@ -11,7 +11,6 @@ import Button from "../Button/Button";
 import { IoMdAdd } from "react-icons/io";
 import { useModifyIdeaMutation } from "@/lib/features/ideas";
 import { getCookie } from "@/utils/storage";
-import { notify } from "@/utils/toast";
 import { useRouter } from "next/navigation";
 import { formatNameRoute } from "@/utils/helperfunctions";
 import Spinner from "../Spinner/Spinner";
@@ -20,6 +19,8 @@ import curr_list from "@/data/currencies.json";
 import SelectComponent from "../Select/Select";
 import Upload from "../Upload/Upload";
 import { AspectRatio } from "@mantine/core";
+import { notifications } from "@mantine/notifications";
+import { errorColor, successColor } from "@/utils/constants";
 
 type Props = {
   data: IGetSingleIdeaResponse;
@@ -78,10 +79,20 @@ const ModifyIdea = (props: Props) => {
 
   useEffect(() => {
     if (isError) {
-      notify((error as any)?.props.data?.message || "Something went wrong");
+      notifications.show({
+        title: "Error Modifying Idea",
+        message: (error as any)?.data?.message || "Something went wrong",
+        autoClose: 3000,
+        color: errorColor,
+      });
     }
     if (isSuccess && props.data) {
-      notify("Idea Modified Successfully Successfully", "success");
+      notifications.show({
+        title: "Success!",
+        message: "Idea modified successfuly!",
+        autoClose: 3000,
+        color: successColor,
+      });
       router.push(
         `/idea/${props.data.idea._id}/${formatNameRoute(
           props.data.idea.headline
@@ -153,7 +164,7 @@ const ModifyIdea = (props: Props) => {
         pitches: JSON.stringify(pitchsIsEmpty ? [] : modifiedData.pitches),
         summary: modifiedData.summary,
         userId: id,
-        files
+        files,
       },
       ideaId: props.data.idea._id,
     });
@@ -172,15 +183,14 @@ const ModifyIdea = (props: Props) => {
         <h1 className="text-xl font-semibold">{props.data.idea.headline}</h1>
         <div className="flex flex-wrap items-center  mt-8">
           <div className="rounded-full overflow-hidden mr-4 h-[2.4rem] w-[2.4rem]">
-            <AspectRatio ratio={1800/1800}>
-
-            <Image
-              width={50}
-              height={50}
-              src={props.data.profile?.ppicture || NoProfilePic}
-              alt="avatar"
+            <AspectRatio ratio={1800 / 1800}>
+              <Image
+                width={50}
+                height={50}
+                src={props.data.profile?.ppicture || NoProfilePic}
+                alt="avatar"
               />
-              </AspectRatio>
+            </AspectRatio>
           </div>
           <div className="w-full mt-3 sm:mt-0 sm:w-auto">
             <div className="text-black1 text-xs mr-auto ">
@@ -208,7 +218,7 @@ const ModifyIdea = (props: Props) => {
           />
         </div> */}
         {/* <div className=""> */}
-          {/* <label className="text-sm font-bold mt-8 mb-4 block">Summary</label>
+        {/* <label className="text-sm font-bold mt-8 mb-4 block">Summary</label>
           <Input
             value={modifiedData.summary}
             changed={(e) => {
@@ -296,7 +306,7 @@ const ModifyIdea = (props: Props) => {
           </p>
         </div> */}
         <div className="mt-6">
-        <h1 className="text-xl mb-5">Body</h1>
+          <h1 className="text-xl mb-5">Body</h1>
           <Editor
             isModify
             contentProps={modifiedIdea}
@@ -313,9 +323,9 @@ const ModifyIdea = (props: Props) => {
           />
         </div>
         <h2 className="font-bold text-sm mt-8">Document</h2>
-      <p className="text-sm mt-1 text-gray4">
-        Please provide the necessary documents to support your modified idea.
-      </p>
+        <p className="text-sm mt-1 text-gray4">
+          Please provide the necessary documents to support your modified idea.
+        </p>
         <div className="mt-4">
           <Upload
             uploadDoc={(file) => {
@@ -327,23 +337,22 @@ const ModifyIdea = (props: Props) => {
                 fileList = [...files];
                 fileList.push(file);
               }
-              setFiles(fileList)
+              setFiles(fileList);
             }}
             files
             accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint, application/pdf"
-           
             idea={files}
             updateDocHandler={(file, index) => {
-              if(!files || !file) return
-              const fileList = [...files]
-              fileList.splice(index, 1, file)
-              setFiles(fileList)
+              if (!files || !file) return;
+              const fileList = [...files];
+              fileList.splice(index, 1, file);
+              setFiles(fileList);
             }}
             deleteFileHandler={(index) => {
-              if(!files) return 
-              const fileList = [...files]
-              fileList.splice(index, 1)
-              setFiles(fileList)
+              if (!files) return;
+              const fileList = [...files];
+              fileList.splice(index, 1);
+              setFiles(fileList);
             }}
           />
         </div>

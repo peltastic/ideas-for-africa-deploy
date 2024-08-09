@@ -7,11 +7,12 @@ import Spinner from "@/components/Spinner/Spinner";
 import { ICreateIdeaPayload } from "@/interface/idea";
 import { useCreateIdeaMutation } from "@/lib/features/ideas";
 import { getCookie } from "@/utils/storage";
-import { notify } from "@/utils/toast";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import WIthAuth from "@/components/HOC/ProtectRoute";
+import { notifications } from "@mantine/notifications";
+import { errorColor, successColor } from "@/utils/constants";
 
 type Props = {};
 
@@ -45,10 +46,20 @@ const ShareIdea = (props: Props) => {
   });
   useEffect(() => {
     if (isError) {
-      notify((error as any)?.data?.message || "Something went wrong");
+      notifications.show({
+        title: "Error Creating Idea",
+        message: (error as any)?.data?.message || "Something went wrong",
+        autoClose: 3000,
+        color: errorColor,
+      });
     }
     if (isSuccess) {
-      notify("Idea Posted Successfully", "success");
+      notifications.show({
+        title: "Success!",
+        message: "Idea posted successfuly!",
+        autoClose: 3000,
+        color: successColor,
+      });
       router.push("/");
     }
   }, [isError, isSuccess]);

@@ -12,8 +12,9 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/lib/store";
 import { useRouter } from "next/navigation";
 import { formatNameRoute } from "@/utils/helperfunctions";
-import { notify } from "@/utils/toast";
 import Spinner from "../Spinner/Spinner";
+import { errorColor, successColor } from "@/utils/constants";
+import { notifications } from "@mantine/notifications";
 
 type Props = {
   data: {
@@ -64,11 +65,21 @@ const SearchedBrainstorms = (props: Props) => {
   };
   useEffect(() => {
     if (isError) {
-      notify((error as any)?.data?.message || "Something went wrong");
+      notifications.show({
+        title: "Couldn't complete request",
+        message: (error as any)?.data?.message || "Something went wrong",
+        autoClose: 3000,
+        color: errorColor,
+      });
     }
 
     if (isSuccess) {
-      notify("Request Sent", "success");
+      notifications.show({
+        title: "Request sent!",
+        message: "Request has been sent to group admin",
+        autoClose: 3000,
+        color: successColor,
+      });
       setUserStatus("requested");
     }
   }, [isSuccess, isError]);
@@ -121,7 +132,7 @@ const SearchedBrainstorms = (props: Props) => {
               >
                 {isLoading ? (
                   <div className="py-1 flex justify-center w-[4rem]">
-                    <Spinner  />
+                    <Spinner />
                   </div>
                 ) : (
                   <p>

@@ -30,3 +30,8 @@ export const subscribeSchema = Yup.object({
     .email("Invalid Email Address")
     .required("Email is required"),
 });
+export const checkInviteEmailSchema = Yup.object({
+  email: Yup.string()
+    .email("Invalid Email Address")
+    .required("Email is required"),
+});

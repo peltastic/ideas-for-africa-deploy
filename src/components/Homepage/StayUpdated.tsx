@@ -9,8 +9,9 @@ import { Form, Formik } from "formik";
 import { subscribeSchema } from "@/utils/validation";
 import Field from "../Input/Field";
 import Spinner from "../Spinner/Spinner";
-import { notify } from "@/utils/toast";
 import { useSubscribeEmailNotificationMutation } from "@/lib/features/subscribe";
+import { notifications } from "@mantine/notifications";
+import { errorColor, successColor } from "@/utils/constants";
 
 type Props = {};
 
@@ -19,12 +20,21 @@ const StayUpdated = (props: Props) => {
     useSubscribeEmailNotificationMutation();
 
   useEffect(() => {
-    console.log(data, error)
     if (isError) {
-      notify((error as any)?.data?.message || "Something went wrong", "error");
+      notifications.show({
+        title: "Subscription not completed",
+        message: (error as any)?.data?.message || "Something went wrong",
+        autoClose: 3000,
+        color: errorColor,
+      });
     }
     if (isSuccess) {
-      notify("Subscription successful!", "success");
+      notifications.show({
+        title: "Subscription successful!",
+        message: "You've successfuly subscribed to our newsletter!",
+        autoClose: 4000,
+        color: successColor,
+      });
     }
   }, [isSuccess, isError]);
 

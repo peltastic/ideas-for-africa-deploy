@@ -11,7 +11,6 @@ import {
   useRequestToJoinGroupMutation,
 } from "@/lib/features/brainstorms";
 import Spinner from "../Spinner/Spinner";
-import { notify } from "@/utils/toast";
 import { useParams, useRouter } from "next/navigation";
 import { useDisclosure } from "@mantine/hooks";
 import ModalComponent from "../Modal/Modal";
@@ -19,6 +18,8 @@ import NotLoggedInModal from "../ModalComponents/NotLoggedInModal";
 import { useSelector } from "react-redux";
 import { RootState } from "@/lib/store";
 import { AspectRatio } from "@mantine/core";
+import { notifications } from "@mantine/notifications";
+import { errorColor, successColor } from "@/utils/constants";
 
 type Props = {
   groups: {
@@ -58,11 +59,21 @@ const BrainstormGrid = (props: Props) => {
 
   useEffect(() => {
     if (isError) {
-      notify((error as any)?.data?.message || "Something went wrong");
+      notifications.show({
+        title: "Couldn't complete request",
+        message: (error as any)?.data?.message || "Something went wrong",
+        autoClose: 3000,
+        color: errorColor,
+      });
     }
 
     if (isSuccess) {
-      notify("Request Sent", "success");
+      notifications.show({
+        title: "Request sent!",
+        message: "Request has been sent to group admin",
+        autoClose: 3000,
+        color: successColor,
+      });
       setUserStatus("requested");
     }
   }, [isSuccess, isError]);
@@ -127,16 +138,15 @@ const BrainstormGrid = (props: Props) => {
         <div className="absolute w-[92%] bottom-2">
           <div className=" flex mt-8 items-center">
             <div className="mr-3 w-[2.4rem] h-[2.4rem] rounded-full overflow-hidden">
-              <AspectRatio ratio={1800/1800}>
-
-              <Image
-                src={props.ideaCreator.url || NoProfilePic}
-                className="w-full"
-                alt="avatar"
-                height={100}
-                width={100}
+              <AspectRatio ratio={1800 / 1800}>
+                <Image
+                  src={props.ideaCreator.url || NoProfilePic}
+                  className="w-full"
+                  alt="avatar"
+                  height={100}
+                  width={100}
                 />
-                </AspectRatio>
+              </AspectRatio>
             </div>
             <div className="text-xs mr-auto ">
               <p className="font-bold mb-[0.02rem]">

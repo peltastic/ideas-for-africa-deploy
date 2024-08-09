@@ -3,6 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { getCookie } from "@/utils/storage";
 import {
   IGetBrainstormGroupsResponse,
+  IGetGroupInfoResponse,
   IGetGroupMembers,
   IGetSearchBrainstormGroups,
   IGroupMessagesResponse,
@@ -46,16 +47,25 @@ export const brainstormsApi = createApi({
       unknown,
       {
         groupId: string;
-        userId: string;
+        email: string;
         invitedBy: string;
       }
     >({
       query: (body) => ({
-        url: `/groups/invite`,
+        url: `/groups/groups/invite`,
         method: "POST",
         body,
       }),
     }),
+    acceptInvitation: build.mutation<unknown, {
+      groupId: string
+    }>({
+      query: (body) => ({
+        url: "/groups/groups/invite",
+        method: "POST",
+        body
+      })
+    }), 
     requestToJoinGroup: build.mutation<
       unknown,
       {
@@ -99,6 +109,11 @@ export const brainstormsApi = createApi({
     getGroupMembers: build.query<IGetGroupMembers[], string>({
       query: (id) => `/groups/groups/${id}/members`,
     }),
+    checkInviteMember: build.query<{
+      exists: boolean
+    }, string>({
+      query: (email) => `/users/check-user?email=${email}`,
+    }),
     getGroupMessages: build.query<
       {
         messages: IGroupMessagesResponse[];
@@ -108,16 +123,7 @@ export const brainstormsApi = createApi({
       query: (roomId) => `/groups/messages/${roomId}`,
     }),
     getGroupInfo: build.query<
-      {
-        group: {
-          name: string;
-        };
-        fname: string
-        lname: string
-        profilepic: string
-        pow: string
-        ideaheadline: string
-      },
+      IGetGroupInfoResponse,
       { groupId: string; userId?: string }
     >({
       query: ({ groupId, userId }) => `/groups/groups/${groupId}`,
@@ -159,4 +165,7 @@ export const {
   useLazyGetGroupMessagesQuery,
   useLazyGetGroupInfoQuery,
   useLazySearchBrainstormsQuery,
+  useInviteMemberMutation,
+  useLazyCheckInviteMemberQuery,
+  useAcceptInvitationMutation
 } = brainstormsApi;

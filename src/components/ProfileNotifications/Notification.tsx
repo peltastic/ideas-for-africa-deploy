@@ -10,6 +10,8 @@ import moment from "moment";
 import MenuComponent from "../Menu/Menu";
 import Link from "next/link";
 import { formatNameRoute } from "@/utils/helperfunctions";
+import { notifications } from "@mantine/notifications";
+import { errorColor, successColor } from "@/utils/constants";
 
 type Props = {
   data: IGetProfileNotificationResponse;
@@ -25,12 +27,22 @@ const Notification = (props: Props) => {
 
   useEffect(() => {
     if (isError) {
-      notify((error as any)?.data?.message || "Something went wrong");
+      notifications.show({
+        title: "An error occured",
+        message: (error as any)?.data?.message || "Something went wrong",
+        autoClose: 3000,
+        color: errorColor,
+      });
       setAcceptLoading(false);
       setDeclineLoading(false);
     }
     if (isSuccess) {
-      notify("Successful", "success");
+      notifications.show({
+        title: "Success!",
+        message: "",
+        autoClose: 3000,
+        color: successColor,
+      });
       setAcceptLoading(false);
       setDeclineLoading(false);
     }

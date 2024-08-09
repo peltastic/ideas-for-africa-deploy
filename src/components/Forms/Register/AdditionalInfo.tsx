@@ -3,8 +3,9 @@ import Field from "@/components/Input/Field";
 import SelectComponent from "@/components/Select/Select";
 import Spinner from "@/components/Spinner/Spinner";
 import { useUpdateProfileMutation } from "@/lib/features/profile";
+import { successColor } from "@/utils/constants";
 import { getCookie } from "@/utils/storage";
-import { notify } from "@/utils/toast";
+import { notifications } from "@mantine/notifications";
 import { Form, Formik } from "formik";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -21,10 +22,13 @@ const AdditionalInfo = (props: Props) => {
   });
   useEffect(() => {
     if (isSuccess) {
-      notify(
-        "Profile Updated Successfully!",
-        "success"
-      );
+      notifications.show({
+        title: "Profile update successful!",
+        message: "Your profile has been saved!",
+        autoClose: 3000,
+        color: successColor,
+      });
+
       router.push("/auth/register/verify");
     }
   }, [isSuccess, isError]);
@@ -51,10 +55,10 @@ const AdditionalInfo = (props: Props) => {
           });
         }}
       >
-        <Form >
+        <Form>
           <div className="mt-8">
             <SelectComponent
-            value={nonInputValues.title}
+              value={nonInputValues.title}
               options={[
                 { label: "Software Engineer", value: "Software Engineer" },
               ]}

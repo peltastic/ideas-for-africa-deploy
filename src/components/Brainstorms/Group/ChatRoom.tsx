@@ -1,7 +1,6 @@
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { IoIosArrowRoundBack } from "react-icons/io";
-import Avatar from "/public/assets/avatar.png";
 import ChatMessage from "./ChatMessage";
 import ChatInput from "./ChatInput";
 import { chat_socket, joinBrainstormRoom } from "@/lib/sockets";
@@ -20,10 +19,12 @@ import moment from "moment";
 import { replacePTags } from "@/utils/helperfunctions";
 import NoProfilePic from "/public/assets/no-profile.jpg";
 import { AspectRatio } from "@mantine/core";
+import { IGetGroupInfoResponse } from "@/interface/brainstorms";
 
 type Props = {
   setShowProps: (val: boolean) => void;
   show?: boolean;
+  data: IGetGroupInfoResponse | undefined
 };
 
 const ChatRoom = (props: Props) => {
@@ -31,7 +32,6 @@ const ChatRoom = (props: Props) => {
   // const params = useParams();
   const [getGroupMessages, { data, isFetching }] =
     useLazyGetGroupMessagesQuery();
-  const [getGrouInfo, result] = useLazyGetGroupInfoQuery();
   const [showChat, setShowChat] = useState<boolean>(false);
   const router = useRouter();
   const profile = useSelector(
@@ -51,13 +51,7 @@ const ChatRoom = (props: Props) => {
     (state: RootState) => state.persistedState.profile.profile
   );
 
-  useEffect(() => {
-    if (subId) {
-      getGrouInfo({
-        groupId: subId,
-      });
-    }
-  }, [subId]);
+
 
   useEffect(() => {
     if (subId) {
@@ -131,17 +125,17 @@ const ChatRoom = (props: Props) => {
           Members
         </Button>
       </div>
-      {result.data ? <div className="px-3 sm:px-0">
+      {props.data ? <div className="px-3 sm:px-0">
         <h1 className="text-xl font-bold mt-3">
-          {result.data?.fname}&apos;s brainstorm group on {result.data?.ideaheadline}
+          {props.data?.fname}&apos;s brainstorm group on {props.data?.ideaheadline}
           rubber
         </h1>
 
-        {result.data?.group.name ? (
+        {props.data?.group.name ? (
           <div
             className="mt-7"
             dangerouslySetInnerHTML={{
-              __html: `${replacePTags(result.data?.group.name || "")}`,
+              __html: `${replacePTags(props.data?.group.name || "")}`,
             }}
           ></div>
         ) : null}
@@ -149,13 +143,13 @@ const ChatRoom = (props: Props) => {
           <div className="mr-3 w-[2.4rem] h-[2.4rem] overflow-hidden rounded-full">
             <AspectRatio ratio={1800/1800}>
 
-            <Image src={result.data?.profilepic || NoProfilePic } width={100} height={100} className="w-full h-full" alt="avatar" />
+            <Image src={props.data?.profilepic || NoProfilePic } width={100} height={100} className="w-full h-full" alt="avatar" />
             </AspectRatio>
           </div>
           <div className="text-sm mr-auto ">
-            <p className="font-semibold mb-[0.02rem]">{result.data?.fname} {result.data?.lname}</p>
+            <p className="font-semibold mb-[0.02rem]">{props.data?.fname} {props.data?.lname}</p>
             <p className="leading-5 text-gray1">
-              {result.data?.pow} • Created Feb 23, 2024
+              {props.data?.pow} • Created Feb 23, 2024
             </p>
           </div>
         </div>

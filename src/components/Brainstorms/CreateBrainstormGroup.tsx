@@ -9,8 +9,9 @@ import {
 } from "@/lib/features/brainstorms";
 import { useParams, useRouter } from "next/navigation";
 import { getCookie } from "@/utils/storage";
-import { notify } from "@/utils/toast";
 import Spinner from "../Spinner/Spinner";
+import { notifications } from "@mantine/notifications";
+import { errorColor, successColor } from "@/utils/constants";
 
 type Props = {
   close: () => void;
@@ -36,11 +37,21 @@ const CreateBrainstormGroup = (props: Props) => {
 
   useEffect(() => {
     if (isError) {
-      notify((error as any)?.data?.message || "Something went wrong", "error");
+      notifications.show({
+        title: "Error creating group",
+        message: (error as any)?.data?.message || "Something went wrong",
+        autoClose: 3000,
+        color: errorColor,
+      });
       return () => {};
     }
     if (isSuccess) {
-      notify("Brainstorm group created successfully", "success");
+      notifications.show({
+        title: "Group created!",
+        message: "Brainstrom group created successfully!",
+        autoClose: 3000,
+        color: successColor,
+      });
       props.close();
       getGroups(id as string);
     }
@@ -64,7 +75,6 @@ const CreateBrainstormGroup = (props: Props) => {
             setDescriptionText(value as string);
           } else {
             setDescription(value as string);
-
           }
           console.log(key, value);
         }}

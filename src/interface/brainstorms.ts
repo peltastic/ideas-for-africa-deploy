@@ -41,6 +41,19 @@ export interface IGetGroupInfo {
   title: string;
 }
 
+export interface IGetGroupInfoResponse  {
+  group: {
+    name: string;
+    admin: string
+    _id: string
+  };
+  fname: string
+  lname: string
+  profilepic: string
+  pow: string
+  ideaheadline: string
+}
+
 export interface IGetSearchBrainstormGroups {
   groups: {
     _id: string;

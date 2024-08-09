@@ -12,10 +12,11 @@ import {
 } from "@/lib/features/profile";
 import { getCookie } from "@/utils/storage";
 import Spinner from "../Spinner/Spinner";
-import { notify } from "@/utils/toast";
 import Button from "../Button/Button";
 import { changePasswordSchema } from "@/utils/validation";
 import { useRouter } from "next/navigation";
+import { notifications } from "@mantine/notifications";
+import { errorColor, successColor } from "@/utils/constants";
 
 type Props = {
   tempPfp?: string;
@@ -23,7 +24,7 @@ type Props = {
 };
 
 const ProfileSettings = (props: Props) => {
-const router = useRouter()
+  const router = useRouter();
   const id = getCookie("id");
   const [changePfp, { data, isLoading, isSuccess, isError, error }] =
     useUploadProfilePictureMutation();
@@ -39,23 +40,43 @@ const router = useRouter()
   };
   useEffect(() => {
     if (isError) {
-      notify((error as any)?.data?.message || "Something went wrong", "error");
+      notifications.show({
+        title: "Upload unsuccessful",
+        message: (error as any)?.data?.message || "Something went wrong",
+        autoClose: 3000,
+        color: errorColor,
+      });
       return () => {};
     }
     if (isSuccess) {
-      notify("Profile picture updated successfully", "success");
+      notifications.show({
+        title: "Success!",
+        message: "Profile uploaded successfully!",
+        autoClose: 3000,
+        color: successColor,
+      });
       props.setTempPfp(data?.ppicture);
     }
   }, [isError, isSuccess]);
 
   useEffect(() => {
     if (result.isError) {
-      notify((result.error as any)?.data?.message || "Something went wrong", "error");
+      notifications.show({
+        title: "Password change unsuccessful",
+        message: (error as any)?.data?.message || "Something went wrong",
+        autoClose: 3000,
+        color: errorColor,
+      });
       return () => {};
     }
     if (result.isSuccess) {
-      notify("Password changed successfully successfully", "success");
-      router.push("/profile")
+      notifications.show({
+        title: "Success!",
+        message: "Password changed successfully successfully",
+        autoClose: 3000,
+        color: successColor,
+      });
+      router.push("/profile");
     }
   }, [result.isError, result.isSuccess]);
   return (

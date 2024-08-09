@@ -37,12 +37,13 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/lib/store";
 import { IoShareSocialOutline } from "react-icons/io5";
 import Button from "../Button/Button";
-import { notify } from "@/utils/toast";
 import { useRouter } from "next/navigation";
 import HoverCardComponent from "../HoverCard/HoverCard";
 import { AspectRatio } from "@mantine/core";
 import ToolTip from "../ToolTip/ToolTip";
 import ToolTipComponent from "../ToolTip/ToolTip";
+import { successColor } from "@/utils/constants";
+import { notifications } from "@mantine/notifications";
 
 type Props = {
   data: IGetSingleIdeaResponse;
@@ -146,7 +147,12 @@ const IdeaGrid = ({ data, setOpenVH, modified }: Props) => {
             classname="bg-gray3 py-2 px-4 text-sm rounded-md"
             clicked={() => {
               navigator.clipboard.writeText(url);
-              notify("Link copied to clipboard", "success");
+              notifications.show({
+                title: "Copied!",
+                message: "Link copied to clipboard",
+                autoClose: 3000,
+                color: successColor,
+              });
             }}
           >
             Copy

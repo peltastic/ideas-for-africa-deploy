@@ -1,10 +1,6 @@
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import Google from "/public/assets/google.svg";
-import Facebook from "/public/assets/facebook-icon.svg";
-import X from "/public/assets/x.svg";
-import LinkedIn from "/public/assets/linkedin.svg";
-import Microsoft from "/public/assets/microsoft.svg";
 import { Form, Formik } from "formik";
 import Field from "../../Input/Field";
 import Button from "@/components/Button/Button";
@@ -13,19 +9,22 @@ import CancelImage from "/public/assets/cancel.svg";
 import { useRouter } from "next/navigation";
 import {
   useLazyCheckSessionQuery,
+  useLoginGoogleAuthMutation,
   useLoginUserMutation,
 } from "@/lib/features/auth/auth";
 import Spinner from "@/components/Spinner/Spinner";
-import { notify } from "@/utils/toast";
 import { setCookie, setTokenCookie } from "@/utils/storage";
 import { useDispatch, useSelector } from "react-redux";
 import { setAuthState } from "@/lib/reducers/auth";
 import { loginSchema } from "@/utils/validation";
 import AuthError from "@/components/Error/AuthError";
-import useFCMToken from "@/hooks/useFcmToken";
 import { useSetFcmTokenMutation } from "@/lib/features/notifications";
 import { RootState } from "@/lib/store";
 import { enableNotis } from "@/lib/sockets";
+import { GoogleLogin, useGoogleLogin } from "@react-oauth/google";
+import axios from "axios";
+import { notifications } from "@mantine/notifications";
+import { successColor } from "@/utils/constants";
 
 type Props = {};
 
@@ -36,6 +35,8 @@ const LoginForm = (props: Props) => {
   const dispatch = useDispatch();
   const [loginUser, { isLoading, isError, isSuccess, data, error }] =
     useLoginUserMutation();
+  const [gLoading, setGLoading] = useState<boolean>(false);
+  const [completeGoogleLogin, gLoginRes] = useLoginGoogleAuthMutation();
   const [setFcm, fcmResult] = useSetFcmTokenMutation();
   const [checkSession, result] = useLazyCheckSessionQuery();
   const [loading, setLoading] = useState<boolean>();
@@ -50,14 +51,26 @@ const LoginForm = (props: Props) => {
       checkSession();
     }
   }, [isSuccess, isError]);
+  useEffect(() => {
+    if (gLoginRes.isError) {
+      setGLoading(false);
+      setErrorMessage(
+        (gLoginRes.error as any)?.data?.message || "Something went wrong"
+      );
+    }
+    if (gLoginRes.isSuccess) {
+      setTokenCookie(gLoginRes.data?.token);
+      checkSession();
+    }
+  }, [gLoginRes.isSuccess, gLoginRes.error]);
 
   useEffect(() => {
-    if (isError) {
+    if (result.isError) {
       setErrorMessage((error as any)?.data?.message || "Something went wrong");
       setLoading(false);
+      setGLoading(false);
     }
-    if (isSuccess) {
-      notify("Login Successful!", "success");
+    if (result.isSuccess) {
       dispatch(setAuthState("LOGGED_IN"));
       setCookie("id", result.data?.user.id as string, {
         expires: new Date(Date.now() + 8 * 24 * 60 * 60 * 1000),
@@ -69,14 +82,49 @@ const LoginForm = (props: Props) => {
         });
         enableNotis(result.data.user.id);
       }
-
+      notifications.show({
+        title: "Notification",
+        message: "You've successfully logged in",
+        color: successColor,
+        autoClose: 2000
+      })
+      // notify("Login Successful!", "success");
       setLoading(false);
+      setGLoading(false);
       if (currLink) {
         return router.push(currLink);
       }
       router.push("/");
     }
   }, [result.isSuccess, result.isError]);
+  const googleLogin = useGoogleLogin({
+    onSuccess: async (res) => {
+      // setGoogleUserState(res.access_token);
+      setGLoading(true);
+      const userInfo = await axios
+        .get("https://www.googleapis.com/oauth2/v3/userinfo", {
+          headers: {
+            Authorization: `Bearer ${res.access_token}`,
+          },
+        })
+        .then((res) =>
+          completeGoogleLogin({
+            email: res.data.email,
+            fname: res.data.given_name,
+            lname: res.data.family_name,
+          })
+        )
+        .catch((error) => {
+          setGLoading(false);
+          setErrorMessage(
+            "Something went wrong, could not finish login process"
+          );
+        });
+    },
+    onError: (error) => console.log(error),
+    // scope:
+  });
+
   return (
     <>
       <div
@@ -91,20 +139,18 @@ const LoginForm = (props: Props) => {
           <h1>Log in to get started</h1>
         </div>
         <div className="flex items-center my-10 justify-between">
-          <div className="border border-gray9 rounded-full cursor-pointer px-5 py-2">
-            <Image src={Google} alt="google" className="w-[1.1rem]" />
-          </div>
-          <div className="border border-gray9 rounded-full cursor-pointer px-5 py-2">
-            <Image src={Facebook} alt="facebook" className="w-[1.1rem]" />
-          </div>
-          <div className="border border-gray9 rounded-full cursor-pointer px-5 py-2">
-            <Image src={X} alt="x" className="w-[1rem]" />
-          </div>
-          <div className="border border-gray9 rounded-full cursor-pointer px-5 py-2">
-            <Image src={LinkedIn} alt="google" className="w-[1.1rem]" />
-          </div>
-          <div className="border border-gray9 rounded-full cursor-pointer px-5 py-2">
-            <Image src={Microsoft} alt="google" className="w-[1.1rem]" />
+          <div
+            onClick={() => googleLogin()}
+            className="border border-gray9 flex rounded-md cursor-pointer px-5 py-2"
+          >
+            <p className="mr-2 text-sm">Sign In with Google</p>
+            {gLoading ? (
+              <div className="mt-[0.14rem]">
+                <Spinner dark />
+              </div>
+            ) : (
+              <Image src={Google} alt="google" className="w-[1.1rem]" />
+            )}
           </div>
         </div>
         <div className="flex items-center gap-2 ">

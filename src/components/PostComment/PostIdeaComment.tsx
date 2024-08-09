@@ -2,13 +2,14 @@ import React, { useEffect, useState } from "react";
 import Button from "../Button/Button";
 import { useCommentOnIdeaMutation } from "@/lib/features/comments";
 import { getCookie } from "@/utils/storage";
-import { notify } from "@/utils/toast";
 import Spinner from "../Spinner/Spinner";
 import ModalComponent from "../Modal/Modal";
 import { useDisclosure } from "@mantine/hooks";
 import Link from "next/link";
 import { useSelector } from "react-redux";
 import { RootState } from "@/lib/store";
+import { notifications } from "@mantine/notifications";
+import { errorColor, successColor } from "@/utils/constants";
 
 type Props = {
   ideaId: string;
@@ -38,10 +39,20 @@ const PostIdeaComment = ({ ideaId, fname, lname, getIdeaComments }: Props) => {
 
   useEffect(() => {
     if (isError) {
-      notify((error as any)?.data?.message || "Something went wrong", "error");
+      notifications.show({
+        title: "Error",
+        message: (error as any)?.data?.message || "Something went wrong",
+        autoClose: 3000,
+        color: errorColor,
+      });
     }
     if (isSuccess) {
-      notify("Comment posted successfully", "success");
+      notifications.show({
+        title: "Success!",
+        message: "Comment posted successfuly!",
+        autoClose: 3000,
+        color: successColor,
+      });
       setComment("");
       getIdeaComments();
     }

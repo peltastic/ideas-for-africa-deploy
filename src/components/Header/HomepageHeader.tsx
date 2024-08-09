@@ -5,11 +5,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { useSelector } from "react-redux";
 import { RootState } from "@/lib/store";
-import { notify } from "@/utils/toast";
 import { useRouter } from "next/navigation";
 import { HeaderStrokeSvg } from "../svgs/Svgs";
 type Props = {};
 import { motion } from "framer-motion";
+import { notifications } from "@mantine/notifications";
+import { primaryColor } from "@/utils/constants";
 
 const HomepageHeader = (props: Props) => {
   const router = useRouter();
@@ -135,7 +136,12 @@ const HomepageHeader = (props: Props) => {
           }}
           onClick={() => {
             if (authStatus === "LOGGED_OUT") {
-              notify("Login to share an idea");
+              notifications.show({
+                title: "Please Login!",
+                message: "You need to share an idea!",
+                autoClose: 4000,
+                color: primaryColor,
+              });
               router.push("/auth/login");
             } else {
               router.push("/share-idea");
@@ -145,28 +151,24 @@ const HomepageHeader = (props: Props) => {
         >
           Share an idea
         </motion.button>
-        <motion.div  initial={{
-                x: 100,
-                opacity: 0,
-              }}
-              animate={{
-                x: 0,
-                opacity: 1,
-              }}
-              transition={{
-                duration: 0.5,
-                delay: 0.7,
-                bounce: 1,
-              }} className="w-full xs:w-[60%] md:w-auto rounded-full px-8 py-4 md:py-3 text-primary md:mr-8 border-primary border">
-          <Link
-            className=""
-            href={"/meet-the-team"}
-          >
-            <motion.button
-             
-            >
-              Meet the team
-            </motion.button>
+        <motion.div
+          initial={{
+            x: 100,
+            opacity: 0,
+          }}
+          animate={{
+            x: 0,
+            opacity: 1,
+          }}
+          transition={{
+            duration: 0.5,
+            delay: 0.7,
+            bounce: 1,
+          }}
+          className="w-full xs:w-[60%] md:w-auto rounded-full px-8 py-4 md:py-3 text-primary md:mr-8 border-primary border"
+        >
+          <Link className="" href={"/meet-the-team"}>
+            <motion.button>Meet the team</motion.button>
           </Link>
         </motion.div>
       </div>

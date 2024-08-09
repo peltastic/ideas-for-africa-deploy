@@ -1,11 +1,12 @@
 "use client";
 import { setCurrentLink } from "@/lib/reducers/route";
 import { RootState } from "@/lib/store";
-import { notify } from "@/utils/toast";
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { usePathname } from "next/navigation";
+import { notifications } from "@mantine/notifications";
+import { errorColor } from "@/utils/constants";
 
 type Props = {};
 
@@ -21,7 +22,12 @@ const WIthAuth = (WrappedComponent: any) => {
     useEffect(() => {
       dispatch(setCurrentLink(pathname));
       if (auth === "LOGGED_OUT") {
-        notify("You're logged out or session expired, Please Log In", "error");
+        notifications.show({
+          title: "Session Expired!",
+          message: "You're logged out or session expired, Please Log In",
+          autoClose: 4000,
+          color: errorColor,
+        });
         router.push("/auth/login");
       }
     }, [auth]);

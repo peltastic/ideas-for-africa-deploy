@@ -1,6 +1,6 @@
 export const idea_categories_list: {
-    label: string
-    value: string
+  label: string;
+  value: string;
 }[] = [
   {
     label: "Technology",
@@ -8,29 +8,30 @@ export const idea_categories_list: {
   },
   {
     label: "Business",
-    value: "Business"
+    value: "Business",
   },
   {
     label: "Manufacturing",
-    value: "Manufacturing"
+    value: "Manufacturing",
   },
   {
     label: "Analytics",
-    value: "Analytics"
+    value: "Analytics",
   },
   {
     label: "Academia",
-    value: "Academia"
+    value: "Academia",
   },
   {
     label: "Healthcare",
-    value: "Healthcare"
+    value: "Healthcare",
   },
   {
     label: "Sustainability",
-    value: "Sustainability"
+    value: "Sustainability",
   },
 ];
 
-
-
+export const successColor = "#1a9c16";
+export const errorColor = "#ce1919";
+export const primaryColor = "#B35009";

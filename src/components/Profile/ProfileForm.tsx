@@ -9,8 +9,9 @@ import {
 import ThreeDotLoader from "../Loader/ThreeDotLoader";
 import Button from "../Button/Button";
 import Spinner from "../Spinner/Spinner";
-import { notify } from "@/utils/toast";
 import { IGetUserProfileResponse } from "@/interface/profile";
+import { notifications } from "@mantine/notifications";
+import { successColor } from "@/utils/constants";
 
 type Props = {
   data: IGetUserProfileResponse | null;
@@ -25,9 +26,12 @@ const ProfileForm = ({ data }: Props) => {
   });
 
   useEffect(() => {
-    if (result.isSuccess) {
-      notify("Profile updated successfully", "success");
-    }
+    notifications.show({
+      title: "Profile updated!",
+      message: "",
+      autoClose: 3000,
+      color: successColor,
+    });
   }, [result.isError, result.isSuccess]);
 
   useEffect(() => {

@@ -17,11 +17,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { setAuthState } from "@/lib/reducers/auth";
 import { useRouter } from "next/navigation";
-import { notify } from "@/utils/toast";
 import { notis_socket } from "@/lib/sockets";
 import { setShowIndicator } from "@/lib/reducers/notis";
 import NoProfilePic from "/public/assets/no-profile.jpg";
 import { AspectRatio } from "@mantine/core";
+import { notifications } from "@mantine/notifications";
+import { successColor } from "@/utils/constants";
 
 type Props = {};
 
@@ -163,7 +164,12 @@ const ProfileMenu = (props: Props) => {
                     },
                   })
                 );
-                notify("Logout successful", "success");
+                notifications.show({
+                  title: "Notification",
+                  message: "Log out successful",
+                  color: successColor,
+                  autoClose: 2000
+                })
                 router.push("/");
               }}
             >

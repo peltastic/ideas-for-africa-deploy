@@ -37,20 +37,40 @@ export const authApi = createApi({
         body,
       }),
     }),
-    verifyUserEmail: builder.mutation<unknown, {userId: string; vcode: string}>({
+    loginGoogleAuth: builder.mutation<
+      { token: string; message: string },
+      {
+        email: string;
+        fname: string;
+        lname: string;
+      }
+    >({
+      query: (body) => ({
+        url: `/oauth/auth/google`,
+        body,
+        method: "POST",
+      }),
+    }),
+    verifyUserEmail: builder.mutation<
+      unknown,
+      { userId: string; vcode: string }
+    >({
       query: (body) => ({
         url: `/users/verify`,
         method: "POST",
-        body
-      })
+        body,
+      }),
     }),
-    checkSession: builder.query< {
-      message: string
-      user: {
-        id: string
-        email: string
-      }
-    }, void>({
+    checkSession: builder.query<
+      {
+        message: string;
+        user: {
+          id: string;
+          email: string;
+        };
+      },
+      void
+    >({
       query: () => {
         const token = getCookie("token");
         return {
@@ -64,4 +84,10 @@ export const authApi = createApi({
   }),
 });
 
-export const { useLoginUserMutation, useRegisterUserMutation, useLazyCheckSessionQuery, useVerifyUserEmailMutation } = authApi;
+export const {
+  useLoginUserMutation,
+  useRegisterUserMutation,
+  useLazyCheckSessionQuery,
+  useVerifyUserEmailMutation,
+  useLoginGoogleAuthMutation,
+} = authApi;

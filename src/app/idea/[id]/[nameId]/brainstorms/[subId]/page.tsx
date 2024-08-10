@@ -3,7 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import Logo from "/public/assets/logo.svg";
-import { useDisclosure } from "@mantine/hooks";
 import ProfileMenu from "@/components/ProfileMenu/ProfileMenu";
 import ChatRoom from "@/components/Brainstorms/Group/ChatRoom";
 import RoomMembers from "@/components/Brainstorms/Group/RoomMembers";
@@ -16,7 +15,6 @@ type Props = {};
 const BrainstormGroupPage = (props: Props) => {
   const { subId } = useParams<{ subId: string }>();
   const [getGrouInfo, result] = useLazyGetGroupInfoQuery();
-  const [opened, { open, close }] = useDisclosure(false);
   const [showMembers, setShowMembers] = useState<boolean>();
   const showMembersHandler = (val: boolean) => {
     setShowMembers(val);

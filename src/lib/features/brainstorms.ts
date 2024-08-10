@@ -58,7 +58,8 @@ export const brainstormsApi = createApi({
       }),
     }),
     acceptInvitation: build.mutation<unknown, {
-      groupId: string
+      groupId: string,
+      userId: string,
     }>({
       query: (body) => ({
         url: "/groups/groups/invite",
@@ -98,10 +99,11 @@ export const brainstormsApi = createApi({
       {
         userId: string;
         groupId: string;
+        status: "accepted" | "declined"
       }
     >({
       query: (body) => ({
-        url: "/groups/accept",
+        url: "/groups/groups/accept-invite",
         method: "POST",
         body,
       }),
@@ -167,5 +169,6 @@ export const {
   useLazySearchBrainstormsQuery,
   useInviteMemberMutation,
   useLazyCheckInviteMemberQuery,
-  useAcceptInvitationMutation
+  useAcceptInvitationMutation,
+  useAcceptInviteMutation
 } = brainstormsApi;

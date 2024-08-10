@@ -23,9 +23,9 @@ const WIthAuth = (WrappedComponent: any) => {
       dispatch(setCurrentLink(pathname));
       if (auth === "LOGGED_OUT") {
         notifications.show({
-          title: "Session Expired!",
+          title: "Please Log In",
           message: "You're logged out or session expired, Please Log In",
-          autoClose: 4000,
+          autoClose: 8000,
           color: errorColor,
         });
         router.push("/auth/login");

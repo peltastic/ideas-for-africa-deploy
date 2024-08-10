@@ -46,6 +46,7 @@ export interface IGetGroupInfoResponse  {
     name: string;
     admin: string
     _id: string
+    ideaId: string
   };
   fname: string
   lname: string

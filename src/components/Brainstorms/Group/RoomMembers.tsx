@@ -46,6 +46,7 @@ const RoomMembers = (props: Props) => {
     }
     if (result.isSuccess) {
       setUserExists(result.data.exists);
+      setErrorMessage("")
     }
   }, [result.isSuccess, result.isError]);
   useEffect(() => {
@@ -86,6 +87,7 @@ const RoomMembers = (props: Props) => {
               email: "",
             }}
             onSubmit={(values) => {
+              if (result.isLoading) return
               if (!userExists) {
                 return setErrorMessage(
                   "user isn't registered on this platform"
@@ -110,6 +112,7 @@ const RoomMembers = (props: Props) => {
                     name="email"
                     label="Email"
                     changed={(e: React.ChangeEvent<HTMLInputElement>) => {
+                      
                       if (
                         /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(
                           e.target.value
@@ -117,6 +120,7 @@ const RoomMembers = (props: Props) => {
                       ) {
                         checkInviteEmail(e.target.value);
                       }
+                    
                     }}
                     placeholder="example@email.com"
                   />

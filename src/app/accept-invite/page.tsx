@@ -27,7 +27,12 @@ const AcceptInvite = (props: Props) => {
   const groupId = search.get("groupId");
   const userId = search.get("userId");
   const [opened, { open, close }] = useDisclosure();
-  const router = useRouter()
+  const router = useRouter();
+  const [actionType, setActionType] = useState<"accept" | "reject" | "">("");
+  const [acceptInviteLoading, setAcceptInviteLoading] =
+    useState<boolean>(false);
+  const [rejectInviteLoading, setRejectInviteLoading] =
+    useState<boolean>(false);
 
   const [acceptInvite, { isLoading, isSuccess, isError, error }] =
     useAcceptInviteMutation();
@@ -59,18 +64,22 @@ const AcceptInvite = (props: Props) => {
         autoClose: 3000,
         color: errorColor,
       });
+      setAcceptInviteLoading(false);
+      setRejectInviteLoading(false);
     }
 
     if (isSuccess) {
       notifications.show({
-        title: "Invite Accepted",
+        title: actionType === "accept" ? "Invite Accepted Successfully" : "Invite Rejected Successfully",
         message: "",
         autoClose: 3000,
         color: successColor,
       });
-      if (groupLink) {
+      if (groupLink && actionType === "accept") {
         open();
       }
+      setAcceptInviteLoading(false);
+      setRejectInviteLoading(false);
     }
   }, [isSuccess, isError]);
 
@@ -79,10 +88,16 @@ const AcceptInvite = (props: Props) => {
       <ModalComponent onClose={close} size="lg" centered opened={opened}>
         <div className=" py-10">
           <h1 className="mb-6">
-            You&apos;ve successfully accepted an invite to join <span className="font-semibold">{result.data?.fname}</span>
+            You&apos;ve successfully accepted an invite to join{" "}
+            <span className="font-semibold">{result.data?.fname}</span>
             &apos;s brainstorm group on <span>{result.data?.ideaheadline}</span>
           </h1>
-          <Button clicked={() => router.push(groupLink)} classname="text-sm text-white bg-primary py-2 flex justify-center rounded-md w-[8rem] text-center">Open Group</Button>
+          <Button
+            clicked={() => router.push(groupLink)}
+            classname="text-sm text-white bg-primary py-2 flex justify-center rounded-md w-[8rem] text-center"
+          >
+            Open Group
+          </Button>
         </div>
       </ModalComponent>
       <div>
@@ -119,6 +134,8 @@ const AcceptInvite = (props: Props) => {
                 <Button
                   clicked={() => {
                     if (userId && groupId) {
+                      setActionType("accept");
+                      setAcceptInviteLoading(true);
                       acceptInvite({
                         groupId,
                         userId,
@@ -128,7 +145,7 @@ const AcceptInvite = (props: Props) => {
                   }}
                   classname=" text-white bg-primary py-2 flex justify-center rounded-md w-[10rem] text-center"
                 >
-                  {isLoading ? (
+                  {acceptInviteLoading ? (
                     <div className="py-1">
                       <Spinner />
                     </div>
@@ -136,8 +153,27 @@ const AcceptInvite = (props: Props) => {
                     "Accept"
                   )}
                 </Button>
-                <Button classname="bg-gray3 w-[10rem] text-black rounded-md">
-                  Reject
+                <Button
+                  clicked={() => {
+                    if (userId && groupId) {
+                      setActionType("reject");
+                      setRejectInviteLoading(true);
+                      acceptInvite({
+                        groupId,
+                        userId,
+                        status: "declined",
+                      });
+                    }
+                  }}
+                  classname="bg-gray3 w-[10rem] items-center  flex justify-center text-black rounded-md"
+                >
+                  {rejectInviteLoading ? (
+                    <div className="py-1">
+                      <Spinner dark />
+                    </div>
+                  ) : (
+                    "Reject"
+                  )}
                 </Button>
               </div>
             </div>

@@ -52,7 +52,7 @@ const BrainstormGrid = (props: Props) => {
     useRequestToJoinGroupMutation();
   const result = useGetGroupMembersQuery(props.groups._id);
   const [userStatus, setUserStatus] = useState<
-    "Not a member" | "requested" | "Accepted" | "Declined"
+    "Not a member" | "requested" | "Accepted" | "Declined" | "Pending"
   >(props.groups.status);
   const id = getCookie("id");
   const [pfps, setPfps] = useState<string[] | null>(null);
@@ -159,7 +159,7 @@ const BrainstormGrid = (props: Props) => {
             {pfps && pfps[0] ? <AvatarGroup avatars={pfps} /> : null}
             {/* <AvatarGroup avatars={[url, url, url, url]} /> */}
             <Button
-              disabled={userStatus === "requested"}
+              disabled={userStatus === "requested" || userStatus === "Pending"}
               clicked={handleButtonAction}
               classname="flex  ml-auto sm:ml-0 md:ml-auto  items-center text-xs des:text-sm rounded-full px-5 py-2 my-6 bg-primary disabled:bg-gray6 disabled:border-0 disabled:cursor-not-allowed text-white  border-primary border mt-6"
             >
@@ -173,7 +173,7 @@ const BrainstormGrid = (props: Props) => {
                     ? "Open group"
                     : userStatus === "Not a member" || userStatus === "Declined"
                     ? "Request To Join"
-                    : userStatus === "requested"
+                    : userStatus === "requested" || userStatus === "Pending"
                     ? "Pending"
                     : userStatus === "Accepted"
                     ? "Open group"

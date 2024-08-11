@@ -64,6 +64,7 @@ const ProfileMenu = (props: Props) => {
 
   useEffect(() => {
     notis_socket.on("newNotification", (msgData) => {
+      console.log("new Notification")
       dispatch(setShowIndicator(true));
     });
   }, []);

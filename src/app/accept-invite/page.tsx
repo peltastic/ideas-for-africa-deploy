@@ -79,8 +79,8 @@ const AcceptInvite = (props: Props) => {
       <ModalComponent onClose={close} size="lg" centered opened={opened}>
         <div className=" py-10">
           <h1 className="mb-6">
-            You've successfully accepted an invite to join <span className="font-semibold">{result.data?.fname}</span>
-            's brainstorm group on <span>{result.data?.ideaheadline}</span>
+            You&apos;ve successfully accepted an invite to join <span className="font-semibold">{result.data?.fname}</span>
+            &apos;s brainstorm group on <span>{result.data?.ideaheadline}</span>
           </h1>
           <Button clicked={() => router.push(groupLink)} classname="text-sm text-white bg-primary py-2 flex justify-center rounded-md w-[8rem] text-center">Open Group</Button>
         </div>

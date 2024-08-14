@@ -23,12 +23,14 @@ const UserModifiedIdeas = (props: Props) => {
           <IdeasSkeleton />
           <IdeasSkeleton />
         </div>
-      ) : ( 
+      ) : (
         <div className="">
           {data?.modifiedIdeas ? (
             <div className="w-full lg:w-[80%] des:w-[70%]">
               {data?.modifiedIdeas.map((el) => (
                 <Idea
+                  count={0}
+                  createdAt={""}
                   id={el._id}
                   key={el._id}
                   description={el.summary}
@@ -44,7 +46,11 @@ const UserModifiedIdeas = (props: Props) => {
             </div>
           ) : (
             <div className="">
-              <Image src={NoIdea} alt="no-idea image" className="w-[20rem] mx-auto" />
+              <Image
+                src={NoIdea}
+                alt="no-idea image"
+                className="w-[20rem] mx-auto"
+              />
               <p className="text-center">No Modified Ideas</p>
             </div>
           )}

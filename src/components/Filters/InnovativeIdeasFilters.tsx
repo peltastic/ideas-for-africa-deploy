@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import SelectComponent from "../Select/Select";
 import Tabs from "@/Tabs/Tabs";
-import { idea_categories_list } from "@/utils/constants";
+import { idea_categories_list, share_idea_categories_list } from "@/utils/constants";
 import InnovativeIdeasTab from "@/Tabs/InnovativeIdeasTab";
 
 type Props = {
@@ -45,12 +45,7 @@ const InnovativeIdeasFilters = (props: Props) => {
           value={props.filterVal}
           size="md"
           placeholder="Categories"
-          options={filterEl.map((el) => {
-            return {
-              value: el,
-              label: el,
-            };
-          })}
+          options={share_idea_categories_list}
           changed={(val) => {
             props.setFilterVal(val);
           }}

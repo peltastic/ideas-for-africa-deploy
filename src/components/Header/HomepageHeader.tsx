@@ -60,11 +60,23 @@ const HomepageHeader = (props: Props) => {
           for a better Africa?
         </motion.h1>
       </div>
-      <div className="">
+      <motion.div initial={{
+        y: -100,
+        opacity: 0
+      }}  
+      animate={{
+        y: 0,
+        opacity: 1,
+      }}
+      transition={{
+        duration: 0.5,
+        delay: 0.5,
+      }}
+      className="">
         <h1 className="text-[2.7rem] xxs:text-[2.9rem] block sm:hidden font-bold xs:font-semibold leading-[1.07]">
           Got an Idea for a better Africa?
         </h1>
-      </div>
+      </motion.div>
       <div className="flex justify-center mt-6 gap-4">
         <motion.div
           initial={{

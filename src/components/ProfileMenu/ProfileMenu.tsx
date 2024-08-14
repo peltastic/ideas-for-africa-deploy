@@ -17,18 +17,17 @@ import Image from "next/image";
 import Link from "next/link";
 import { setAuthState } from "@/lib/reducers/auth";
 import { useRouter } from "next/navigation";
-import { notis_socket } from "@/lib/sockets";
-import { setShowIndicator } from "@/lib/reducers/notis";
 import NoProfilePic from "/public/assets/no-profile.jpg";
 import { AspectRatio } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
 import { successColor } from "@/utils/constants";
+import { AiOutlineTeam } from "react-icons/ai";
 
 type Props = {};
 
 const ProfileMenu = (props: Props) => {
   const showNotisIndicator = useSelector(
-    (state: RootState) => state.notis.showIndicator
+    (state: RootState) => state.persistedState.notis.showIndicator
   );
   const dispatch = useDispatch();
   const authState = useSelector(
@@ -62,12 +61,12 @@ const ProfileMenu = (props: Props) => {
     }
   }, [data]);
 
-  useEffect(() => {
-    notis_socket.on("newNotification", (msgData) => {
-      console.log("new Notification")
-      dispatch(setShowIndicator(true));
-    });
-  }, []);
+  // useEffect(() => {
+  //   notis_socket.on("newNotification", (msgData) => {
+  //     console.log("new Notification")
+  //     dispatch(setShowIndicator(true));
+  //   });
+  // }, []);
 
   const router = useRouter();
 
@@ -145,10 +144,12 @@ const ProfileMenu = (props: Props) => {
                 <p className="font-semibold">Notifications</p>
               </div>
             </Link>
-            <div className="my-8 flex sm:hidden">
-              <Image src={ArchiveImg} alt="" className="mr-4 w-[1.4rem]" />
-              <p className="font-semibold">Brainstorms</p>
-            </div>
+            <Link href={"/meet-the-team"}>
+              <div className="my-8 flex sm:hidden">
+                <AiOutlineTeam className="text-[1.4rem] mr-4" />
+                <p className="font-semibold">Meet The Team</p>
+              </div>
+            </Link>
             <div
               className="mt-8 flex cursor-pointer"
               onClick={() => {
@@ -169,8 +170,8 @@ const ProfileMenu = (props: Props) => {
                   title: "Notification",
                   message: "Log out successful",
                   color: successColor,
-                  autoClose: 2000
-                })
+                  autoClose: 2000,
+                });
                 router.push("/");
               }}
             >
@@ -197,10 +198,8 @@ const ProfileMenu = (props: Props) => {
                   <Link href={"/auth/register"}>Sign Up</Link>
                 </li>
                 <li className=" hover:bg-gray3 px-4 py-2">
-                  <Link href={"/brainstorms"}>
-                  Brainstorms
-                  </Link>
-                  </li>
+                  <Link href={"/brainstorms"}>Brainstorms</Link>
+                </li>
               </ul>
             </MenuComponent>
           </div>

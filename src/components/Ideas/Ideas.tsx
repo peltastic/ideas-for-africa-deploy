@@ -49,6 +49,8 @@ const Ideas = (props: Props) => {
                 description={el.summary}
                 title={el.headline}
                 likes={el.likes}
+                createdAt={el.createdAt}
+                count={el.count}
               />
             ))}
           </div>

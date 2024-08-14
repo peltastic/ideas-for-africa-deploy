@@ -1,9 +1,7 @@
 import config from "@/config/config";
 import {
-  ICreateIdeaPayload,
   IGetIdeasResponse,
   IGetSingleIdeaResponse,
-  IGetTopLikedIdeas,
   IModifyIdeaPayload,
 } from "@/interface/idea";
 import { formDataHandler } from "@/utils/helperfunctions";
@@ -31,8 +29,8 @@ export const ideasApi = createApi({
         category: string;
         body: string;
         pitches: string;
-        minbud: string;
-        maxbud: string;
+        minbud?: string;
+        maxbud?: string;
         userId?: string;
         banner: File | null;
         files?: File[] | null;
@@ -177,8 +175,7 @@ export const ideasApi = createApi({
         }
 
         return {
-          url: `/users/viewed/ideas/?limit=${limit || "10"}
-          }${query}`,
+          url: `/users/viewed/ideas/?limit=${limit || "10"}${query}`,
         };
       },
     }),

@@ -32,7 +32,7 @@ const LoginPage = (props: Props) => {
        className="bg-auth bg-cover bg-center   h-screen hidden des:block w-[50%]">
         {/* <Image src={AuthImage} alt="auth-image" className="w-full h-full" /> */}
       </div>
-      <div className="mx-auto w-[90%] sm:w-[70%] lg:w-[50%] relative">
+      <div className="mx-auto w-[90%] sm:w-[70%] lg:w-[50%] lg:max-w-[50rem] relative">
         <LoginForm />
       </div>
     </div>

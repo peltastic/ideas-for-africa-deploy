@@ -56,7 +56,7 @@ const InnovativeIdeasFilters = (props: Props) => {
           }}
         />
       </div>
-      <div className="items-center bg-gray3 px-1  py-1 rounded-full hidden des:flex ">
+      <div className="items-center bg-gray3 px-1 overflow-x-scroll no-scrollbar  py-1 rounded-full hidden des:flex ">
         <InnovativeIdeasTab
           elements={filterEl}
           filterVal={props.filterVal}

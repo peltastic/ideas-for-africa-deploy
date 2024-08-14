@@ -25,6 +25,7 @@ export interface IGetIdeasResponse {
   lname?: string;
   userId: string;
   pow?: string;
+  count: number
   profile?: {
     ppicture: string;
     pow: string;

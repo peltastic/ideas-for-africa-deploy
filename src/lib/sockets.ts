@@ -30,6 +30,7 @@ export function sendMessage(roomID: string, text: string) {
 }
 
 export function enableNotis(userId: string) {
+  console.log("joined")
   notis_socket.emit("join", userId);
 }
 

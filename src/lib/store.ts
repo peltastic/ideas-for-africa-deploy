@@ -21,6 +21,7 @@ const persistConfig = {
 const combinedReducers = combineReducers({
   auth: authReducer,
   profile: profileReducer,
+  notis: notisReducer,
 });
 const persistedReducer = persistReducer(persistConfig, combinedReducers);
 export const store = configureStore({
@@ -28,7 +29,6 @@ export const store = configureStore({
     persistedState: persistedReducer,
     fcm: fcmReducer,
     route: routeReducer,
-    notis: notisReducer,
     [authApi.reducerPath]: authApi.reducer,
     [profileApi.reducerPath]: profileApi.reducer,
     [ideasApi.reducerPath]: ideasApi.reducer,

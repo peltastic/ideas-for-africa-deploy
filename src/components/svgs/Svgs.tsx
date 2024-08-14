@@ -18,7 +18,7 @@ export const HeaderStrokeSvg = () => {
   };
   return (
     <motion.svg
-      width="203"
+      width="180"
       height="86"
       viewBox="0 0 203 86"
       fill="none"

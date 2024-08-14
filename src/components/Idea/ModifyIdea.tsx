@@ -358,7 +358,7 @@ const ModifyIdea = (props: Props) => {
         </div>
       </div>
       <div className="flex py-10 px-4">
-        <Button classname="bg-gray3 w-[7rem] mr-auto rounded-full py-2 px-5">
+        <Button clicked={() => router.back()} classname="bg-gray3 w-[7rem] mr-auto rounded-full py-2 px-5">
           Discard
         </Button>
         <Button

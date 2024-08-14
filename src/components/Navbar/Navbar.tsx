@@ -34,8 +34,8 @@ const Navbar = (props: Props) => {
           </Link>
         </div>
         {props.homepage ? (
-          <Link className="hidden sm:block mr-8 hover:scale-105 transition-all text-primary border-b-2 border-primary" href={"/brainstorms"}>
-            <p className="">Brainstorms</p>
+          <Link className="hidden sm:block mr-8 hover:scale-105 transition-all text-primary border-b-2 border-primary" href={"/meet-the-team"}>
+            <p className="">Meet The Team</p>
           </Link>
         ) : null}
         <ProfileMenu />

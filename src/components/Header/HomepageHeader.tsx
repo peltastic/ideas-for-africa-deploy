@@ -36,9 +36,9 @@ const HomepageHeader = (props: Props) => {
               // ease: "easeIn"
             }}
           >
-            A space where ideas
+            Got an Idea
           </motion.span>
-          <div className="absolute right-[-1.1rem] top-[-.4rem] hidden lg:block">
+          <div className="absolute right-[-1.3rem] top-[-.4rem] hidden lg:block">
             <HeaderStrokeSvg />
             {/* <Image src={HeaderStroke} alt="header-stroke" /> */}
           </div>
@@ -57,12 +57,12 @@ const HomepageHeader = (props: Props) => {
             delay: 0.2,
           }}
         >
-          blossom & minds connect
+          for a better Africa?
         </motion.h1>
       </div>
       <div className="">
         <h1 className="text-[2.7rem] xxs:text-[2.9rem] block sm:hidden font-bold xs:font-semibold leading-[1.07]">
-          A space where ideas blossom & minds connect
+          Got an Idea for a better Africa?
         </h1>
       </div>
       <div className="flex justify-center mt-6 gap-4">
@@ -98,8 +98,8 @@ const HomepageHeader = (props: Props) => {
           }}
           className=" text-[#333752] md:text-gray1  xxs:text-lg "
         >
-          Collaborate, share, and breathe life into your ideas. Let others help
-          bring your vision to fruition.
+          This is an open space to share, Modify and brainstorm on ideas that
+          can build the continent.
         </motion.h2>
         <motion.div
           initial={{
@@ -167,8 +167,8 @@ const HomepageHeader = (props: Props) => {
           }}
           className="w-full xs:w-[60%] md:w-auto rounded-full px-8 py-4 md:py-3 text-primary md:mr-8 border-primary border"
         >
-          <Link className="" href={"/meet-the-team"}>
-            <motion.button>Meet the team</motion.button>
+          <Link className="" href={"/brainstorms"}>
+            <motion.button>Brainstorms</motion.button>
           </Link>
         </motion.div>
       </div>

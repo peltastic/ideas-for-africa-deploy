@@ -66,24 +66,39 @@ const ShareIdea = (props: Props) => {
 
   const createIdeaHandler = () => {
     let pitchsIsEmpty = true;
-    for (const el of ideaPayload.pitchs) {
-      if (el.step) {
-        pitchsIsEmpty = false;
-        break;
-      }
+    let trimmedPitches = ideaPayload.pitchs.filter((el) => !!el.step);
+    if (trimmedPitches.length === 0) {
+      pitchsIsEmpty = false;
     }
-    createIdea({
+
+    const payload: {
+      headline: string;
+      summary: string;
+      category: string;
+      body: string;
+      pitches: string;
+      minbud?: string;
+      maxbud?: string;
+      userId?: string;
+      banner: File | null;
+      files?: File[] | null;
+    } = {
       banner: ideaPayload.banner,
       headline: ideaPayload.headline,
       category: ideaPayload.category,
       summary: ideaPayload.summary,
       body: ideaPayload.body,
-      pitches: JSON.stringify(pitchsIsEmpty ? [] : ideaPayload.pitchs),
-      maxbud: `${currencyValue} ${ideaPayload.maxbud}`,
-      minbud: `${currencyValue} ${ideaPayload.minbud}`,
+      pitches: JSON.stringify(pitchsIsEmpty ? [] : trimmedPitches),
       userId: id,
       files: ideaPayload.files,
-    });
+    };
+    if (ideaPayload.minbud) {
+      payload.minbud = `${currencyValue} ${ideaPayload.minbud}`;
+    }
+    if (ideaPayload.maxbud) {
+      payload.maxbud = `${currencyValue} ${ideaPayload.maxbud}`
+    }
+    createIdea(payload);
   };
   const setIdeaPayloadHandler = (key: string, value: string | File | null) => {
     setIdeaPayload((prev) => ({
@@ -239,10 +254,7 @@ const ShareIdea = (props: Props) => {
                 !ideaPayload.summary ||
                 !ideaPayload.body ||
                 !ideaPayload.banner ||
-                ((!ideaPayload.maxbud ||
-                  !ideaPayload.minbud ||
-                  !(ideaPayload.pitchs.length > 0) ||
-                  !ideaPayload.category) &&
+                ((!(ideaPayload.pitchs.length > 0) || !ideaPayload.category) &&
                   step === "additional")
               }
               classname="bg-primary px-5 py-2 disabled:cursor-not-allowed rounded-full ml-auto disabled:bg-[#A6ABAF] text-white"

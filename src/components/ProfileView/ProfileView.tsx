@@ -19,7 +19,7 @@ const ProfileView = (props: Props) => {
     case "ideas":
       component = <Ideas hideFilter />;
       break;
-    case "brainstorm":
+    case "brainstorms":
       component = <UserBrainstormGroups />;
       break;
     case "modified ideas":
@@ -35,7 +35,7 @@ const ProfileView = (props: Props) => {
       <div className="my-8">
         <Tabs
           profile
-          elements={["Ideas", "Modified Ideas", "Brainstorm"]}
+          elements={["Ideas", "Modified Ideas", "Brainstorms"]}
           filterVal={tab || "ideas"}
           setVal={(el) =>
             router.push(`/profile/${props.id}?tab=${el.toLowerCase()}`)

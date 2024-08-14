@@ -90,7 +90,7 @@ const InnovativeIdeas = (props: Props) => {
           category: selectedFilter,
         });
       } else {
-        getTopViewedIdeas(id);
+        getTopViewedIdeas({ id });
       }
     } else {
       if (selectedFilter !== "All Categories") {
@@ -100,7 +100,7 @@ const InnovativeIdeas = (props: Props) => {
           category: selectedFilter,
         });
       } else {
-        getTopLikedIdeas(id);
+        getTopLikedIdeas({ id });
       }
     }
     setDropDownValue(value);
@@ -113,8 +113,8 @@ const InnovativeIdeas = (props: Props) => {
           Explore innovative ideas
         </h1>
         <h2 className="text-gray1">
-          Bring visionary ideas to fruition through collection and shared
-          inspiration
+          Browse through a collection of ideas from some of the smartest minds
+          around. Ideas are open and free to use
         </h2>
       </div>
       <div className="sm:mr-12">

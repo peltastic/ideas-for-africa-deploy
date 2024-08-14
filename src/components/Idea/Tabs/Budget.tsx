@@ -18,7 +18,7 @@ const Budget = (props: Props) => {
           </p>
         </div>
       ) : (
-        <div className="text-black2 flex flex-wrap sm:flex-nowrap justify-between">
+        <div className="text-black2 flex flex-wrap sm:flex-nowrap gap-10">
         <div className="w-full sm:w-auto">
             <p>Estimate Budget <span className="text-black1 font-semibold">{props.minbud}</span></p>
            <p>(Minimum)</p> 

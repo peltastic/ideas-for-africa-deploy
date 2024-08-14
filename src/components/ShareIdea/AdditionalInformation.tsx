@@ -4,7 +4,7 @@ import { IoMdAdd } from "react-icons/io";
 import SelectComponent from "../Select/Select";
 import Upload from "../Upload/Upload";
 import { ICreateIdeaPayload } from "@/interface/idea";
-import { idea_categories_list } from "@/utils/constants";
+import { idea_categories_list, share_idea_categories_list } from "@/utils/constants";
 import { motion } from "framer-motion";
 import curr_list from "@/data/currencies.json";
 
@@ -154,7 +154,7 @@ const AdditionalInformation = ({
         <SelectComponent
           value={idea.category}
           changed={(val) => setIdea("category", val)}
-          options={idea_categories_list}
+          options={share_idea_categories_list}
           placeholder="Select an option"
           size="sm"
         />

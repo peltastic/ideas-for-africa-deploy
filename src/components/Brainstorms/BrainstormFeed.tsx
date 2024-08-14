@@ -36,12 +36,12 @@ const BrainstormFeed = (props: Props) => {
     <div className="px-4 sm:px-0 md:px-6 sm:mx-6 py-8 bg-primary-bg rounded-xl min-h-screen">
       <h1 className="text-[2rem] font-semibold">Brainstorms</h1>
       <div className="border  w-full sm:w-[70%] des:w-[40%] flex items-center mt-4 rounded-[0.48rem]">
-        <div className="w-[6rem] sm:w-[8rem]">
+        <div className="w-[6rem]">
           <SelectComponent
             variant="filled"
             value={value}
             changed={(value) => setValue(value)}
-            size="sm"
+            size="md"
             options={options}
             radius="md"
           />

@@ -65,7 +65,7 @@ const Notification = (props: Props) => {
       setAcceptInviteLoading(false);
       setRejectInviteLoading(false);
       if (actionType === "acceptInv") {
-        open()
+        open();
       }
     }
   }, [result.isError, result, isSuccess]);
@@ -121,11 +121,36 @@ const Notification = (props: Props) => {
           </Button>
         </div>
       </ModalComponent>
-      <div className="my-10">
+      <div
+        className={`my-10 ${
+          props.data.type &&
+          (props.data.type === "Request" || props.data.type === "Response")
+            ? "hover:bg-gray7 cursor-pointer"
+            : ""
+        } transition-all px-3 py-3 rounded-lg`}
+      >
         <div className="flex items-center ">
-          <div className=" w-[90%] sm:w-auto flex flex-wrap sm:flex-nowrap items-center mr-auto">
+          <div
+            onClick={() => {
+              if (
+                props.data.type &&
+                (props.data.type === "Request" ||
+                  props.data.type === "Response")
+              ) {
+                router.push(
+                  `/idea/${props.data.action.IdeaId}/${formatNameRoute(
+                    props.data.action.ideaheadline || ""
+                  )}/brainstorms/${props.data.action.groupId}`
+                );
+              }
+            }}
+            className=" w-[90%] sm:w-auto flex flex-wrap sm:flex-nowrap items-center mr-auto"
+          >
             <div className="  mr-4 bg-gradient-to-br from-[#5C6670] to-black1 text-white rounded-full p-1 h-[2.5rem] w-[2.5rem] flex items-center justify-center">
-              <p>{props.data.action.username.split(" ")[0][0]}{props.data.action.username.split(" ")[1][0]}</p>
+              <p>
+                {props.data.action.username.split(" ")[0][0]}
+                {props.data.action.username.split(" ")[1][0]}
+              </p>
             </div>
             <div className="mt-3 sm:mt-0">
               <h3 className="font-semibold text-sm mb-1">
@@ -152,7 +177,7 @@ const Notification = (props: Props) => {
                       href={`/idea/${
                         props.data.action.IdeaId
                       }/${formatNameRoute(
-                        props.data.action.ideaheadline || ""
+                        props.data.action.ideaheadline || "i"
                       )}/brainstorms/${props.data.action.groupId}`}
                     >
                       Open Group
@@ -163,7 +188,21 @@ const Notification = (props: Props) => {
             </div>
           ) : null}
         </div>
-        <div className="text-sm mt-4">
+        <div
+          onClick={() => {
+            if (
+              props.data.type &&
+              (props.data.type === "Request" || props.data.type === "Response")
+            ) {
+              router.push(
+                `/idea/${props.data.action.IdeaId}/${formatNameRoute(
+                  props.data.action.ideaheadline || ""
+                )}/brainstorms/${props.data.action.groupId}`
+              );
+            }
+          }}
+          className="text-sm mt-4"
+        >
           <p>{props.data.body}</p>
         </div>
         {props.data.type === "Request" || props.data.type === "Invite" ? (

@@ -164,7 +164,7 @@ const IdeaGrid = ({ data, setOpenVH, modified }: Props) => {
           <h1 className="text-2xl font-bold flex items-center">
             {data.idea.headline}
             {modified ? (
-              <span className="bg-gray3 text-gray1 ml-4 rounded-full px-4 py-2 font-medium text-xs">
+              <span className="bg-[#332600] text-white ml-4 rounded-full px-4 py-2 font-medium text-xs">
                 Modified
               </span>
             ) : null}

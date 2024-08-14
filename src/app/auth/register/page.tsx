@@ -31,7 +31,7 @@ const RegisterPage = (props: Props) => {
       }} className="  bg-cover bg-center h-screen hidden des:block w-[50%]">
         {/* <Image src={AuthImage} alt='auth-image' className='h-full w-full' /> */}
        </div>
-       <div className="w-[90%] des:h-screen des:overflow-scroll mm:w-[65%] des:w-[50%] mx-auto relative">
+       <div className="w-[90%] des:h-screen des:overflow-scroll mm:w-[65%] des:w-[50%] lg:max-w-[50rem] mx-auto relative">
         <RegisterForm />
        </div>
     </div>

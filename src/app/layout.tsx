@@ -33,7 +33,7 @@ export default function RootLayout({
         <ToastContainer />
         <GoogleOAuthProvider clientId={config.GOOGLE_AUTH_CLIENT_ID as string}>
           <Providers>
-            {/* <App />  */}
+            <App /> 
             <MantineProvider
               theme={{
                 headings: { fontFamily: "Poppins, sans-serif" },

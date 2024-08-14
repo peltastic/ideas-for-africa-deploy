@@ -7,6 +7,7 @@ import { formatNameRoute, truncateStr } from "@/utils/helperfunctions";
 import { useRouter } from "next/navigation";
 import { AspectRatio } from "@mantine/core";
 import NoProfilePic from "/public/assets/no-profile.jpg";
+import moment from "moment";
 
 type Props = {
   modified?: boolean;
@@ -20,12 +21,14 @@ type Props = {
   lname?: string;
   userId?: string;
   ideaId?: string;
+  createdAt: string;
+  count: number;
 };
 
 const Idea = (props: Props) => {
   const router = useRouter();
   return (
-    <div className="sm:flex flex-wrap sm:flex-nowrap items-center my-10">
+    <div className="sm:flex flex-wrap sm:flex-nowrap  my-10">
       <div
         onClick={() => {
           if (props.modified) {
@@ -66,10 +69,21 @@ const Idea = (props: Props) => {
           />
         </div>
       </div>
-      <div className={` w-[95%] xxs:w-[90%] sm:w-[70%] md::w-[80%] mx-auto sm:mx-0 mt-3 sm:mt-0`}>
+      <div
+        className={` w-[95%] xxs:w-[90%] sm:w-[70%] flex flex-col justify-between md::w-[80%] mx-auto sm:mx-0 mt-3 sm:mt-0`}
+      >
         <div className="flex items-center mb-2">
           <h1
-            onClick={() => router.push(`/idea/${props.id}`)}
+            onClick={() => {
+              if (props.modified) {
+                return router.push(
+                  `/idea/${props.ideaId}/${formatNameRoute(
+                    props.title
+                  )}/modified-idea/${props.id}`
+                );
+              }
+              router.push(`/idea/${props.id}/${formatNameRoute(props.title)}`);
+            }}
             className=" cursor-pointer font-semibold text-sm "
           >
             {props.title ||
@@ -104,12 +118,15 @@ const Idea = (props: Props) => {
                 router.push(`/profile/${props.userId}`);
               }}
             >
-              <Image
-                src={props.ppicture || NoProfilePic}
-                alt="avatar"
-                width={100}
-                height={100}
-              />
+              <AspectRatio ratio={1800/1800}>
+                <Image
+                  src={props.ppicture || NoProfilePic}
+                  alt="avatar"
+                  width={100}
+                  height={100}
+                  className="w-full h-full"
+                />
+              </AspectRatio>
             </div>
             <div
               onClick={() => router.push(`/profile/${props.ppicture}`)}
@@ -124,10 +141,10 @@ const Idea = (props: Props) => {
         ) : (
           <div className="flex items-center text-gray1 text-xs">
             <Image src={ChatImg} alt="chat-img" className="mr-1" />{" "}
-            <p className="mr-2">0</p> •{" "}
+            <p className="mr-2">{props.count}</p> •{" "}
             <Image src={LikeImg} alt="chat-img" className="mx-2" />{" "}
             <p className="mr-2">{props.likes}</p> •{" "}
-            <p className="ml-2">2 hours ago</p>
+            <p className="ml-2">{moment(props.createdAt).fromNow()}</p>
           </div>
         )}
       </div>

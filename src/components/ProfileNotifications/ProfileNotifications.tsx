@@ -1,29 +1,15 @@
-import {
-  useLazyGetUserNotificationQuery,
-} from "@/lib/features/notifications";
-import { getCookie } from "@/utils/storage";
-import React, { useEffect } from "react";
-import Notification from "./Notification";
-import IdeasSkeleton from "../Skeleton/IdeasSkeleton";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setShowIndicator } from "@/lib/reducers/notis";
-import NoNotifications from "/public/assets/notify-animate.svg"
-import Image from "next/image";
+import Button from "../Button/Button";
+import ReadNotifications from "./ReadNotifications";
+import UnreadNotifications from "./UnreadNotifications";
 
 type Props = {};
 
 const ProfileNotifications = (props: Props) => {
   const dispatch = useDispatch();
-  const id = getCookie("id");
-  const [getUserNotification, { data, isFetching }] =
-    useLazyGetUserNotificationQuery();
-  // const {data} = useGetUserNotificationQuery(id, {
-  //   ref
-  // })
- 
-  useEffect(() => {
-    getUserNotification(id);
-  }, []);
+  const [type, setType] = useState<"read" | "unread">("unread");
 
   useEffect(() => {
     dispatch(setShowIndicator(false));
@@ -31,26 +17,37 @@ const ProfileNotifications = (props: Props) => {
 
   return (
     <div>
-      <div className="">
-        {isFetching ? (
-          <div className="w-full mm:w-[90%] lg:w-[80%] des:w-[60%]">
-            <IdeasSkeleton />
-            <IdeasSkeleton />
-            <IdeasSkeleton />
-            <IdeasSkeleton />
-          </div>
-        ) : data?.notifications ? (
-          <div className="w-full mm:w-[90%] lg:w-[80%] des:w-[60%]">
-            {data?.notifications.map((el) => (
-              <Notification data={el} key={el._id} />
-            ))}
-          </div>
-        ): <div className="">
-          <Image src={NoNotifications} alt="no-notifications" className="mx-auto w-[20rem]" />
-          <p className="text-center">No Notifications received</p>
-        </div> }
+      <div className="flex text-sm ">
+        <Button
+          clicked={() => {
+            setType("unread");
+          }}
+          classname={`${
+            type === "unread"
+              ? "border-black text-black"
+              : "border-gray3 text-gray1"
+          }  border rounded-full  py-1 px-3 mr-2 transition-all`}
+        >
+          Unread
+        </Button>
+        <Button
+          clicked={() => {
+            setType("read");
+          }}
+          classname={`${
+            type === "read"
+              ? "border-black text-black"
+              : "border-gray3 text-gray1"
+          }  border rounded-full  py-1 px-3 mr-2 transition-all`}
+        >
+          Read
+        </Button>
       </div>
-     
+      {type === "read" ? (
+        <ReadNotifications type={type} />
+      ) : (
+        <UnreadNotifications type={type} />
+      )}
     </div>
   );
 };

@@ -57,7 +57,6 @@ export function getRandomColor() {
     },
   ];
   const index = Math.floor(Math.random() * (5 - 1) + 1);
-  console.log(index);
 
   return {
     dark: modifyIdeasColorPallet[index].dark,

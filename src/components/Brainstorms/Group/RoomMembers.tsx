@@ -39,7 +39,6 @@ const RoomMembers = (props: Props) => {
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [userExists, setUserExists] = useState<boolean>(false);
   const [inviteMember, invite] = useInviteMemberMutation();
-  // console.log(data.)
   useEffect(() => {
     if (result.isError) {
       setErrorMessage("Something went wrong, could not verify email");

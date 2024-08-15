@@ -40,11 +40,27 @@ export const notificationApi = createApi({
     >({
       query: (id) => `/users/profile/returnfcm/${id}`,
     }),
-    getUserNotification: build.query<
+    getUserUnreadNotification: build.query<
       { notifications: IGetProfileNotificationResponse[] },
-      string
+      {
+        userId: string;
+      }
     >({
-      query: (id) => `/users/notifications/unread/${id}`,
+      query: ({ userId }) => `/users/notifications/unread/${userId}/unread`,
+    }),
+    getUserReadNotifications: build.query<
+      { notifications: IGetProfileNotificationResponse[] },
+      {
+        userId: string;
+      }
+    >({
+      query: ({ userId }) => `/users/notifications/unread/${userId}/read`,
+    }),
+    setNotificationsToRead: build.mutation<unknown, string>({
+      query: (id) => ({
+        method: "PATCH",
+        url: `/users/notifications/${id}/read`,
+      }),
     }),
     subscribeEmailNotification: build.mutation<unknown, string>({
       query: (email) => ({
@@ -82,7 +98,8 @@ export const notificationApi = createApi({
 export const {
   useSetFcmTokenMutation,
   useReturnFcmTokenQuery,
-  useGetUserNotificationQuery,
-  useLazyGetUserNotificationQuery,
+  useLazyGetUserReadNotificationsQuery,
+  useLazyGetUserUnreadNotificationQuery,
   useSubscribeEmailNotificationMutation,
+  useSetNotificationsToReadMutation,
 } = notificationApi;

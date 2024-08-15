@@ -1,13 +1,13 @@
 "use client";
 import React, { useEffect } from "react";
-import useFCM from "@/hooks/useFcm";
 import { useDispatch, useSelector } from "react-redux";
-import { setFCM } from "@/lib/reducers/fcm";
+
 import { RootState } from "@/lib/store";
-import { useSetFcmTokenMutation } from "@/lib/features/notifications";
 import { getCookie } from "@/utils/storage";
 import { enableNotis, notis_socket } from "@/lib/sockets";
 import { setShowIndicator } from "@/lib/reducers/notis";
+import { notifications } from "@mantine/notifications";
+import { primaryColor } from "@/utils/constants";
 
 type Props = {};
 
@@ -23,7 +23,12 @@ const App = (props: Props) => {
       enableNotis(id)
     }
     notis_socket.on("newNotification", (msgData) => {
-      console.log("new Notification");
+      notifications.show({
+        title: "New notification",
+        message: "Check Notifications on your profile",
+        color: primaryColor,
+        autoClose: 4000
+      })
       dispatch(setShowIndicator(true));
     });
   }, []);

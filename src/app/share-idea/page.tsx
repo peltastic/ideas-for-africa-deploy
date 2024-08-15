@@ -107,7 +107,6 @@ const ShareIdea = (props: Props) => {
     }));
   };
   const updatePitch = (value: string, count: string) => {
-    // console.log(count)
     const newEntry = {
       count,
       step: value,

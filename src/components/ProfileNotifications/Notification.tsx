@@ -18,9 +18,11 @@ import { errorColor, successColor } from "@/utils/constants";
 import { useDisclosure } from "@mantine/hooks";
 import ModalComponent from "../Modal/Modal";
 import { useRouter } from "next/navigation";
+import { useSetNotificationsToReadMutation } from "@/lib/features/notifications";
 
 type Props = {
   data: IGetProfileNotificationResponse;
+  type: "read" | "unread";
 };
 
 const Notification = (props: Props) => {
@@ -40,6 +42,7 @@ const Notification = (props: Props) => {
     useState<boolean>(false);
   const [rejectInviteLoading, setRejectInviteLoading] =
     useState<boolean>(false);
+  const [setToRead, {}] = useSetNotificationsToReadMutation();
 
   useEffect(() => {
     if (result.isError) {
@@ -69,6 +72,13 @@ const Notification = (props: Props) => {
       }
     }
   }, [result.isError, result, isSuccess]);
+
+  useEffect(() => {
+    if (props.type === "unread") {
+      setToRead(props.data._id);
+    }
+  }, []);
+
   useEffect(() => {
     if (isError) {
       notifications.show({

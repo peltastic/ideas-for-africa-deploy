@@ -27,9 +27,6 @@ const ProfileView = (props: Props) => {
     default:
       break;
   }
-  useEffect(() => {
-    console.log(tab);
-  }, [tab]);
   return (
     <div>
       <div className="my-8">

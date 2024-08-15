@@ -76,7 +76,6 @@ const CreateBrainstormGroup = (props: Props) => {
           } else {
             setDescription(value as string);
           }
-          console.log(key, value);
         }}
       />
       <Button

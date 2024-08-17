@@ -30,7 +30,7 @@ const IdeaOptionsMobile = (props: Props) => {
       >
         <ul className="text-white">
           <li onClick={props.setOpenVH} className="flex items-center text-lg">
-            <p className="mr-3 ml-auto">Version History</p>
+            <p className="mr-3 ml-auto">View Modified Ideas</p>
             <Button classname="bg-gray11 h-[3.5rem] w-[3.5rem] flex justify-center items-center rounded-full">
               <Image src={Hamburger} alt="hamburger" />
             </Button>

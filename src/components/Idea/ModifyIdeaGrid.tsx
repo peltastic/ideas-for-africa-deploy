@@ -73,7 +73,7 @@ const ModifyIdeaGrid = (props: Props) => {
       <ModalComponent size="md" centered opened={opened} onClose={close}>
         <NotLoggedInModal title="You need to be logged in to modify ideas" />
       </ModalComponent>
-      <div className="border h-screen des:h-auto rounded-md bg-white border-gray3 px-2 xxs:px-6">
+      <div className="border h-screen des:h-auto rounded-md bg-white border-gray3 px-4 xxs:px-6">
         <div onClick={props.closeVH} className="my-8 flex des:hidden">
           <Image src={CancelSvg} alt="cancel-svg" className=" w-[1.2rem]" />
         </div>

@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import HeaderStroke from "/public/assets/header-stroke.svg";
+import React from "react";
 import HeaderStar from "/public/assets/header-star.svg";
 import Image from "next/image";
 import Link from "next/link";
@@ -18,7 +17,7 @@ const HomepageHeader = (props: Props) => {
     (state: RootState) => state.persistedState.auth.authStatus
   );
   return (
-    <header className="text-center w-[90%] sm:w-[95%] md:w-[70%] mx-auto mt-2 pt-[9rem]">
+    <header className="text-center w-[90%] sm:w-[95%] md:w-[70%] mx-auto mt-2 pt-[5rem] sm:pt-[9rem]">
       <div className=" hidden sm:block text-[2.5rem] sm:text-[3.5rem] md:text-[4rem] leading-[1.07] font-bold md:font-semibold ">
         <h1 className="relative w-fit mx-auto text-black1">
           <motion.span

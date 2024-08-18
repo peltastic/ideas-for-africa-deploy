@@ -38,9 +38,7 @@ import { RootState } from "@/lib/store";
 import { IoShareSocialOutline } from "react-icons/io5";
 import Button from "../Button/Button";
 import { useRouter } from "next/navigation";
-import HoverCardComponent from "../HoverCard/HoverCard";
 import { AspectRatio } from "@mantine/core";
-import ToolTip from "../ToolTip/ToolTip";
 import ToolTipComponent from "../ToolTip/ToolTip";
 import { successColor } from "@/utils/constants";
 import { notifications } from "@mantine/notifications";
@@ -225,7 +223,11 @@ const IdeaGrid = ({ data, setOpenVH, modified }: Props) => {
                   if (authStatus === "LOGGED_OUT") {
                     return open();
                   }
-                  setClicked(true)
+                  router.push(
+                    `/idea/${data.idea._id}/${formatNameRoute(
+                      data.idea.headline
+                    )}/modify`
+                  );
                 }}
                 className="flex items-center text-xs rounded-md sm:rounded-full px-4 py-3 w-[15rem] sm:w-[10rem] justify-center bg-primary text-white border-primary border"
               >
@@ -318,6 +320,12 @@ const IdeaGrid = ({ data, setOpenVH, modified }: Props) => {
           <div className="" onClick={() => share.open()}>
             <IoShareSocialOutline className="mr-3 cursor-pointer text-2xl" />
           </div>
+        </div>
+        <div
+          onClick={() => setOpenVH()}
+          className=" block des:hidden mb-6 text-primary border-b font-semibold border-b-primary w-fit pb-1"
+        >
+          <p>View Modified Ideas</p>
         </div>
         <div className="">
           <IdeaTab

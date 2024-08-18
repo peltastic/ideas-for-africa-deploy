@@ -6,7 +6,6 @@ import Hamburger from "/public/assets/menu.svg";
 import ProfileImg from "/public/assets/account_circle.svg";
 import IdeaImg from "/public/assets/idea.svg";
 import NotificationImg from "/public/assets/notifications.svg";
-import ArchiveImg from "/public/assets/archive.svg";
 import LogoutImg from "/public/assets/logout.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/lib/store";
@@ -182,7 +181,7 @@ const ProfileMenu = (props: Props) => {
         </MenuComponent>
       ) : (
         <>
-          <div className="block sm:hidden bg-gray3 py-2 px-3 rounded-xl">
+          <div className="block sm:hidden bg-gray3 py-3 px-3 rounded-xl">
             <MenuComponent
               target={
                 <div>

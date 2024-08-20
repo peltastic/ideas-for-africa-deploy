@@ -160,6 +160,7 @@ const InnovativeIdeas = (props: Props) => {
                     likes: el.likes,
                     viewCount: el.viewCount,
                     wordpm: el.wordpm,
+                    modified: el.modified
                   }}
                   // image={el.banner || el.thumb && el.thumb[0].path}
                   key={index}

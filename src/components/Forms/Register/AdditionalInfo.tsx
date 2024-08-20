@@ -2,24 +2,50 @@ import Button from "@/components/Button/Button";
 import Field from "@/components/Input/Field";
 import SelectComponent from "@/components/Select/Select";
 import Spinner from "@/components/Spinner/Spinner";
-import { useUpdateProfileMutation } from "@/lib/features/profile";
+import { useLazyGetOccupationsQuery, useUpdateProfileMutation } from "@/lib/features/profile";
 import { successColor } from "@/utils/constants";
 import { getCookie } from "@/utils/storage";
 import { notifications } from "@mantine/notifications";
 import { Form, Formik } from "formik";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
-
+import countriesJson from "@/data/countries.json";
 type Props = {};
 
 const AdditionalInfo = (props: Props) => {
   const router = useRouter();
+  const [getOccupations, OccRes] = useLazyGetOccupationsQuery();
+  const [occupations, setOccupations] = useState<
+  {
+    label: string;
+    value: string;
+  }[]
+>([]);
+  
   const [updateProfile, { isLoading, isSuccess, isError }] =
     useUpdateProfileMutation();
   const [nonInputValues, setNonInputValues] = useState({
     title: "",
     location: "",
   });
+  const [countriesOptions, setCountriesOptions] = useState<
+  {
+    label: string;
+    value: string;
+  }[]
+>();
+
+useEffect(() => {
+  if (OccRes.isSuccess && OccRes.data) {
+    const res = OccRes.data.map((el) => {
+      return {
+        label: el.jobTitle,
+        value: el.jobTitle,
+      };
+    });
+    setOccupations(res);
+  }
+}, [OccRes.isSuccess, OccRes.data]);
   useEffect(() => {
     if (isSuccess) {
       notifications.show({
@@ -32,6 +58,21 @@ const AdditionalInfo = (props: Props) => {
       router.push("/auth/register/verify");
     }
   }, [isSuccess, isError]);
+  useEffect(() => {
+    getOccupations();
+  }, []);
+
+  useEffect(() => {
+    const formattedCountriesData = countriesJson.map((el) => {
+      return {
+        label: el.name,
+        value: el.code,
+      };
+    });
+
+    setCountriesOptions(formattedCountriesData);
+  }, []);
+
   return (
     <div className="sm:px-8">
       <h1 className="font-semibold text-lg">Additional Information</h1>
@@ -59,9 +100,8 @@ const AdditionalInfo = (props: Props) => {
           <div className="mt-8">
             <SelectComponent
               value={nonInputValues.title}
-              options={[
-                { label: "Software Engineer", value: "Software Engineer" },
-              ]}
+              options={occupations}
+              searchable
               thinLabel
               label="Title"
               size="sm"
@@ -80,7 +120,7 @@ const AdditionalInfo = (props: Props) => {
               classname="py-[0.47rem] px-3 text-sm"
               name="pow"
               label="Where do you work?"
-              placeholder="e.g Pledre"
+              placeholder="e.g Microsoft"
             />
             <Field
               labelClass="text-sm font-medium"
@@ -92,13 +132,9 @@ const AdditionalInfo = (props: Props) => {
           </div>
           <div className="mt-8">
             <SelectComponent
-              options={[
-                {
-                  label: "United State of America",
-                  value: "United State of America",
-                },
-              ]}
+              options={countriesOptions}
               thinLabel
+              searchable
               label="Location"
               size="sm"
               placeholder="-Select-"
@@ -117,7 +153,7 @@ const AdditionalInfo = (props: Props) => {
               classname="py-[0.47rem] px-3 text-sm"
               name="url"
               label="Website URL"
-              placeholder="e.g Pledre"
+              placeholder="e.g example.com"
             />
           </div>
           {/* <div className="mt-8">

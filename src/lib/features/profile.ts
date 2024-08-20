@@ -1,5 +1,9 @@
 import config from "@/config/config";
-import { IGetUserModifiedIdeasResponse, IGetUserProfileResponse, IUpdateProfilePayload } from "@/interface/profile";
+import {
+  IGetUserModifiedIdeasResponse,
+  IGetUserProfileResponse,
+  IUpdateProfilePayload,
+} from "@/interface/profile";
 import { getCookie } from "@/utils/storage";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
@@ -64,19 +68,27 @@ export const profileApi = createApi({
     getUserModifiedIdeas: build.query<IGetUserModifiedIdeasResponse, string>({
       query: (userId) => `/users/modifiedIdeas/user/${userId}`,
     }),
-    getUserBrainstormGroups: build.query<{
-      groups: {
-        _id: string
-        ideaId: string
-        text: string
-        createdAt: string
-        ideaTitle: string
-        admin: string
-        banner: string
-      }[]
-    }, string>({
-      query: (userId) => `/groups/user/${userId}`
-    })
+    getUserBrainstormGroups: build.query<
+      {
+        groups: {
+          _id: string;
+          ideaId: string;
+          text: string;
+          createdAt: string;
+          ideaTitle: string;
+          admin: string;
+          banner: string;
+        }[];
+      },
+      string
+    >({
+      query: (userId) => `/groups/user/${userId}`,
+    }),
+    getOccupations: build.query<{
+      jobTitle: string
+    }[], void>({
+      query: () => `/admin/occupations`,
+    }),
   }),
 });
 
@@ -86,5 +98,6 @@ export const {
   useUploadProfilePictureMutation,
   useChangePasswordMutation,
   useGetUserModifiedIdeasQuery,
-  useGetUserBrainstormGroupsQuery
+  useGetUserBrainstormGroupsQuery,
+  useLazyGetOccupationsQuery
 } = profileApi;

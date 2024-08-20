@@ -15,6 +15,7 @@ import { FaRegEye } from "react-icons/fa";
 import NotLoggedInModal from "../ModalComponents/NotLoggedInModal";
 import { useLikeIdeaMutation } from "@/lib/features/ideas";
 import { getCookie } from "@/utils/storage";
+import ToolTipComponent from "../ToolTip/ToolTip";
 
 type Props = {
   // image: string;
@@ -37,6 +38,7 @@ type Props = {
     };
     wordpm: number;
     viewCount: number;
+    modified?: boolean
   };
 };
 
@@ -122,9 +124,14 @@ const InnovativeIdeasCard = (props: Props) => {
                 className="mx-auto  "
               />
             </AspectRatio>
-            <p className="bg-white text-[0.5rem] xs:text-xs absolute left-4 bottom-4 py-1 px-2 rounded-full font-semibold text-black">
+            <p className="bg-white text-[0.5rem] xs:text-xs absolute left-2 sm:left-4 bottom-2 sm:bottom-4 py-1 px-2 rounded-full font-semibold text-black">
               {props.data.category}
             </p>
+           {props.data.modified ?  <div className="bg-white p-1 absolute right-2 sm:right-4 bottom-2 sm:bottom-4 rounded-full w-5 h-5 flex justify-center items-center">
+              <ToolTipComponent auto label="This has modified ideas">
+                <p className="text-primary text-xs sm:text-sm font-bold">M</p>
+              </ToolTipComponent>
+            </div>: null}
           </div>
           <div className="flex flex-wrap sm:flex-nowrap py-3 text-[0.65rem] xs:text-xs text-gray4 items-center">
             <div className="flex items-center w-full mr-auto sm:w-auto">

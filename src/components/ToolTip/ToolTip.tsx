@@ -1,28 +1,29 @@
-import { Button, Tooltip } from '@mantine/core'
-import React, { ReactNode } from 'react'
+import { Button, Tooltip } from "@mantine/core";
+import React, { ReactNode } from "react";
 
 type Props = {
-    label: string
-    children: ReactNode
-}
+  label: string;
+  children: ReactNode;
+  auto?: boolean;
+};
 
 const ToolTipComponent = (props: Props) => {
   return (
     <Tooltip
       position="right"
-      color='#332600'
-      w={280}
+      color="#332600"
+      w={props.auto ? "fit" : 280}
       multiline
       transitionProps={{
-        transition: 'fade-left',
-        duration: 300
+        transition: "fade-left",
+        duration: 300,
       }}
-    //   opened
+      //   opened
       label={props.label}
     >
-        {props.children}
+      {props.children}
     </Tooltip>
-  )
-}
+  );
+};
 
-export default ToolTipComponent
+export default ToolTipComponent;

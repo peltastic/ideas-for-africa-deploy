@@ -14,6 +14,7 @@ export interface ICreateIdeaPayload {
 export interface IGetIdeasResponse {
   _id: string;
   headline: string;
+  modified: boolean
   category: string;
   subcategory: string;
   summary: string;

@@ -13,6 +13,8 @@ import { getCookie } from "@/utils/storage";
 import { AspectRatio } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
 import { errorColor, successColor } from "@/utils/constants";
+import { IoMdAdd } from "react-icons/io";
+
 
 type Props = {
   fname: string;
@@ -90,7 +92,12 @@ const ProfileHeader = (props: Props) => {
               }}
               accept="image/png,image/jpeg"
             >
-              <div className=" w-[4.5rem] h-[4.5rem] overflow-hidden rounded-full">
+              <div className="relative">
+
+                <div className="text-primary absolute right-0 rounded-full bottom-2 bg-white">
+                  <IoMdAdd />
+                </div>
+              <div className=" w-[4.5rem] h-[4.5rem]  overflow-hidden rounded-full">
                 <AspectRatio ratio={1800 / 1800}>
                   <Image
                     src={preview || props.url || NoProfilePic}
@@ -98,9 +105,10 @@ const ProfileHeader = (props: Props) => {
                     height={100}
                     alt="avatar"
                     className="h-full w-full"
-                  />
+                    />
                 </AspectRatio>
               </div>
+                    </div>
             </FileButtonComponent>
           )}
         </div>

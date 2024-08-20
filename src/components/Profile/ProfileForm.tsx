@@ -4,6 +4,7 @@ import SelectComponent from "../Select/Select";
 import Field from "../Input/Field";
 import { getCookie } from "@/utils/storage";
 import {
+  useLazyGetOccupationsQuery,
   useUpdateProfileMutation,
 } from "@/lib/features/profile";
 import ThreeDotLoader from "../Loader/ThreeDotLoader";
@@ -11,27 +12,78 @@ import Button from "../Button/Button";
 import Spinner from "../Spinner/Spinner";
 import { IGetUserProfileResponse } from "@/interface/profile";
 import { notifications } from "@mantine/notifications";
-import { successColor } from "@/utils/constants";
+import { errorColor, successColor } from "@/utils/constants";
+import countriesJson from "@/data/countries.json";
 
 type Props = {
   data: IGetUserProfileResponse | null;
 };
 
 const ProfileForm = ({ data }: Props) => {
+  const [getOccupations, OccRes] = useLazyGetOccupationsQuery();
+  const [occupations, setOccupations] = useState<
+    {
+      label: string;
+      value: string;
+    }[]
+  >([]);
   const id = getCookie("id");
   const [updateProfile, result] = useUpdateProfileMutation();
   const [nonInputValues, setNonInputValues] = useState({
     title: data?.profile?.title,
     location: data?.profile?.country,
   });
+  const [countriesOptions, setCountriesOptions] = useState<
+    {
+      label: string;
+      value: string;
+    }[]
+  >();
 
   useEffect(() => {
-    notifications.show({
-      title: "Profile updated!",
-      message: "",
-      autoClose: 3000,
-      color: successColor,
+    const formattedCountriesData = countriesJson.map((el) => {
+      return {
+        label: el.name,
+        value: el.code,
+      };
     });
+
+    setCountriesOptions(formattedCountriesData);
+  }, []);
+
+  useEffect(() => {
+    if (OccRes.isSuccess && OccRes.data) {
+      const res = OccRes.data.map((el) => {
+        return {
+          label: el.jobTitle,
+          value: el.jobTitle,
+        };
+      });
+      setOccupations(res);
+    }
+  }, [OccRes.isSuccess, OccRes.data]);
+
+  useEffect(() => {
+    getOccupations();
+  }, []);
+
+  useEffect(() => {
+    if (result.isError) {
+      notifications.show({
+        title: "Error updating profile",
+        message: (result.error as any)?.data?.message || "Something went wrong",
+        autoClose: 3000,
+        color: errorColor,
+      });
+    }
+    if (result.isSuccess) {
+      notifications.show({
+        title: "Profile updated!",
+        message: "",
+        autoClose: 3000,
+        color: successColor,
+      });
+    }
   }, [result.isError, result.isSuccess]);
 
   useEffect(() => {
@@ -82,9 +134,8 @@ const ProfileForm = ({ data }: Props) => {
                     title: val,
                   })
                 }
-                options={[
-                  { label: "Software Engineer", value: "Software Engineer" },
-                ]}
+                searchable
+                options={occupations}
                 label="Title"
                 size="lg"
                 placeholder={"Select an option"}
@@ -142,12 +193,8 @@ const ProfileForm = ({ data }: Props) => {
                     location: val,
                   })
                 }
-                options={[
-                  {
-                    label: "United State of America",
-                    value: "United State of America",
-                  },
-                ]}
+                searchable
+                options={countriesOptions}
                 label="Location"
                 size="lg"
                 placeholder={"Select an option"}
@@ -169,7 +216,7 @@ const ProfileForm = ({ data }: Props) => {
                 placeholder=""
               />
             </div> */}
-          
+
             <div className="flex justify-between my-10">
               <Button
                 type="button"

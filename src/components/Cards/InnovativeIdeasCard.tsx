@@ -128,7 +128,7 @@ const InnovativeIdeasCard = (props: Props) => {
               {props.data.category}
             </p>
            {props.data.modified ?  <div className="bg-white p-1 absolute right-2 sm:right-4 bottom-2 sm:bottom-4 rounded-full w-5 h-5 flex justify-center items-center">
-              <ToolTipComponent auto label="This has modified ideas">
+              <ToolTipComponent auto label="This Idea has modified ideas">
                 <p className="text-primary text-xs sm:text-sm font-bold">M</p>
               </ToolTipComponent>
             </div>: null}

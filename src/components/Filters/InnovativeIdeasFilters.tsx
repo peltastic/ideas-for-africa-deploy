@@ -33,7 +33,7 @@ const InnovativeIdeasFilters = (props: Props) => {
         <SelectComponent
           value={props.dropdownVal}
           size="md"
-          placeholder="Most viewed"
+          placeholder="Filter"
           options={options}
           changed={(val) => {
             props.dropdoownFunction(val === "1" ? "views" : "likes", val);

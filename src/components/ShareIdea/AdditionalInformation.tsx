@@ -4,9 +4,14 @@ import { IoMdAdd } from "react-icons/io";
 import SelectComponent from "../Select/Select";
 import Upload from "../Upload/Upload";
 import { ICreateIdeaPayload } from "@/interface/idea";
-import { idea_categories_list, share_idea_categories_list } from "@/utils/constants";
+import {
+  idea_categories_list,
+  share_idea_categories_list,
+} from "@/utils/constants";
 import { motion } from "framer-motion";
 import curr_list from "@/data/currencies.json";
+import CheckboxComponent from "../Checkbox/CheckboxComponent";
+import Link from "next/link";
 
 type Props = {
   setIdea: (key: string, value: string | File | null) => void;
@@ -18,6 +23,8 @@ type Props = {
   updateDocHandler: (file: File | null, index: number) => void;
   currValue: string;
   setCurrValue: (val: string) => void;
+  checked: boolean;
+  setChecked: (checked: boolean) => void;
 };
 
 const AdditionalInformation = ({
@@ -30,6 +37,8 @@ const AdditionalInformation = ({
   updateDocHandler,
   setCurrValue,
   currValue,
+  checked,
+  setChecked,
 }: Props) => {
   const [currencyOptions, setCurrencyOptions] = useState<
     {
@@ -173,6 +182,22 @@ const AdditionalInformation = ({
           updateDocHandler={updateDocHandler}
           deleteFileHandler={deleteFileHandler}
         />
+      </div>
+      <div className="mt-10 flex items-center ">
+        <CheckboxComponent checked={checked} setChecked={setChecked} />
+        <p className="ml-4">
+          By checking the box indicating your agreement with these{" "}
+          <span className="underline text-primary">
+            <Link href={"/terms-and-conditions"} target="_blank">
+              Terms & Conditions
+            </Link>
+          </span>
+          , you acknowledge that you have read, understood, and agree to be
+          bound by these{" "}
+          <span className="underline text-primary">
+            <Link href={"/terms-and-conditions"} target="_blank">Terms</Link>
+          </span>
+        </p>
       </div>
       {/* <div className="mt-8">
         {idea

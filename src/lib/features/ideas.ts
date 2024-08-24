@@ -4,7 +4,6 @@ import {
   IGetSingleIdeaResponse,
   IModifyIdeaPayload,
 } from "@/interface/idea";
-import { formDataHandler } from "@/utils/helperfunctions";
 import { getCookie } from "@/utils/storage";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
@@ -78,7 +77,7 @@ export const ideasApi = createApi({
         }
         if (body.files && body.files.length > 0) {
           for (const el of body.files) {
-            formData.append("files", el)
+            formData.append("files", el);
           }
         }
 
@@ -150,7 +149,6 @@ export const ideasApi = createApi({
       }
     >({
       query: ({ category, limit }) => {
-        console.log(limit)
         let query = "";
         if (category) {
           query = `&category=${category}`;
@@ -179,6 +177,35 @@ export const ideasApi = createApi({
         };
       },
     }),
+    getAllIdeas: build.query<
+      {
+        ideas: IGetIdeasResponse[];
+        currentPage: number
+        totalPages: number
+      },
+      {
+        category: string;
+        type: "filter" | "search";
+        search?: string;
+        filterType?: "views" | "likes" | string;
+        page?: number 
+      }
+    >({
+      query: ({ category, type, filterType, search, page }) => {
+        let query = "";
+        if (type === "filter") {
+          query = `/search/${filterType || "likes"}?limit=${8}&page=${page || 1}`;
+          if (category) {
+            query += `&category=${category}`;
+          }
+        } else {
+          query = `/search/search?query=${search}&limit=${30}&page=${page || 1}`
+        }
+        return {
+          url: query,
+        };
+      },
+    }),
   }),
 });
 
@@ -196,4 +223,5 @@ export const {
   useLazyGetTopLikedIdeasQuery,
   useLazyGetTopViewedIdeasQuery,
   useGetTopLikedIdeasQuery,
+  useLazyGetAllIdeasQuery,
 } = ideasApi;

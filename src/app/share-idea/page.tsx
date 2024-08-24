@@ -24,6 +24,7 @@ const ShareIdea = (props: Props) => {
   const [step, setStep] = useState<"basic" | "additional">("basic");
   const [bannerPreview, setBannerPreview] = useState<string>("");
   const [currencyValue, setCurrencyValue] = useState<string>("$");
+  const [checked, setChecked] = useState<boolean>(false);
   const [ideaPayload, setIdeaPayload] = useState<ICreateIdeaPayload>({
     headline: "",
     summary: "",
@@ -96,7 +97,7 @@ const ShareIdea = (props: Props) => {
       payload.minbud = `${currencyValue} ${ideaPayload.minbud}`;
     }
     if (ideaPayload.maxbud) {
-      payload.maxbud = `${currencyValue} ${ideaPayload.maxbud}`
+      payload.maxbud = `${currencyValue} ${ideaPayload.maxbud}`;
     }
     createIdea(payload);
   };
@@ -176,6 +177,10 @@ const ShareIdea = (props: Props) => {
     setCurrencyValue(val);
   };
 
+  const setCheckedHandler = (checked: boolean) => {
+    setChecked(checked);
+  };
+
   return (
     <div className="">
       <Navbar />
@@ -219,6 +224,8 @@ const ShareIdea = (props: Props) => {
               />
             ) : (
               <AdditionalInformation
+                checked={checked}
+                setChecked={setCheckedHandler}
                 addDocHandler={addDocumentFilesHandler}
                 updateDocHandler={updateDocumentHandler}
                 addNewPitchHandler={addNewPitch}
@@ -249,11 +256,12 @@ const ShareIdea = (props: Props) => {
           >
             <Button
               disabled={
+                
                 !ideaPayload.headline ||
                 !ideaPayload.summary ||
                 !ideaPayload.body ||
                 !ideaPayload.banner ||
-                ((!(ideaPayload.pitchs.length > 0) || !ideaPayload.category) &&
+                ((!(ideaPayload.pitchs.length > 0) || !ideaPayload.category || !checked) &&
                   step === "additional")
               }
               classname="bg-primary px-5 py-2 disabled:cursor-not-allowed rounded-full ml-auto disabled:bg-[#A6ABAF] text-white"

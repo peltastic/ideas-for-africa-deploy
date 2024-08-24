@@ -20,6 +20,7 @@ export interface IGetIdeasResponse {
   summary: string;
   files: any;
   likes: string;
+  likeCount: string
   createdAt: string;
   banner: string;
   fname?: string;
@@ -42,6 +43,7 @@ export interface IGetIdeasResponse {
   };
   wordpm: number
   viewCount: number
+
 }
 
 export interface IIdeaDocumentData {

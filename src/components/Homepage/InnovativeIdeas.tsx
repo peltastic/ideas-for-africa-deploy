@@ -13,10 +13,12 @@ import {
 } from "@/lib/features/ideas";
 import { IGetIdeasResponse } from "@/interface/idea";
 import { getCookie } from "@/utils/storage";
+import { useRouter } from "next/navigation";
 
 type Props = {};
 
 const InnovativeIdeas = (props: Props) => {
+  const router = useRouter()
   const [dropDownValue, setDropDownValue] = useState<string>("");
   const id = getCookie("id");
   const [selectedFilter, setSelectedFilter] =
@@ -169,7 +171,7 @@ const InnovativeIdeas = (props: Props) => {
           </>
         )}
       </div>
-      <div className="border border-gray2 py-4 rounded-2xl text-center sm:mr-10">
+      <div onClick={() => router.push("/all-ideas")} className="cursor-pointer border border-gray2 py-4 rounded-2xl text-center sm:mr-10">
         <p className="text-xs font-medium text-[#56616B]">Show more</p>
       </div>
     </section>

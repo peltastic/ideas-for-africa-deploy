@@ -32,7 +32,7 @@ const MeetTheTeam = (props: Props) => {
             <p>
               IdeasAfrica.org is a platform designed to bridge the gap between
               ideators and executors, fostering innovation and progress in
-              Africa. Here's how to use the site to share your ideas:
+              Africa. Here&apos;s how to use the site to share your ideas:
             </p>
           </div>
         </div>
@@ -124,7 +124,7 @@ const MeetTheTeam = (props: Props) => {
           <div className="mt-10">
             <h2 className="text-2xl font-semibold ">2. Share Your Idea.</h2>
             <p>
-              Once you've completed your idea, click the "Submit" button. Your
+              Once you&apos;ve completed your idea, click the &lsquo;Submit&rsquo; button. Your
               idea will then be published on the IdeasAfrica.org platform for
               everyone to see.
             </p>

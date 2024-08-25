@@ -70,7 +70,7 @@ const AllIdeas = (props: Props) => {
   };
 
   return (
-    <div className="px-8">
+    <div className="px-2 sm:px-8">
       <div className="mb-6 mt-5">
         <h1 className="text-3xl xs:text-4xl font-bold mb-3 text-black1">
           Explore innovative ideas

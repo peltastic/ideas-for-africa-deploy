@@ -10,7 +10,7 @@ type Props = {}
 const AllIdeasPage = (props: Props) => {
   return (
     <div>
-        <nav className='w-full py-4 px-8'>
+        <nav className='w-full py-4 px-2 sm:px-8'>
          <div className="flex items-center">
             <div className="cursor-pointer mr-auto">
                 <Link href={"/"}>

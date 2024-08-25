@@ -228,7 +228,7 @@ const ModifyIdea = (props: Props) => {
             class="rounded-lg w-full px-4 py-2 border border-gray8 placeholder:text-gray1 placeholder:text-sm outline-none"
           />
         </div> */}
-        <h1 className="text-sm font-bold mt-8 mb-4">Price range</h1>
+        <h1 className="text-sm font-bold mt-8 mb-4">Budget range</h1>
         <div className="mt-6 flex flex-wrap sm:flex-nowrap items-center gap-6">
           <div className="w-[100%] sm:w-[20%]">
             {currencyOptions.length > 0 ? (

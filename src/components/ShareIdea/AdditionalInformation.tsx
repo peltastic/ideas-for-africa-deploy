@@ -115,7 +115,7 @@ const AdditionalInformation = ({
         <IoMdAdd className="mr-1 text-lg" />
         <p>Add more</p>
       </div>
-      <h1 className="text-sm font-bold mt-8 mb-4">Price range</h1>
+      <h1 className="text-sm font-bold mt-8 mb-4">Budget range</h1>
       <div className="mt-6 flex flex-wrap sm:flex-nowrap items-center gap-6">
         <div className="w-full sm:w-[20%]">
           {currencyOptions.length > 0 ? (

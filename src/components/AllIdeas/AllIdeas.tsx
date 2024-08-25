@@ -171,7 +171,7 @@ const AllIdeas = (props: Props) => {
                 page: val,
                 type: searchValue ? "search" : "filter",
                 search: "",
-                filterType: dropDownValue,
+                filterType: dropDownValue === "1" ? "views" : "likes" ,
               });
             }}
           />

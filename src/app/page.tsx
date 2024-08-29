@@ -10,12 +10,14 @@ function Home() {
   return (
     <div className="">
       <Navbar homepage />
-      <div className="mx-auto bg-primary-bg max-w-[1500px]">
-        <HomepageHeader />
-        <div className="ml-4 mr-4   sm:ml-10 mt-[6rem] sm:mt-[10rem]">
-          <InnovativeIdeas />
+      <div className="bg-primary-bg">
+        <div className="mx-auto  max-w-[1500px]">
+          <HomepageHeader />
+          <div className="ml-4 mr-4   sm:ml-10 mt-[6rem] sm:mt-[10rem]">
+            <InnovativeIdeas />
+          </div>
+          <StayUpdated />
         </div>
-        <StayUpdated />
       </div>
       <Footer />
     </div>

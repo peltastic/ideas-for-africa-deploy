@@ -9,7 +9,6 @@ type Props = {
   };
 };
 
-
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const idea = await axios.get(
     `https://api.ideasafrica.org/api/users/ideas/${params.id}`
@@ -28,9 +27,5 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default function RootLayout({ children }: Props) {
-  return (
-    <html lang="en">
-      <body className="text-black">{children}</body>
-    </html>
-  );
+  return <div className="">{children}</div>;
 }

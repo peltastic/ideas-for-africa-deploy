@@ -15,7 +15,7 @@ const ProfileFilters = (props: Props) => {
         <h1 className="font-semibold">{props.title}</h1>
         <p className="text-xs text-gray1">{props.subtitle}</p>
       </div>
-      <div className=" mt-6 md:mt-0 flex bg-gray3 text-xs rounded-full text-black1 px-4 xxs:s:px-7 py-4">
+      {/* <div className=" mt-6 md:mt-0 flex bg-gray3 text-xs rounded-full text-black1 px-4 xxs:s:px-7 py-4">
         <div className="flex items-center mr-6 xs:mr-20">
           <p className="mr-2">All time</p>
           <IoIosArrowDown />
@@ -24,7 +24,7 @@ const ProfileFilters = (props: Props) => {
             <p className="mr-4">1 Jan 2023 - 7 Jan 2023</p>
             <Image src={CalenderImg} alt="calender-img" />
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

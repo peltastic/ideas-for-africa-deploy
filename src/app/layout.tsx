@@ -17,7 +17,9 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import config from "@/config/config";
 import { Notifications } from "@mantine/notifications";
 
-export const metadata: Metadata = {};
+export const metadata: Metadata = {
+  
+};
 // sjsj
 
 export default function RootLayout({

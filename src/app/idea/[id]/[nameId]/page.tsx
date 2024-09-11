@@ -11,13 +11,7 @@ import Head from "next/head";
 import { Metadata } from "next";
 
 type Props = {};
-export const metadata: Metadata = {
-  openGraph: {
-    title: "dhsdhdsh",
-    images:  "https://ideaafricabucket.s3.eu-north-1.amazonaws.com/1723921467403-857326772-20240730_152544.jpg",
-    description: "shshshshj"
-  }
-};
+
 
 const IdeaPage = (props: Props) => {
   return (

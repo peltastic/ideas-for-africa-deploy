@@ -8,20 +8,30 @@ import ProfileMenu from "@/components/ProfileMenu/ProfileMenu";
 import Idea from "@/components/Idea/Idea";
 import SetRoute from "@/components/HOC/setRoute";
 import Head from "next/head";
+import { Metadata } from "next";
 
 type Props = {};
+export const metadata: Metadata = {
+  openGraph: {
+    title: "dhsdhdsh",
+    images:  "https://ideaafricabucket.s3.eu-north-1.amazonaws.com/1723921467403-857326772-20240730_152544.jpg",
+    description: "shshshshj"
+  }
+};
 
 const IdeaPage = (props: Props) => {
   return (
     <>
-    <Head>
-      <meta property="og:title" content="test title" />
-      <meta property="og:description" content={"description"} />
-        <meta property="og:image" content={"https://ideaafricabucket.s3.eu-north-1.amazonaws.com/1723921467403-857326772-20240730_152544.jpg"} />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content={typeof window !== "undefined" ? window.location.href : ''} />
-        <meta property="og:site_name" content="Ideas for Africa" />
-    </Head>
+      {/* <Head>
+        <meta property="og:title" content="test title" />
+        <meta property="og:description" content={"description"} />
+        <meta
+          property="og:image"
+          content={
+            "https://ideaafricabucket.s3.eu-north-1.amazonaws.com/1723921467403-857326772-20240730_152544.jpg"
+          }
+        />
+      </Head> */}
       <div className="bg-idea-bg px-2">
         <nav className="w-full py-4 px-6">
           <div className="flex items-center ">

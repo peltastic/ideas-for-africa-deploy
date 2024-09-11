@@ -13,15 +13,7 @@ import axios from "axios";
 type Props = {};
 
 const IdeaPage = (props: Props) => {
-  async function erm() {
-   const data = await axios.get(
-      `https://api.ideasafrica.org/api/users/ideas/b02aa963-9c15-49c5-b9d6-a890422df3aa`
-    );
-    console.log(data, "sjsj")
-  }
-  useEffect(() => {
-    erm()
-  }, [])
+
   return (
     <>
       <div className="bg-idea-bg px-2">

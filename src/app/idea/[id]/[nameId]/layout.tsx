@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     openGraph: {
       title: idea.data.idea.headline,
-      images: `https://ideas-for-africa-deploy.vercel.app/api/og?image=${idea.data.thumbs[0].path}`,
+      images: `${idea.data.thumbs[0].path}`,
     },
   };
 }

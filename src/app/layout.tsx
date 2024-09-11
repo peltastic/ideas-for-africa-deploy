@@ -18,7 +18,10 @@ import config from "@/config/config";
 import { Notifications } from "@mantine/notifications";
 
 export const metadata: Metadata = {
-  
+  title: "Got an idea for a better Africa?",
+  icons: {
+    icon: "/assets/logo.svg"
+  }
 };
 // sjsj
 

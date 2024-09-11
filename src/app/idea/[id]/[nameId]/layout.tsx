@@ -12,7 +12,7 @@ type Props = {
 export const metadata: Metadata = {
   openGraph: {
     title: "sjsj",
-    description:
+    images:
       "https://ideas-for-africa-deploy.vercel.app/api/og?image=https://ideaafricabucket.s3.eu-north-1.amazonaws.com/1724208567753-75589356-AAAABeLOP2XHAUHr9G2NUNFSiOjQiontLUh2PMu2bdFu3Qf-SA5G_CKYDMGv_c1kavKLhqlS6xSrA0SCM5zOvQ8YUtABF8DzU1C8WrMd.jpg",
   },
 };

@@ -7,8 +7,6 @@ import Image from "next/image";
 import ProfileMenu from "@/components/ProfileMenu/ProfileMenu";
 import Idea from "@/components/Idea/Idea";
 import SetRoute from "@/components/HOC/setRoute";
-import Head from "next/head";
-import axios from "axios";
 
 type Props = {};
 
